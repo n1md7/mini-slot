@@ -1,0 +1,45 @@
+#slot {
+  border: solid;
+  box-sizing: content-box;
+}
+
+.blink {
+  animation: blink 0.4s infinite alternate;
+  -webkit-animation: blink 0.4s infinite alternate;
+}
+@keyframes blink {
+  to {
+    background: #c3ad00;
+  }
+}
+@-webkit-keyframes blink {
+  to {
+    background: #c3ad00;
+  }
+}
+
+body {
+  background: black !important;
+}
+
+.gold {
+  color: gold !important;
+}
+.green {
+  color: green;
+}
+
+.v-align {
+  vertical-align: inherit !important;
+}
+
+div.modal-footer,
+div.modal-body,
+div.modal-header {
+  background-color: #000000de;
+  color: white;
+}
+
+table td {
+  text-align: center;
+}

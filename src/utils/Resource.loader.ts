@@ -1,20 +1,8 @@
 import { Extension } from './Extension';
 
-enum ImageExt {
-  PNG = 'png',
-  JPG = 'jpg',
-}
-
-enum AudioExt {
-  MP3 = 'mp3'
-}
-
 type Callback = (errors: Error[], image: Map<string, HTMLImageElement>, voice: Map<string, HTMLAudioElement>) => void;
 
 export class Loader {
-  private static readonly imageAllowedExtensions: ImageExt[] = [ImageExt.PNG, ImageExt.JPG];
-  private static readonly audioAllowedExtensions: AudioExt[] = [AudioExt.MP3];
-
   private readonly callbacks: Callback[] = [];
   private readonly errors: Error[] = [];
 
@@ -35,12 +23,14 @@ export class Loader {
     return Promise.all([
       Promise.all(this.imageResources.map(Loader.loadImage)),
       Promise.all(this.audioResources.map(Loader.loadAudio)),
-    ]).then(([images, audios]) => {
-      for (const [resource, image] of images) this.images.set(resource, image);
-      for (const [resource, audio] of audios) this.audios.set(resource, audio);
-    }).then(() => {
-      for (const callback of this.callbacks) callback(this.errors, this.images, this.audios);
-    });
+    ])
+      .then(([images, audios]) => {
+        for (const [resource, image] of images) this.images.set(resource, image);
+        for (const [resource, audio] of audios) this.audios.set(resource, audio);
+      })
+      .then(() => {
+        for (const callback of this.callbacks) callback(this.errors, this.images, this.audios);
+      });
   }
 
   private static loadImage(resource: string): Promise<[string, HTMLImageElement]> {
@@ -61,10 +51,9 @@ export class Loader {
   }
 
   public addImage(resource: string): void {
-    const extension = Extension.extract<ImageExt>(resource);
+    const error = Extension.imageFileVerify(resource);
 
-    if (!Loader.imageAllowedExtensions.includes(extension)) {
-      const error = new Error(`Image type [${extension}] not allowed to load!`);
+    if (error) {
       this.errors.push(error);
 
       return void 0;
@@ -78,10 +67,9 @@ export class Loader {
   }
 
   public addSound(resource: string): void {
-    const extension = Extension.extract<AudioExt>(resource);
+    const error = Extension.audioFileVerify(resource);
 
-    if (!Loader.audioAllowedExtensions.includes(extension)) {
-      const error = new Error(`Audio type [${extension}] not allowed to load!`);
+    if (error) {
       this.errors.push(error);
 
       return void 0;

@@ -3,11 +3,11 @@ import { Extension } from './Extension';
 type Callback = (errors: Error[], image: Map<string, HTMLImageElement>, voice: Map<string, HTMLAudioElement>) => void;
 
 export class Loader {
-  private readonly callbacks: Callback[] = [];
-  private readonly errors: Error[] = [];
+  private readonly callbacks: NonNullable<Callback[]> = [];
+  private readonly errors: NonNullable<Error[]> = [];
 
-  private readonly imageResources: string[] = [];
-  private readonly audioResources: string[] = [];
+  private readonly imageResources: NonNullable<string[]> = [];
+  private readonly audioResources: NonNullable<string[]> = [];
 
   private readonly images: Map<string, HTMLImageElement> = new Map();
   private readonly audios: Map<string, HTMLAudioElement> = new Map();

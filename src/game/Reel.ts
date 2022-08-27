@@ -10,8 +10,8 @@ export type ReelOptions = {
 };
 
 export class Reel extends Canvas {
-  private startedAt: number;
-  private status: ReelStatus;
+  private startedAt: NonNullable<number>;
+  private status: NonNullable<ReelStatus>;
 
   private reelOptions: ReelOptions;
 

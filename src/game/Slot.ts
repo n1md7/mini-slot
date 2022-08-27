@@ -6,10 +6,10 @@ export enum Mode {
 }
 
 export class Slot {
-  private autoSpin: boolean;
-  private credits: number;
-  private mode: Mode;
-  private delta: number;
+  private autoSpin: NonNullable<boolean>;
+  private credits: NonNullable<number>;
+  private delta: NonNullable<number>;
+  private mode: NonNullable<Mode>;
 
   constructor(private readonly reels: [Reel, Reel, Reel]) {
     this.autoSpin = false;

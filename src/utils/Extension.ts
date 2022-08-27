@@ -9,8 +9,8 @@ enum AudioExt {
 }
 
 export class Extension {
-  private static readonly imageAllowedExtensions: ImageExt[] = [ImageExt.PNG, ImageExt.JPG];
-  private static readonly audioAllowedExtensions: AudioExt[] = [AudioExt.MP3, AudioExt.WAV];
+  private static readonly imageAllowedExtensions: NonNullable<ImageExt[]> = [ImageExt.PNG, ImageExt.JPG];
+  private static readonly audioAllowedExtensions: NonNullable<AudioExt[]> = [AudioExt.MP3, AudioExt.WAV];
 
   private static extract<T = unknown>(resource: string): T {
     const parts = resource.split('.');

@@ -21,7 +21,7 @@ export class Extension {
   public static imageFileVerify(resource: string): Error | null {
     const extension = Extension.extract<ImageExt>(resource);
     if (!Extension.imageAllowedExtensions.includes(extension)) {
-      return new Error(`Image type [${extension}] not allowed to load!`);
+      return Error(`Image type [${extension}] not allowed to load!`);
     }
 
     return null;

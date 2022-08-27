@@ -10,6 +10,7 @@
     "prepare": "husky install"
   },
   "devDependencies": {
+    "@types/ms": "^0.7.31",
     "husky": "^8.0.1",
     "lint-staged": "^13.0.3",
     "prettier": "2.7.1",
@@ -18,5 +19,8 @@
   },
   "lint-staged": {
     "**/*": "prettier --write --ignore-unknown"
+  },
+  "dependencies": {
+    "ms": "^2.1.3"
   }
 }

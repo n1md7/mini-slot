@@ -1,38 +1,26 @@
 export type CanvasOptions = {
-  reel: {
-    height: number;
-    width: number;
-  };
-  offsetX: 0 | 1 | 2;
-  margin: number;
+  width: number;
+  height: number;
 };
 
 export abstract class Canvas {
-  protected constructor(
-    protected readonly ctx: CanvasRenderingContext2D,
-    protected readonly canvasOptions: CanvasOptions,
-  ) {}
+  protected constructor(protected readonly ctx: CanvasRenderingContext2D, protected readonly options: CanvasOptions) {}
 
-  drawImage(image: HTMLImageElement, offsetY: number): void {
-    const {
-      reel: { width, height },
-      margin,
-    } = this.canvasOptions;
-    const offsetX = this.canvasOptions.offsetX * width + margin;
-
-    this.ctx.strokeStyle = '#000';
-    this.ctx.lineWidth = 4;
-    this.ctx.fillRect(offsetX, offsetY, width, height / 2);
-    this.ctx.strokeRect(offsetX, offsetY, width, height / 2);
-    this.ctx.drawImage(image, offsetX, offsetY);
+  protected get width(): number {
+    return this.options.width;
   }
 
-  clear(): void {
-    const {
-      reel: { width, height },
-      margin,
-    } = this.canvasOptions;
-    const offsetX = this.canvasOptions.offsetX * width + margin;
-    this.ctx.clearRect(offsetX, height, width, height);
+  protected get height(): number {
+    return this.options.height;
+  }
+
+  protected drawImage(image: HTMLImageElement, x: number, y: number): void {
+    this.ctx.strokeStyle = 'rgb(58,3,3)';
+    this.ctx.strokeRect(x, y, this.width, this.height);
+    this.ctx.drawImage(image, x, y);
+  }
+
+  protected clear(x: number, y: number): void {
+    this.ctx.clearRect(x, y, this.width, this.height);
   }
 }

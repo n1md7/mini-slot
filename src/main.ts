@@ -23,11 +23,13 @@ canvas.width = Canvas.width;
 canvas.height = Canvas.height;
 const context = canvas.getContext('2d')!;
 
-const resourceLoader = new Loader();
-resourceLoader.addImages(BARx1, BARx2, BARx3, Seven, Cherry);
-resourceLoader.addAudios(WinSound, SpinSound);
-resourceLoader
-  .load()
+const resourceLoader = new Loader()
+  .addImages(BARx1, BARx2, BARx3, Seven, Cherry)
+  .addAudios(WinSound, SpinSound)
+  .onProgress((progress, loaded, total) => {
+    console.log({ progress, loaded, total });
+  })
+  .startLoading()
   .then(({ images, audios }) => {
     const slot = new Slot(context, {
       height: canvas.height,

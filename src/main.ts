@@ -26,8 +26,8 @@ const context = canvas.getContext('2d')!;
 const resourceLoader = new Loader()
   .addImages(BARx1, BARx2, BARx3, Seven, Cherry)
   .addAudios(WinSound, SpinSound)
-  .onProgress((progress, loaded, total) => {
-    console.log({ progress, loaded, total });
+  .onProgress(({ progress, total, done, loaded }) => {
+    console.log({ progress, loaded, total, done });
   })
   .startLoading()
   .then(({ images, audios }) => {

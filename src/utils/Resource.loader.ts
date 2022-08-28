@@ -1,6 +1,6 @@
 import { Extension } from './Extension';
 
-type ProgressCallback = (progress: number, loadedResources: number, totalResources: number) => void;
+type ProgressCallback = (data: { progress: number; loaded: number; total: number; done: boolean }) => void;
 
 export class Loader {
   private readonly errors: NonNullable<Error[]> = [];
@@ -13,7 +13,7 @@ export class Loader {
 
   private callback: ProgressCallback = () => void 0;
 
-  private loadedCounter = 0;
+  private counter = 0;
 
   public onProgress(callback: ProgressCallback): this {
     this.callback = callback;
@@ -39,12 +39,20 @@ export class Loader {
       .then(() => Promise.resolve({ images: this.images, audios: this.audios }));
   }
 
-  private get total() {
+  private get total(): number {
     return this.imageResources.length + this.audioResources.length;
   }
 
-  private get progress() {
-    return (this.loadedCounter / this.total) * 100;
+  private get progress(): number {
+    return (this.counter / this.total) * 100;
+  }
+
+  private get done(): boolean {
+    return this.progress === 100;
+  }
+
+  private get loaded(): number {
+    return this.counter;
   }
 
   private loadImage(resource: string): Promise<[string, HTMLImageElement]> {
@@ -52,8 +60,13 @@ export class Loader {
       const image = new Image();
       image.src = resource;
       image.addEventListener('load', () => {
-        this.loadedCounter++;
-        this.callback(this.progress, this.loadedCounter, this.total);
+        this.counter++;
+        this.callback({
+          total: this.total,
+          loaded: this.loaded,
+          progress: this.progress,
+          done: this.done,
+        });
         resolve([resource, image]);
       });
       image.addEventListener('error', () => reject(new Error(`Resource [${resource}] was not able to load!`)));
@@ -64,8 +77,13 @@ export class Loader {
     return new Promise((resolve, reject) => {
       const audio = new Audio(resource);
       audio.addEventListener('canplaythrough', () => {
-        this.loadedCounter++;
-        this.callback(this.progress, this.loadedCounter, this.total);
+        this.counter++;
+        this.callback({
+          total: this.total,
+          loaded: this.loaded,
+          progress: this.progress,
+          done: this.done,
+        });
         resolve([resource, audio]);
       });
       audio.addEventListener('error', () => reject(new Error(`Resource [${resource}] was not able to load!`)));

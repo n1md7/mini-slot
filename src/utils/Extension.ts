@@ -1,16 +1,34 @@
 enum ImageExt {
   PNG = 'png',
   JPG = 'jpg',
+  JPEG = 'jpeg',
+  GIF = 'gif',
+  WEBP = 'webp',
+  SVG = 'svg',
+  TIF = 'tif',
+  TIFF = 'tiff',
+  BMP = 'bmp',
 }
 
 enum AudioExt {
   MP3 = 'mp3',
   WAV = 'wav',
+  OGG = 'ogg',
 }
 
 export class Extension {
-  private static readonly imageAllowedExtensions: NonNullable<ImageExt[]> = [ImageExt.PNG, ImageExt.JPG];
-  private static readonly audioAllowedExtensions: NonNullable<AudioExt[]> = [AudioExt.MP3, AudioExt.WAV];
+  private static readonly imageAllowedExtensions: NonNullable<ImageExt[]> = [
+    ImageExt.PNG,
+    ImageExt.JPG,
+    ImageExt.BMP,
+    ImageExt.GIF,
+    ImageExt.SVG,
+    ImageExt.TIF,
+    ImageExt.TIFF,
+    ImageExt.WEBP,
+    ImageExt.JPEG,
+  ];
+  private static readonly audioAllowedExtensions: NonNullable<AudioExt[]> = [AudioExt.MP3, AudioExt.WAV, AudioExt.OGG];
 
   private static extract<T = unknown>(resource: string): T {
     const parts = resource.split('.');

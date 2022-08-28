@@ -1,5 +1,7 @@
 import { Reel } from './Reel';
 import { CanvasOptions } from './Canvas';
+import { Random } from '../utils/Random';
+import { ReelBlock } from './ReelBlock';
 
 export enum Mode {
   Tester,
@@ -8,11 +10,26 @@ export enum Mode {
 
 type SlotOptions = Pick<CanvasOptions, 'width' | 'height'> & {
   image: {
-    BARx1: HTMLImageElement;
-    BARx2: HTMLImageElement;
-    BARx3: HTMLImageElement;
-    Seven: HTMLImageElement;
-    Cherry: HTMLImageElement;
+    BARx1: {
+      key: string;
+      val: HTMLImageElement;
+    };
+    BARx2: {
+      key: string;
+      val: HTMLImageElement;
+    };
+    BARx3: {
+      key: string;
+      val: HTMLImageElement;
+    };
+    Seven: {
+      key: string;
+      val: HTMLImageElement;
+    };
+    Cherry: {
+      key: string;
+      val: HTMLImageElement;
+    };
   };
   audio: {
     Win: HTMLAudioElement;
@@ -23,18 +40,21 @@ type SlotOptions = Pick<CanvasOptions, 'width' | 'height'> & {
 export class Slot {
   private updatedAt: number = 0;
 
-  private top = 0;
-
   private autoSpin: NonNullable<boolean>;
   private credits: NonNullable<number>;
   private mode: NonNullable<Mode>;
 
   private reels: [Reel, Reel, Reel] | null = null;
+  private readonly reelSkipPixels = 32;
 
   constructor(protected readonly ctx: CanvasRenderingContext2D, protected readonly options: SlotOptions) {
     this.credits = 300;
     this.autoSpin = false;
     this.mode = Mode.Random;
+  }
+
+  public static get FPS(): number {
+    return 10;
   }
 
   private get reelWidth(): number {
@@ -45,16 +65,8 @@ export class Slot {
     return this.options.height; // Same as Canvas height
   }
 
-  public static get FPS(): number {
-    return 60;
-  }
-
-  public get interval(): number {
+  private get interval(): number {
     return 1000 / Slot.FPS;
-  }
-
-  public getDelta(now: number): number {
-    return now - this.updatedAt;
   }
 
   public timeToTick(now: number): boolean {
@@ -63,21 +75,6 @@ export class Slot {
 
   public updateTimestamp(now: number): void {
     this.updatedAt = now - (this.getDelta(now) % this.interval);
-  }
-
-  private attachReels(): void {
-    const options: CanvasOptions = {
-      width: this.reelWidth,
-      height: this.reelHeight,
-    };
-
-    this.reels = [
-      new Reel(this.ctx, options, { spinTime: '2.0s', reelIndex: 0 }),
-      new Reel(this.ctx, options, { spinTime: '2.4s', reelIndex: 1 }),
-      new Reel(this.ctx, options, { spinTime: '2.8s', reelIndex: 2 }),
-    ];
-
-    console.info('Reels attached');
   }
 
   public addCredits(credits: number) {
@@ -89,6 +86,16 @@ export class Slot {
 
     this.attachReels();
 
+    for (const reel of this.reels!) {
+      reel.clear();
+      reel.addBlocks(this.blocks());
+      reel.renderView();
+
+      setTimeout(() => {
+        for (const reel of this.reels!) reel.spin();
+      });
+    }
+
     optionalCallback();
 
     return this;
@@ -97,14 +104,52 @@ export class Slot {
   public loop(now: number) {
     if (!this.reels) throw new TypeError('Reels not defined. Make sure you call "setup" before "loop"!');
     for (const reel of this.reels) {
+      if (reel.isStopped()) break;
+
       const delta = now - reel.getStartedAt();
       const timeToStop = delta > reel.getSpinTime();
-      if (timeToStop) reel.stop();
-      else {
-        reel.clear();
-        reel.drawImage(this.options.image.BARx2, this.top);
+
+      if (timeToStop) reel.stopASAP();
+
+      if (reel.isSpinning()) reel.renderView();
+      if (reel.isStopping()) {
+        reel.slowDown();
+        reel.renderView();
       }
+
+      if (reel.outOfBlocks()) reel.addBlocks(this.blocks());
     }
-    this.top += 2;
+  }
+
+  private blocks() {
+    return Random.shuffleList<ReelBlock>([
+      new ReelBlock(this.options.image.BARx1.val, this.reelHeight),
+      new ReelBlock(this.options.image.BARx2.val, this.reelHeight),
+      new ReelBlock(this.options.image.BARx3.val, this.reelHeight),
+      new ReelBlock(this.options.image.Seven.val, this.reelHeight),
+      new ReelBlock(this.options.image.Cherry.val, this.reelHeight),
+    ]);
+  }
+
+  private getDelta(now: number): number {
+    return now - this.updatedAt;
+  }
+
+  private attachReels(): void {
+    const options: CanvasOptions = {
+      width: this.reelWidth,
+      height: this.reelHeight,
+    };
+
+    const blockHeight = this.reelHeight / 2;
+    const skipPixels = this.reelSkipPixels;
+
+    this.reels = [
+      new Reel(this.ctx, options, { spinTime: '2.0 sec', reelIndex: 0, blockHeight, skipPixels }),
+      new Reel(this.ctx, options, { spinTime: '2.4 sec', reelIndex: 1, blockHeight, skipPixels }),
+      new Reel(this.ctx, options, { spinTime: '2.8 sec', reelIndex: 2, blockHeight, skipPixels }),
+    ];
+
+    console.info('Reels attached');
   }
 }

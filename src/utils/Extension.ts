@@ -30,12 +30,6 @@ export class Extension {
   ];
   private static readonly audioAllowedExtensions: NonNullable<AudioExt[]> = [AudioExt.MP3, AudioExt.WAV, AudioExt.OGG];
 
-  private static extract<T = unknown>(resource: string): T {
-    const parts = resource.split('.');
-
-    return (<unknown>parts[parts.length - 1].toLowerCase()) as T;
-  }
-
   public static imageFileVerify(resource: string): Error | null {
     const extension = Extension.extract<ImageExt>(resource);
     if (!Extension.imageAllowedExtensions.includes(extension)) {
@@ -52,5 +46,11 @@ export class Extension {
     }
 
     return null;
+  }
+
+  private static extract<T = unknown>(resource: string): T {
+    const parts = resource.split('.');
+
+    return (<unknown>parts[parts.length - 1].toLowerCase()) as T;
   }
 }

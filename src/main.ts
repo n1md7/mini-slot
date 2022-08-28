@@ -23,23 +23,38 @@ canvas.width = Canvas.width;
 canvas.height = Canvas.height;
 const context = canvas.getContext('2d')!;
 
-const resourceLoader = new Loader()
-  .addImages(BARx1, BARx2, BARx3, Seven, Cherry)
-  .addAudios(WinSound, SpinSound)
-  .onProgress(({ progress, total, done, loaded }) => {
-    console.log({ progress, loaded, total, done });
-  })
+const loader = new Loader();
+
+loader.addImages(BARx1, BARx2, BARx3, Seven, Cherry);
+loader.addAudios(WinSound, SpinSound);
+
+loader
   .startLoading()
   .then(({ images, audios }) => {
     const slot = new Slot(context, {
       height: canvas.height,
       width: canvas.width,
       image: {
-        BARx1: images.get(BARx1)!,
-        BARx2: images.get(BARx2)!,
-        BARx3: images.get(BARx3)!,
-        Seven: images.get(Seven)!,
-        Cherry: images.get(Cherry)!,
+        BARx1: {
+          key: 'BARx1',
+          val: images.get(BARx1)!,
+        },
+        BARx2: {
+          key: 'BARx2',
+          val: images.get(BARx2)!,
+        },
+        BARx3: {
+          key: 'BARx3',
+          val: images.get(BARx3)!,
+        },
+        Seven: {
+          key: 'Seven',
+          val: images.get(Seven)!,
+        },
+        Cherry: {
+          key: 'Cherry',
+          val: images.get(Cherry)!,
+        },
       },
       audio: {
         Win: audios.get(WinSound)!,

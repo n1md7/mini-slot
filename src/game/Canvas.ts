@@ -14,7 +14,7 @@ export abstract class Canvas {
     return this.options.height;
   }
 
-  protected drawImage(image: HTMLImageElement, x: number, y: number): void {
+  protected drawBlock(image: HTMLImageElement, x: number, y: number): void {
     this.ctx.strokeStyle = 'rgb(58,3,3)';
     this.ctx.strokeRect(x, y, this.width, this.height);
     this.ctx.drawImage(image, x, y);

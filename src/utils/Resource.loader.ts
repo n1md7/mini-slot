@@ -17,7 +17,6 @@ export class Loader {
 
   public onProgress(callback: ProgressCallback): this {
     this.callback = callback;
-    console.log(this.callback);
 
     return this;
   }

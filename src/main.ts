@@ -12,6 +12,7 @@ import WinSound from '../sounds/win.mp3';
 import SpinSound from '../sounds/spin.mp3';
 
 import { Slot } from './game/Slot';
+import { SlotSound } from './sound/SlotSound';
 
 const Canvas = {
   width: 420,
@@ -31,6 +32,8 @@ loader.addAudios(WinSound, SpinSound);
 loader
   .startLoading()
   .then(({ images, audios }) => {
+    const slotSound = new SlotSound(audios.get(WinSound)!, audios.get(SpinSound)!);
+
     const slot = new Slot(context, {
       height: canvas.height,
       width: canvas.width,

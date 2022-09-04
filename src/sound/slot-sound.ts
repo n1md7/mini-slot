@@ -1,4 +1,4 @@
-import { AbstractSound } from './AbstractSound';
+import { AbstractSound } from './sound.abstract';
 
 export class SlotSound extends AbstractSound {
   constructor(private readonly winSound: HTMLAudioElement, private readonly spinSound: HTMLAudioElement) {

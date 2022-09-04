@@ -1,4 +1,4 @@
-import { SlotSound } from './SlotSound';
+import { SlotSound } from './slot-sound';
 
 describe('SlotSound', () => {
   describe('playSpin', () => {

@@ -1,5 +1,5 @@
 import { Container, Text } from 'pixi.js';
-import { Canvas } from '../../enums';
+import { CANVAS } from '/src/game/enums';
 
 export class Spinner extends Container {
   private readonly progress: Text;
@@ -14,8 +14,8 @@ export class Spinner extends Container {
       fontWeight: '900',
     });
     loading.anchor.set(0.5);
-    loading.y = Canvas.HEIGHT / 2;
-    loading.x = Canvas.WIDTH / 2;
+    loading.y = CANVAS.HEIGHT / 2;
+    loading.x = CANVAS.WIDTH / 2;
 
     const poweredBy = new Text('Powered by PIXI.JS', {
       fill: 'white',
@@ -26,8 +26,8 @@ export class Spinner extends Container {
     });
 
     poweredBy.anchor.set(0.5);
-    poweredBy.y = Canvas.HEIGHT - 16;
-    poweredBy.x = Canvas.WIDTH / 2;
+    poweredBy.y = CANVAS.HEIGHT - 16;
+    poweredBy.x = CANVAS.WIDTH / 2;
 
     this.progress = new Text('0.00%', {
       fill: 'white',
@@ -38,17 +38,17 @@ export class Spinner extends Container {
     });
 
     this.progress.anchor.set(0.5);
-    this.progress.y = Canvas.HEIGHT - 32;
-    this.progress.x = Canvas.WIDTH / 2;
+    this.progress.y = CANVAS.HEIGHT - 32;
+    this.progress.x = CANVAS.WIDTH / 2;
 
     this.addChild(loading, poweredBy, this.progress);
   }
 
-  updateProgress(val: number) {
+  updateProgress(val: number): void {
     this.progress.text = this.toPercent(val);
   }
 
-  private toPercent(val: number) {
+  private toPercent(val: number): string {
     return val.toFixed(2) + '%';
   }
 }

@@ -1,6 +1,6 @@
-import { Extension } from './Extension';
+import { Extension } from './extension';
 
-type ProgressCallback = (data: { progress: number; loaded: number; total: number; done: boolean }) => void;
+export type ProgressCallback = (data: { progress: number; loaded: number; total: number; done: boolean }) => void;
 
 export class Loader {
   private readonly errors: NonNullable<Error[]> = [];

@@ -14,7 +14,13 @@
     "noUnusedLocals": false,
     "noUnusedParameters": true,
     "noImplicitReturns": true,
-    "skipLibCheck": true
+    "skipLibCheck": true,
+    "baseUrl": "./",
+    "paths": {
+      "/src/*": ["src/*"],
+      "/images/*": ["images/*"],
+      "/sounds/*": ["sounds/*"]
+    }
   },
   "include": ["src", "node_modules/ts-jest/globals.d.ts"]
 }

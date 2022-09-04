@@ -1,8 +1,11 @@
 import { Application, Texture } from 'pixi.js';
-import { AudioAsset, Canvas, ImageAsset } from './enums';
+import { AUDIO_ASSET, CANVAS, IMAGE_ASSET, REEL } from './enums';
 import { Spinner } from './components/spinner/Spinner';
-import { SlotSound } from '../sound/SlotSound';
+import { SlotSound } from '../sound/slot-sound';
 import { Symbols } from './components/reel/components/Symbols';
+import { Reel } from '/src/game/components/reel/Reel';
+import { Block } from '/src/game/components/reel/components/Block';
+import { Random } from '/src/utils/random';
 
 export class Game {
   private static instance: Game;
@@ -11,6 +14,7 @@ export class Game {
 
   private slotSound!: SlotSound;
   private slotSymbols!: Symbols;
+  private slotReels!: [Reel, Reel, Reel];
   private app!: Application;
 
   private constructor() {
@@ -30,19 +34,59 @@ export class Game {
   }
 
   public start(): void {
+    if (!this.slotSound) throw new Error('[attachAudios] is not called');
+    if (!this.slotSymbols) throw new Error('[attachSymbols] is not called');
+
     this.hideSpinner();
-    this.loop();
+    this.attachReels();
+    this.addBlocks();
+    this.attachLoop();
   }
 
-  public attachAudios(audios: Map<AudioAsset, HTMLAudioElement>) {
-    this.slotSound = new SlotSound(audios.get(AudioAsset.WIN)!, audios.get(AudioAsset.SPIN)!);
+  public attachAudios(audios: Map<AUDIO_ASSET, HTMLAudioElement>) {
+    this.slotSound = new SlotSound(audios.get(AUDIO_ASSET.WIN)!, audios.get(AUDIO_ASSET.SPIN)!);
   }
 
-  public attachSymbols(images: Record<ImageAsset, Texture>) {
+  public attachSymbols(images: Record<IMAGE_ASSET, Texture>) {
     this.slotSymbols = new Symbols();
     for (const [key, symbol] of Object.entries(images)) {
-      this.slotSymbols.set(<ImageAsset>key, symbol);
+      this.slotSymbols.set(<IMAGE_ASSET>key, symbol);
     }
+  }
+
+  private attachReels() {
+    this.slotReels = [
+      new Reel({ spinTime: '2.0 sec', id: 0 }),
+      new Reel({ spinTime: '2.4 sec', id: 1 }),
+      new Reel({ spinTime: '2.8 sec', id: 2 }),
+    ];
+    this.app.stage.addChild(...this.slotReels);
+  }
+
+  private addBlocks() {
+    const [reel01, reel02, reel03] = this.slotReels;
+
+    reel01.addBlocks([
+      new Block(this.slotSymbols.get(IMAGE_ASSET.CHERRY)!),
+      /*new Block(this.slotSymbols.get(IMAGE_ASSET.SEVEN)!),
+      new Block(this.slotSymbols.get(IMAGE_ASSET.BARx1)!),
+      new Block(this.slotSymbols.get(IMAGE_ASSET.BARx2)!),
+      new Block(this.slotSymbols.get(IMAGE_ASSET.BARx3)!),*/
+    ]);
+    reel02.addBlocks([
+      new Block(this.slotSymbols.get(IMAGE_ASSET.SEVEN)!),
+      /*new Block(this.slotSymbols.get(IMAGE_ASSET.BARx1)!),
+      new Block(this.slotSymbols.get(IMAGE_ASSET.BARx2)!),
+      new Block(this.slotSymbols.get(IMAGE_ASSET.BARx3)!),
+      new Block(this.slotSymbols.get(IMAGE_ASSET.CHERRY)!),*/
+    ]);
+    reel03.addBlocks([
+      new Block(this.slotSymbols.get(IMAGE_ASSET.CHERRY)!),
+      /* new Block(this.slotSymbols.get(IMAGE_ASSET.BARx1)!),
+      new Block(this.slotSymbols.get(IMAGE_ASSET.BARx2)!),
+      new Block(this.slotSymbols.get(IMAGE_ASSET.BARx3)!),
+      new Block(this.slotSymbols.get(IMAGE_ASSET.SEVEN)!),*/
+    ]);
   }
 
   private hideSpinner(): void {
@@ -60,8 +104,8 @@ export class Game {
 
     this.app = new Application({
       view: slot as HTMLCanvasElement,
-      width: Canvas.WIDTH,
-      height: Canvas.HEIGHT,
+      width: CANVAS.WIDTH,
+      height: CANVAS.HEIGHT,
       backgroundColor: 0x000,
       resolution: window.devicePixelRatio || 1,
     });
@@ -71,9 +115,16 @@ export class Game {
     this.app.stage.addChild(this.spinner);
   }
 
-  private loop(): void {
-    this.app.ticker.add((_delta) => {
+  private attachLoop(): void {
+    this.app.ticker.add((delta) => {
       // TODO: main update logic here
+      for (const reel of this.slotReels) {
+        for (const block of reel.blocks) {
+          // block.y += (Random.int(0, 1000) / 1000) * delta;
+          block.y += 4 * delta * (reel.id + 1);
+          if (block.y > REEL.HEIGHT) block.y = -REEL.HEIGHT;
+        }
+      }
     });
   }
 }

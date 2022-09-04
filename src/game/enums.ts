@@ -1,4 +1,4 @@
-export enum ImageAsset {
+export enum IMAGE_ASSET {
   CHERRY = 'CHERRY',
   SEVEN = 'SEVEN',
   BARx1 = 'BARx1',
@@ -6,17 +6,27 @@ export enum ImageAsset {
   BARx3 = 'BARx3',
 }
 
-export enum AudioAsset {
+export enum AUDIO_ASSET {
   WIN = 'WIN',
   SPIN = 'SPIN',
 }
 
-export enum Bundle {
+export enum BUNDLE {
   IMAGES = 'IMAGES',
   AUDIOS = 'AUDIOS',
 }
 
-export enum Canvas {
-  WIDTH = 420,
+export enum CANVAS {
+  WIDTH = 426,
   HEIGHT = 240,
+}
+
+export enum REEL {
+  WIDTH = 142, // 426 / 3
+  HEIGHT = 240,
+}
+
+export enum BLOCK {
+  WIDTH = 142,
+  HEIGHT = 120, // 240 / 2
 }

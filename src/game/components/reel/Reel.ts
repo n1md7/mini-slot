@@ -1,8 +1,9 @@
-import { Canvas, CanvasOptions } from '../../Canvas';
-import ms from 'ms';
-import { Random } from '../../../utils/Random';
+import { Random } from '/src/utils/random';
 import { Block } from './components/Block';
-import { Container, Texture } from 'pixi.js';
+import { Container } from 'pixi.js';
+
+import ms from 'ms';
+import { REEL } from '/src/game/enums';
 
 export enum ReelStatus {
   Spinning,
@@ -12,34 +13,43 @@ export enum ReelStatus {
 
 export type ReelOptions = {
   spinTime: `${number} sec`;
-  reelIndex: 0 | 1 | 2;
-  blockHeight: number;
-  skipPixels: number;
+  id: 0 | 1 | 2;
 };
 
 export class Reel extends Container {
+  public blocks: Block[] = [];
+
   private startedAt: NonNullable<number>;
   private status: NonNullable<ReelStatus>;
-  private blocks: Block[] = [];
   private invalidBlocks = 0;
   private top: number = 0;
-  private currentSkip = 0;
 
-  constructor(protected readonly canvasOptions: CanvasOptions, private readonly reelOptions: ReelOptions) {
+  constructor(private readonly reelOptions: ReelOptions) {
     super();
 
+    this.x = reelOptions.id * REEL.WIDTH;
     this.startedAt = -1;
-    this.reelOptions = reelOptions;
     this.status = ReelStatus.Stopped;
-    this.currentSkip = reelOptions.skipPixels;
   }
 
-  public get index(): number {
-    return this.reelOptions.reelIndex;
+  public get id(): number {
+    return this.reelOptions.id;
+  }
+
+  public get isSpinning() {
+    return this.status === ReelStatus.Spinning;
+  }
+
+  public get isStopping() {
+    return this.status === ReelStatus.Stopping;
+  }
+
+  public get isStopped() {
+    return this.status === ReelStatus.Stopped;
   }
 
   private get offsetX(): number {
-    return this.reelOptions.reelIndex * this.width;
+    return this.reelOptions.id * this.width;
   }
 
   public outOfBlocks() {
@@ -47,7 +57,10 @@ export class Reel extends Container {
   }
 
   public addBlocks(blocks: Block[]): void {
-    for (const block of blocks) this.blocks.push(block);
+    for (const block of blocks) {
+      this.blocks.push(block);
+      this.addChild(block);
+    }
   }
 
   public clearBlocks() {
@@ -70,32 +83,11 @@ export class Reel extends Container {
     return this.startedAt;
   }
 
-  public isSpinning() {
-    return this.status === ReelStatus.Spinning;
-  }
-
-  public isStopping() {
-    return this.status === ReelStatus.Stopping;
-  }
-
-  public isStopped() {
-    return this.status === ReelStatus.Stopped;
-  }
-
   public stop() {
     this.status = ReelStatus.Stopped;
   }
 
-  public stopASAP() {
-    this.status = ReelStatus.Stopping;
-  }
-
   public spin() {
     this.status = ReelStatus.Spinning;
-  }
-
-  public slowDown() {
-    this.currentSkip = this.currentSkip - this.currentSkip * 0.05;
-    if (this.currentSkip === 0) this.stop();
   }
 }

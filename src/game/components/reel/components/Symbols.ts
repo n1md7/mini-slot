@@ -1,4 +1,4 @@
-import { ImageAsset } from '../../../enums';
+import { IMAGE_ASSET } from '../../../enums';
 import { Texture } from 'pixi.js';
 
-export class Symbols extends Map<ImageAsset, Texture> {}
+export class Symbols extends Map<IMAGE_ASSET, Texture> {}

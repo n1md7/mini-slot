@@ -1,7 +1,5 @@
 import './style.css';
 
-import { Loader } from './utils/Resource.loader';
-
 import BARx1 from '../images/1xBAR.png';
 import BARx2 from '../images/2xBAR.png';
 import BARx3 from '../images/3xBAR.png';
@@ -11,69 +9,36 @@ import Cherry from '../images/Cherry.png';
 import WinSound from '../sounds/win.mp3';
 import SpinSound from '../sounds/spin.mp3';
 
-import { Slot } from './game/Slot';
-import { SlotSound } from './sound/SlotSound';
+import { Game } from './game/Game';
+import { Assets } from '@pixi/assets';
+import { AudioAsset, Bundle, ImageAsset } from './game/enums';
+import { settings, Texture, utils } from 'pixi.js';
+import { delay } from './utils/functions';
+import { Loader } from './utils/Resource.loader';
 
-const Canvas = {
-  width: 420,
-  height: 240,
-};
+utils.skipHello();
+settings.ROUND_PIXELS = true;
 
-const canvas = document.getElementById('slot') as HTMLCanvasElement;
-canvas.width = Canvas.width;
-canvas.height = Canvas.height;
-const context = canvas.getContext('2d')!;
+const game = Game.getInstance();
+const audioBundle = new Loader().addAudios(WinSound, SpinSound);
 
-const loader = new Loader();
+Assets.addBundle(Bundle.IMAGES, {
+  [ImageAsset.BARx1]: BARx1,
+  [ImageAsset.BARx2]: BARx2,
+  [ImageAsset.BARx3]: BARx3,
+  [ImageAsset.SEVEN]: Seven,
+  [ImageAsset.CHERRY]: Cherry,
+});
 
-loader.addImages(BARx1, BARx2, BARx3, Seven, Cherry);
-loader.addAudios(WinSound, SpinSound);
+const assetBundles = [Assets.loadBundle(Bundle.IMAGES, game.updateProgress.bind(game)), audioBundle.startLoading()];
 
-loader
-  .startLoading()
-  .then(({ images, audios }) => {
-    const slotSound = new SlotSound(audios.get(WinSound)!, audios.get(SpinSound)!);
-
-    const slot = new Slot(context, {
-      height: canvas.height,
-      width: canvas.width,
-      image: {
-        BARx1: {
-          key: 'BARx1',
-          val: images.get(BARx1)!,
-        },
-        BARx2: {
-          key: 'BARx2',
-          val: images.get(BARx2)!,
-        },
-        BARx3: {
-          key: 'BARx3',
-          val: images.get(BARx3)!,
-        },
-        Seven: {
-          key: 'Seven',
-          val: images.get(Seven)!,
-        },
-        Cherry: {
-          key: 'Cherry',
-          val: images.get(Cherry)!,
-        },
-      },
-      audio: {
-        Win: audios.get(WinSound)!,
-        Spin: audios.get(SpinSound)!,
-      },
-    }).setup();
-
-    (function update(now) {
-      if (slot.timeToTick(now)) {
-        slot.updateTimestamp(now);
-        slot.loop(now);
-      }
-
-      window.requestAnimationFrame(update);
-    })(0);
+Promise.all(assetBundles)
+  .then(([images, { audios }]) => {
+    game.attachAudios(audios as Map<AudioAsset, HTMLAudioElement>);
+    game.attachSymbols(images as Record<ImageAsset, Texture>);
   })
-  .catch(({ message = 'unknown error' }) => {
-    console.error(message);
+  .then(() => delay())
+  .then(() => game.start())
+  .catch((err) => {
+    console.error(err?.message || err);
   });

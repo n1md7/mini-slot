@@ -1,4 +1,4 @@
-export class ReelBlock {
+export class Block {
   private offsetY: number = Number.MAX_SAFE_INTEGER;
   private readonly blockHeight: number;
 

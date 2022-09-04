@@ -12,8 +12,11 @@
   "devDependencies": {
     "@types/ms": "^0.7.31",
     "husky": "^8.0.1",
+    "jest": "^28.1.3",
+    "jest-environment-jsdom": "^29.0.2",
     "lint-staged": "^13.0.3",
     "prettier": "2.7.1",
+    "ts-jest": "^28.0.8",
     "typescript": "^4.8.2",
     "vite": "^3.0.7"
   },
@@ -21,6 +24,37 @@
     "**/*": "prettier --write --ignore-unknown"
   },
   "dependencies": {
-    "ms": "^2.1.3"
+    "@pixi/assets": "^6.5.2",
+    "ms": "^2.1.3",
+    "pixi.js": "^6.5.2"
+  },
+  "jest": {
+    "verbose": false,
+    "collectCoverageFrom": [
+      "<rootDir>/src/**/*.{(j|t)s}"
+    ],
+    "modulePathIgnorePatterns": [
+      "index.ts"
+    ],
+    "testMatch": [
+      "**/?(*.)+(spec|test).[tj]s"
+    ],
+    "moduleFileExtensions": [
+      "ts",
+      "js"
+    ],
+    "transform": {
+      "^.+\\.ts$": "ts-jest"
+    },
+    "moduleDirectories": [
+      "node_modules",
+      "src"
+    ],
+    "testEnvironment": "jsdom",
+    "moduleNameMapper": {},
+    "coverageDirectory": "<rootDir>/test/reports",
+    "setupFiles": [
+      "<rootDir>/test/setup.js"
+    ]
   }
 }

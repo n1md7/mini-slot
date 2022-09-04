@@ -10,10 +10,23 @@ export class Loader {
 
   private readonly images: Map<string, HTMLImageElement> = new Map();
   private readonly audios: Map<string, HTMLAudioElement> = new Map();
-
-  private callback: ProgressCallback = () => void 0;
-
   private counter = 0;
+
+  private get total(): number {
+    return this.imageResources.length + this.audioResources.length;
+  }
+
+  private get progress(): number {
+    return (this.counter / this.total) * 100;
+  }
+
+  private get done(): boolean {
+    return this.progress === 100;
+  }
+
+  private get loaded(): number {
+    return this.counter;
+  }
 
   public onProgress(callback: ProgressCallback): this {
     this.callback = callback;
@@ -38,21 +51,43 @@ export class Loader {
       .then(() => Promise.resolve({ images: this.images, audios: this.audios }));
   }
 
-  private get total(): number {
-    return this.imageResources.length + this.audioResources.length;
+  public addImage(resource: string): void {
+    const error = Extension.imageFileVerify(resource);
+
+    if (error) {
+      this.errors.push(error);
+
+      return void 0;
+    }
+
+    this.imageResources.push(resource);
   }
 
-  private get progress(): number {
-    return (this.counter / this.total) * 100;
+  public addImages(...images: string[]): this {
+    for (const image of images) this.addImage(image);
+
+    return this;
   }
 
-  private get done(): boolean {
-    return this.progress === 100;
+  public addAudio(resource: string): void {
+    const error = Extension.audioFileVerify(resource);
+
+    if (error) {
+      this.errors.push(error);
+
+      return void 0;
+    }
+
+    this.audioResources.push(resource);
   }
 
-  private get loaded(): number {
-    return this.counter;
+  public addAudios(...voices: string[]): this {
+    for (const voice of voices) this.addAudio(voice);
+
+    return this;
   }
+
+  private callback: ProgressCallback = () => void 0;
 
   private loadImage(resource: string): Promise<[string, HTMLImageElement]> {
     return new Promise((resolve, reject) => {
@@ -87,41 +122,5 @@ export class Loader {
       });
       audio.addEventListener('error', () => reject(new Error(`Resource [${resource}] was not able to load!`)));
     });
-  }
-
-  public addImage(resource: string): void {
-    const error = Extension.imageFileVerify(resource);
-
-    if (error) {
-      this.errors.push(error);
-
-      return void 0;
-    }
-
-    this.imageResources.push(resource);
-  }
-
-  public addImages(...images: string[]): this {
-    for (const image of images) this.addImage(image);
-
-    return this;
-  }
-
-  public addSound(resource: string): void {
-    const error = Extension.audioFileVerify(resource);
-
-    if (error) {
-      this.errors.push(error);
-
-      return void 0;
-    }
-
-    this.audioResources.push(resource);
-  }
-
-  public addAudios(...voices: string[]): this {
-    for (const voice of voices) this.addSound(voice);
-
-    return this;
   }
 }

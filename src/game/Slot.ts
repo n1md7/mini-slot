@@ -1,7 +1,8 @@
-import { Reel } from './Reel';
+/*
+import { Reel } from './components/reel/Reel';
 import { CanvasOptions } from './Canvas';
 import { Random } from '../utils/Random';
-import { ReelBlock } from './ReelBlock';
+import { Block } from './components/reel/components/Block';
 
 export enum Mode {
   Tester,
@@ -122,12 +123,12 @@ export class Slot {
   }
 
   private blocks() {
-    return Random.shuffleList<ReelBlock>([
-      new ReelBlock(this.options.image.BARx1.val, this.reelHeight),
-      new ReelBlock(this.options.image.BARx2.val, this.reelHeight),
-      new ReelBlock(this.options.image.BARx3.val, this.reelHeight),
-      new ReelBlock(this.options.image.Seven.val, this.reelHeight),
-      new ReelBlock(this.options.image.Cherry.val, this.reelHeight),
+    return Random.shuffleList<Block>([
+      new Block(this.options.image.BARx1.val, this.reelHeight),
+      new Block(this.options.image.BARx2.val, this.reelHeight),
+      new Block(this.options.image.BARx3.val, this.reelHeight),
+      new Block(this.options.image.Seven.val, this.reelHeight),
+      new Block(this.options.image.Cherry.val, this.reelHeight),
     ]);
   }
 
@@ -153,3 +154,4 @@ export class Slot {
     console.info('Reels attached');
   }
 }
+*/

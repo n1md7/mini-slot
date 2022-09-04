@@ -1,6 +1,6 @@
 type Status = 'ON' | 'OFF';
 
-export class AbstractSound {
+export abstract class AbstractSound {
   protected status: Status = 'ON';
   protected volume: number = 0.25;
 

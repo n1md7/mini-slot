@@ -1,7 +1,8 @@
-import { Canvas, CanvasOptions } from './Canvas';
+import { Canvas, CanvasOptions } from '../../Canvas';
 import ms from 'ms';
-import { Random } from '../utils/Random';
-import { ReelBlock } from './ReelBlock';
+import { Random } from '../../../utils/Random';
+import { Block } from './components/Block';
+import { Container, Texture } from 'pixi.js';
 
 export enum ReelStatus {
   Spinning,
@@ -16,20 +17,16 @@ export type ReelOptions = {
   skipPixels: number;
 };
 
-export class Reel extends Canvas {
+export class Reel extends Container {
   private startedAt: NonNullable<number>;
   private status: NonNullable<ReelStatus>;
-  private blocks: ReelBlock[] = [];
+  private blocks: Block[] = [];
   private invalidBlocks = 0;
   private top: number = 0;
   private currentSkip = 0;
 
-  constructor(
-    protected readonly ctx: CanvasRenderingContext2D,
-    protected readonly canvasOptions: CanvasOptions,
-    private readonly reelOptions: ReelOptions,
-  ) {
-    super(ctx, canvasOptions);
+  constructor(protected readonly canvasOptions: CanvasOptions, private readonly reelOptions: ReelOptions) {
+    super();
 
     this.startedAt = -1;
     this.reelOptions = reelOptions;
@@ -49,7 +46,7 @@ export class Reel extends Canvas {
     return this.invalidBlocks >= this.blocks.length;
   }
 
-  public addBlocks(blocks: ReelBlock[]): void {
+  public addBlocks(blocks: Block[]): void {
     for (const block of blocks) this.blocks.push(block);
   }
 
@@ -100,27 +97,5 @@ export class Reel extends Canvas {
   public slowDown() {
     this.currentSkip = this.currentSkip - this.currentSkip * 0.05;
     if (this.currentSkip === 0) this.stop();
-  }
-
-  public renderView(): void {
-    this.top += this.currentSkip;
-
-    this.clear();
-    this.blocks.forEach((block, index) => {
-      block.setOffsetY(this.top, index);
-      if (block.inRange()) {
-        this.drawBlock(block.image, block.getOffsetY());
-      } else {
-        this.invalidBlocks++;
-      }
-    });
-  }
-
-  public override drawBlock(image: HTMLImageElement, offsetY: number): void {
-    super.drawBlock(image, this.offsetX, offsetY);
-  }
-
-  public override clear(): void {
-    super.clear(this.offsetX, 0);
   }
 }

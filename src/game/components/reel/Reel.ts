@@ -95,6 +95,7 @@ export class Reel extends Container {
   }
 
   public spin() {
+    this.startedAt = Date.now();
     this.status = ReelStatus.Spinning;
   }
 }

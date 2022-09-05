@@ -1,11 +1,12 @@
 import { Application, Texture } from 'pixi.js';
-import { AUDIO_ASSET, CANVAS, IMAGE_ASSET, REEL } from './enums';
+import { AUDIO_ASSET, BLOCK, CANVAS, IMAGE_ASSET, REEL } from './enums';
 import { Spinner } from './components/spinner/Spinner';
 import { SlotSound } from '../sound/slot-sound';
 import { Symbols } from './components/reel/components/Symbols';
 import { Reel } from '/src/game/components/reel/Reel';
 import { Block } from '/src/game/components/reel/components/Block';
 import { Random } from '/src/utils/random';
+import { Point } from '/src/game/components/reel/components/Point';
 
 export class Game {
   private static instance: Game;
@@ -39,7 +40,7 @@ export class Game {
 
     this.hideSpinner();
     this.attachReels();
-    this.addBlocks();
+    this.callSetupOnce();
     this.attachLoop();
   }
 
@@ -61,6 +62,8 @@ export class Game {
       new Reel({ spinTime: '2.8 sec', id: 2 }),
     ];
     this.app.stage.addChild(...this.slotReels);
+
+    this.addBlocks();
   }
 
   private addBlocks() {
@@ -128,13 +131,32 @@ export class Game {
     this.app.stage.addChild(this.spinner);
   }
 
+  private drawStoppingPoints(): void {
+    this.app.stage.addChild(
+      new Point(0, BLOCK.HEIGHT / 2),
+      new Point(0, REEL.HEIGHT / 2),
+      new Point(0, REEL.HEIGHT - BLOCK.HEIGHT / 2),
+
+      new Point(CANVAS.WIDTH - Point.width, BLOCK.HEIGHT / 2),
+      new Point(CANVAS.WIDTH - Point.width, REEL.HEIGHT / 2),
+      new Point(CANVAS.WIDTH - Point.width, REEL.HEIGHT - BLOCK.HEIGHT / 2),
+    );
+  }
+
+  private callSetupOnce(): void {
+    this.drawStoppingPoints();
+    for (const reel of this.slotReels) reel.spin();
+  }
+
   private attachLoop(): void {
-    this.app.ticker.add((delta) => {
-      // TODO: main update logic here
+    let i = 0;
+    this.app.ticker.add((_delta) => {
+      //if (i++ % 40 !== 38) return;
+      const now = Date.now();
       for (const reel of this.slotReels) {
+        if (now - reel.getStartedAt() > reel.getSpinTime()) reel.stop();
         for (const block of reel.blocks) {
-          block.y += 1 * delta * (reel.id + 1);
-          //if (block.y > REEL.HEIGHT) block.y = -REEL.HEIGHT;
+          if (reel.isSpinning) block.y += 8 * reel.id + 1;
         }
       }
     });

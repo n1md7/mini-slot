@@ -27,6 +27,9 @@ export class Reel extends Container {
   constructor(private readonly reelOptions: ReelOptions) {
     super();
 
+    this.width = REEL.WIDTH;
+    this.height = REEL.HEIGHT;
+
     this.x = reelOptions.id * REEL.WIDTH;
     this.startedAt = -1;
     this.status = ReelStatus.Stopped;
@@ -56,10 +59,14 @@ export class Reel extends Container {
     return this.invalidBlocks >= this.blocks.length;
   }
 
+  public addBlock(block: Block): void {
+    this.blocks.push(block);
+    this.addChild(block);
+  }
+
   public addBlocks(blocks: Block[]): void {
     for (const block of blocks) {
-      this.blocks.push(block);
-      this.addChild(block);
+      this.addBlock(block);
     }
   }
 

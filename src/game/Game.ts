@@ -67,26 +67,39 @@ export class Game {
     const [reel01, reel02, reel03] = this.slotReels;
 
     reel01.addBlocks([
-      new Block(this.slotSymbols.get(IMAGE_ASSET.CHERRY)!),
-      /*new Block(this.slotSymbols.get(IMAGE_ASSET.SEVEN)!),
-      new Block(this.slotSymbols.get(IMAGE_ASSET.BARx1)!),
-      new Block(this.slotSymbols.get(IMAGE_ASSET.BARx2)!),
-      new Block(this.slotSymbols.get(IMAGE_ASSET.BARx3)!),*/
+      new Block(this.slotSymbols.get(IMAGE_ASSET.CHERRY)!, 0),
+      new Block(this.slotSymbols.get(IMAGE_ASSET.SEVEN)!, 1),
+      new Block(this.slotSymbols.get(IMAGE_ASSET.BARx1)!, 2),
+      new Block(this.slotSymbols.get(IMAGE_ASSET.BARx2)!, 3),
+      new Block(this.slotSymbols.get(IMAGE_ASSET.BARx3)!, 4),
     ]);
     reel02.addBlocks([
-      new Block(this.slotSymbols.get(IMAGE_ASSET.SEVEN)!),
-      /*new Block(this.slotSymbols.get(IMAGE_ASSET.BARx1)!),
-      new Block(this.slotSymbols.get(IMAGE_ASSET.BARx2)!),
-      new Block(this.slotSymbols.get(IMAGE_ASSET.BARx3)!),
-      new Block(this.slotSymbols.get(IMAGE_ASSET.CHERRY)!),*/
+      new Block(this.slotSymbols.get(IMAGE_ASSET.CHERRY)!, 0),
+      new Block(this.slotSymbols.get(IMAGE_ASSET.SEVEN)!, 1),
+      new Block(this.slotSymbols.get(IMAGE_ASSET.BARx1)!, 2),
+      new Block(this.slotSymbols.get(IMAGE_ASSET.BARx2)!, 3),
+      new Block(this.slotSymbols.get(IMAGE_ASSET.BARx3)!, 4),
+      new Block(this.slotSymbols.get(IMAGE_ASSET.BARx3)!, 5),
+      new Block(this.slotSymbols.get(IMAGE_ASSET.BARx3)!, 6),
+      new Block(this.slotSymbols.get(IMAGE_ASSET.BARx3)!, 7),
+      new Block(this.slotSymbols.get(IMAGE_ASSET.BARx1)!, 8),
+      new Block(this.slotSymbols.get(IMAGE_ASSET.BARx2)!, 9),
+      new Block(this.slotSymbols.get(IMAGE_ASSET.BARx3)!, 10),
+      new Block(this.slotSymbols.get(IMAGE_ASSET.BARx3)!, 11),
+      new Block(this.slotSymbols.get(IMAGE_ASSET.BARx1)!, 12),
+      new Block(this.slotSymbols.get(IMAGE_ASSET.BARx3)!, 13),
+      new Block(this.slotSymbols.get(IMAGE_ASSET.BARx2)!, 14),
+      new Block(this.slotSymbols.get(IMAGE_ASSET.CHERRY)!, 15),
+      new Block(this.slotSymbols.get(IMAGE_ASSET.SEVEN)!, 16),
+      new Block(this.slotSymbols.get(IMAGE_ASSET.BARx3)!, 17),
     ]);
-    reel03.addBlocks([
-      new Block(this.slotSymbols.get(IMAGE_ASSET.CHERRY)!),
-      /* new Block(this.slotSymbols.get(IMAGE_ASSET.BARx1)!),
-      new Block(this.slotSymbols.get(IMAGE_ASSET.BARx2)!),
-      new Block(this.slotSymbols.get(IMAGE_ASSET.BARx3)!),
-      new Block(this.slotSymbols.get(IMAGE_ASSET.SEVEN)!),*/
-    ]);
+
+    Array.from({ length: 60 }).forEach((_, index) => {
+      const symbols = [IMAGE_ASSET.SEVEN, IMAGE_ASSET.CHERRY, IMAGE_ASSET.BARx1, IMAGE_ASSET.BARx2, IMAGE_ASSET.BARx3];
+
+      const symbol = Random.int(0, symbols.length);
+      reel03.addBlock(new Block(this.slotSymbols.get(symbols[symbol])!, index));
+    });
   }
 
   private hideSpinner(): void {
@@ -120,9 +133,8 @@ export class Game {
       // TODO: main update logic here
       for (const reel of this.slotReels) {
         for (const block of reel.blocks) {
-          // block.y += (Random.int(0, 1000) / 1000) * delta;
-          block.y += 4 * delta * (reel.id + 1);
-          if (block.y > REEL.HEIGHT) block.y = -REEL.HEIGHT;
+          block.y += 1 * delta * (reel.id + 1);
+          //if (block.y > REEL.HEIGHT) block.y = -REEL.HEIGHT;
         }
       }
     });

@@ -56,7 +56,7 @@ Promise.all(assetBundles)
     game.attachAudios(audios as Map<AUDIO_ASSET, HTMLAudioElement>);
     game.attachSymbols(images as Record<IMAGE_ASSET, Texture>);
   })
-  .then(() => delay())
+  //.then(() => delay())
   .then(() => game.start())
   .catch((err) => {
     console.error(err?.message || err);

@@ -5,8 +5,8 @@
     <meta content="#000000" name="theme-color" />
     <link href="/vite.svg" rel="icon" type="image/svg+xml" />
     <meta content="width=device-width, initial-scale=1.0" name="viewport" />
-    <link href="https://getbootstrap.com/docs/4.5/dist/css/bootstrap.min.css" rel="stylesheet" type="text/css" />
-    <link href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" rel="stylesheet" />
+    <!--  <link href="https://getbootstrap.com/docs/4.5/dist/css/bootstrap.min.css" rel="stylesheet" type="text/css" />
+    <link href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" rel="stylesheet" />-->
     <link href="/styles/style.scss" rel="stylesheet" />
     <script defer src="/src/main.ts" type="module"></script>
     <title>TS | Slot</title>
@@ -14,12 +14,16 @@
   <body>
     <div id="app">
       <canvas id="slot"></canvas>
+      <div id="controls">
+        <button id="spin">Spin</button>
+        <button id="stop">Stop</button>
+      </div>
     </div>
     <!-- Pay-table modal -->
     <div
       aria-hidden="true"
       aria-labelledby="payTableTitle"
-      class="modal fade"
+      class="modal fade hidden"
       id="payTable"
       role="dialog"
       tabindex="-1"
@@ -110,11 +114,11 @@
         </div>
       </div>
     </div>
-    <button class="btn btn-primary w-auto" data-target="#payTable" data-toggle="modal" type="button">
+    <button class="btn btn-primary w-auto hidden" data-target="#payTable" data-toggle="modal" type="button">
       <i class="fas fa-money-bill-alt"></i> Pay Table
     </button>
-    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"></script>
+    <!-- <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"></script>-->
   </body>
 </html>

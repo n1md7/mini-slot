@@ -1,5 +1,22 @@
+html,
+body {
+  padding: 0;
+  margin: 0;
+}
+
+body {
+  background: #000;
+  width: 100vw;
+  height: 100vh;
+}
+
+#app {
+  text-align: center;
+  margin-top: 16vh;
+}
+
 #slot {
-  border: solid;
+  border: solid 2px chartreuse;
   box-sizing: content-box;
 }
 
@@ -42,4 +59,8 @@ div.modal-header {
 
 table td {
   text-align: center;
+}
+
+.hidden {
+  display: none;
 }

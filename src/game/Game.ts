@@ -55,6 +55,16 @@ export class Game {
     }
   }
 
+  public attachControls(spin: HTMLButtonElement, stop: HTMLButtonElement): void {
+    spin.addEventListener('click', () => {
+      for (const reel of this.slotReels) reel.spin();
+    });
+
+    stop.addEventListener('click', () => {
+      for (const reel of this.slotReels) reel.stop();
+    });
+  }
+
   private attachReels() {
     this.slotReels = [
       new Reel({ spinTime: '2.0 sec', id: 0 }),
@@ -69,40 +79,15 @@ export class Game {
   private addBlocks() {
     const [reel01, reel02, reel03] = this.slotReels;
 
-    reel01.addBlocks([
-      new Block(this.slotSymbols.get(IMAGE_ASSET.CHERRY)!, 0),
-      new Block(this.slotSymbols.get(IMAGE_ASSET.SEVEN)!, 1),
-      new Block(this.slotSymbols.get(IMAGE_ASSET.BARx1)!, 2),
-      new Block(this.slotSymbols.get(IMAGE_ASSET.BARx2)!, 3),
-      new Block(this.slotSymbols.get(IMAGE_ASSET.BARx3)!, 4),
-    ]);
-    reel02.addBlocks([
-      new Block(this.slotSymbols.get(IMAGE_ASSET.CHERRY)!, 0),
-      new Block(this.slotSymbols.get(IMAGE_ASSET.SEVEN)!, 1),
-      new Block(this.slotSymbols.get(IMAGE_ASSET.BARx1)!, 2),
-      new Block(this.slotSymbols.get(IMAGE_ASSET.BARx2)!, 3),
-      new Block(this.slotSymbols.get(IMAGE_ASSET.BARx3)!, 4),
-      new Block(this.slotSymbols.get(IMAGE_ASSET.BARx3)!, 5),
-      new Block(this.slotSymbols.get(IMAGE_ASSET.BARx3)!, 6),
-      new Block(this.slotSymbols.get(IMAGE_ASSET.BARx3)!, 7),
-      new Block(this.slotSymbols.get(IMAGE_ASSET.BARx1)!, 8),
-      new Block(this.slotSymbols.get(IMAGE_ASSET.BARx2)!, 9),
-      new Block(this.slotSymbols.get(IMAGE_ASSET.BARx3)!, 10),
-      new Block(this.slotSymbols.get(IMAGE_ASSET.BARx3)!, 11),
-      new Block(this.slotSymbols.get(IMAGE_ASSET.BARx1)!, 12),
-      new Block(this.slotSymbols.get(IMAGE_ASSET.BARx3)!, 13),
-      new Block(this.slotSymbols.get(IMAGE_ASSET.BARx2)!, 14),
-      new Block(this.slotSymbols.get(IMAGE_ASSET.CHERRY)!, 15),
-      new Block(this.slotSymbols.get(IMAGE_ASSET.SEVEN)!, 16),
-      new Block(this.slotSymbols.get(IMAGE_ASSET.BARx3)!, 17),
-    ]);
+    const symbols = [IMAGE_ASSET.SEVEN, IMAGE_ASSET.CHERRY, IMAGE_ASSET.BARx1, IMAGE_ASSET.BARx2, IMAGE_ASSET.BARx3];
 
-    Array.from({ length: 60 }).forEach((_, index) => {
-      const symbols = [IMAGE_ASSET.SEVEN, IMAGE_ASSET.CHERRY, IMAGE_ASSET.BARx1, IMAGE_ASSET.BARx2, IMAGE_ASSET.BARx3];
+    const reel01Symbols = Random.pick(symbols, 16);
+    const reel02Symbols = Random.pick(symbols, 64);
+    const reel03Symbols = Random.pick(symbols, 128);
 
-      const symbol = Random.int(0, symbols.length);
-      reel03.addBlock(new Block(this.slotSymbols.get(symbols[symbol])!, index));
-    });
+    for (const { val, idx } of reel01Symbols) reel01.addBlock(new Block(this.slotSymbols.get(val)!, idx));
+    for (const { val, idx } of reel02Symbols) reel02.addBlock(new Block(this.slotSymbols.get(val)!, idx));
+    for (const { val, idx } of reel03Symbols) reel03.addBlock(new Block(this.slotSymbols.get(val)!, idx));
   }
 
   private hideSpinner(): void {
@@ -145,7 +130,6 @@ export class Game {
 
   private callSetupOnce(): void {
     this.drawStoppingPoints();
-    for (const reel of this.slotReels) reel.spin();
   }
 
   private attachLoop(): void {

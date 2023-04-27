@@ -7,6 +7,7 @@ import { Reel } from '/src/game/components/reel/Reel';
 import { Block } from '/src/game/components/reel/components/Block';
 import { Random } from '/src/utils/random';
 import { Point } from '/src/game/components/reel/components/Point';
+import { gsap } from 'gsap';
 
 export class Game {
   private static instance: Game;
@@ -35,13 +36,12 @@ export class Game {
   }
 
   public start(): void {
-    if (!this.slotSound) throw new Error('[attachAudios] is not called');
-    if (!this.slotSymbols) throw new Error('[attachSymbols] is not called');
+    if (!this.slotSound) throw new Error("[attachAudios] hasn't been called");
+    if (!this.slotSymbols) throw new Error("[attachSymbols] hasn't been called");
 
     this.hideSpinner();
     this.attachReels();
     this.callSetupOnce();
-    this.attachLoop();
   }
 
   public attachAudios(audios: Map<AUDIO_ASSET, HTMLAudioElement>) {
@@ -55,13 +55,11 @@ export class Game {
     }
   }
 
-  public attachControls(spin: HTMLButtonElement, stop: HTMLButtonElement): void {
+  public attachControls(spin: HTMLButtonElement): void {
     spin.addEventListener('click', () => {
-      for (const reel of this.slotReels) reel.spin();
-    });
-
-    stop.addEventListener('click', () => {
-      for (const reel of this.slotReels) reel.stop();
+      this.reset();
+      this.addBlocks();
+      this.spin();
     });
   }
 
@@ -72,8 +70,6 @@ export class Game {
       new Reel({ spinTime: '2.8 sec', id: 2 }),
     ];
     this.app.stage.addChild(...this.slotReels);
-
-    this.addBlocks();
   }
 
   private addBlocks() {
@@ -81,9 +77,9 @@ export class Game {
 
     const symbols = [IMAGE_ASSET.SEVEN, IMAGE_ASSET.CHERRY, IMAGE_ASSET.BARx1, IMAGE_ASSET.BARx2, IMAGE_ASSET.BARx3];
 
-    const reel01Symbols = Random.pick(symbols, 16);
-    const reel02Symbols = Random.pick(symbols, 64);
-    const reel03Symbols = Random.pick(symbols, 128);
+    const reel01Symbols = Random.pick(symbols, 4);
+    const reel02Symbols = Random.pick(symbols, 8);
+    const reel03Symbols = Random.pick(symbols, 16);
 
     for (const { val, idx } of reel01Symbols) reel01.addBlock(new Block(this.slotSymbols.get(val)!, idx));
     for (const { val, idx } of reel02Symbols) reel02.addBlock(new Block(this.slotSymbols.get(val)!, idx));
@@ -109,6 +105,7 @@ export class Game {
       height: CANVAS.HEIGHT,
       backgroundColor: 0x000,
       resolution: window.devicePixelRatio || 1,
+      antialias: true,
     });
   }
 
@@ -116,7 +113,7 @@ export class Game {
     this.app.stage.addChild(this.spinner);
   }
 
-  private drawStoppingPoints(): void {
+  private drawStoppingLines(): void {
     this.app.stage.addChild(
       new Point(0, BLOCK.HEIGHT / 2),
       new Point(0, REEL.HEIGHT / 2),
@@ -129,20 +126,22 @@ export class Game {
   }
 
   private callSetupOnce(): void {
-    this.drawStoppingPoints();
+    this.drawStoppingLines();
   }
 
-  private attachLoop(): void {
-    let i = 0;
-    this.app.ticker.add((_delta) => {
-      //if (i++ % 40 !== 38) return;
-      const now = Date.now();
-      for (const reel of this.slotReels) {
-        if (now - reel.getStartedAt() > reel.getSpinTime()) reel.stop();
-        for (const block of reel.blocks) {
-          if (reel.isSpinning) block.y += 8 * reel.id + 1;
-        }
-      }
-    });
+  private spin(): void {
+    for (const reel of this.slotReels) {
+      gsap.to(reel, {
+        pixi: { y: reel.size },
+        duration: reel.spinTime / 1000,
+        ease: 'back.out(0.4)',
+      });
+    }
+  }
+
+  private reset(): void {
+    for (const reel of this.slotReels) {
+      reel.reset();
+    }
   }
 }

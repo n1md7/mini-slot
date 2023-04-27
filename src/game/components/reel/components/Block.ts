@@ -5,20 +5,18 @@ export class Block extends Graphics {
   constructor(texture: Texture, public readonly id: number) {
     super();
 
-    this.y = BLOCK.HEIGHT * -id;
-
     this.width = BLOCK.WIDTH;
     this.height = BLOCK.HEIGHT;
 
-    this.lineStyle(2, 0xfee000, 1);
-    this.beginFill(0xff0000, 0.01);
+    this.lineStyle(BLOCK.LINE_THICKNESS, '#6A6E6AE8', 1);
     this.drawRect(0, 0, BLOCK.WIDTH, BLOCK.HEIGHT);
     this.endFill();
+    this.zIndex = 1;
 
     const sprite = new Sprite(texture);
 
-    sprite.width = Block.reduce(BLOCK.WIDTH).by(20);
-    sprite.height = Block.reduce(BLOCK.HEIGHT).by(20);
+    sprite.width = Block.reduce(BLOCK.WIDTH).by(30);
+    sprite.height = Block.reduce(BLOCK.HEIGHT).by(30);
 
     sprite.x = this.alignX(sprite);
     sprite.y = this.alignY(sprite);

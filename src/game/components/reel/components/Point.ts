@@ -8,8 +8,9 @@ export class Point extends Graphics {
     this.y = y;
     this.x = x;
 
-    this.beginFill(0xffffff, 0.5);
-    this.drawRect(0, 0, Point.width, 4);
+    this.beginFill('#6A6E6AE8');
+    this.drawRect(0, 0, Point.width, 1);
     this.endFill();
+    this.zIndex = 2;
   }
 }

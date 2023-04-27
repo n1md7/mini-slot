@@ -38,6 +38,7 @@ export class Loader {
     console.time('Resource loading finished in');
 
     if (this.errors.length) return Promise.reject(this.errors.pop());
+    console.log('Started');
 
     return Promise.all([
       Promise.all(this.imageResources.map(this.loadImage.bind(this))),
@@ -110,7 +111,7 @@ export class Loader {
   private loadAudio(resource: string): Promise<[string, HTMLAudioElement]> {
     return new Promise((resolve, reject) => {
       const audio = new Audio(resource);
-      audio.addEventListener('canplaythrough', () => {
+      const callback = () => {
         this.counter++;
         this.callback({
           total: this.total,
@@ -119,7 +120,10 @@ export class Loader {
           done: this.done,
         });
         resolve([resource, audio]);
-      });
+      };
+      audio.addEventListener('canplaythrough', callback);
+      audio.load();
+      resolve([resource, audio]);
       audio.addEventListener('error', () => reject(new Error(`Resource [${resource}] was not able to load!`)));
     });
   }

@@ -29,4 +29,5 @@ export enum REEL {
 export enum BLOCK {
   WIDTH = 142,
   HEIGHT = 120, // 240 / 2
+  LINE_THICKNESS = 1,
 }

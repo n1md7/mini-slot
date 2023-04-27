@@ -8,7 +8,9 @@ import WinSound from '/sounds/win.mp3';
 import SpinSound from '/sounds/spin.mp3';
 
 import { Assets } from '@pixi/assets';
-import { settings, Texture, utils } from 'pixi.js';
+import * as PIXI from 'pixi.js';
+import { gsap } from 'gsap';
+import { PixiPlugin } from 'gsap/PixiPlugin';
 
 import { AUDIO_ASSET, BUNDLE, IMAGE_ASSET } from '/src/game/enums';
 import { Game } from '/src/game/Game';
@@ -16,8 +18,11 @@ import { delay } from '/src/utils/functions';
 import { Loader } from '/src/sound/loader';
 import { Random } from '/src/utils/random';
 
-utils.skipHello();
-settings.ROUND_PIXELS = true;
+gsap.registerPlugin(PixiPlugin);
+PixiPlugin.registerPIXI(PIXI);
+
+PIXI.utils.skipHello();
+PIXI.settings.ROUND_PIXELS = true;
 
 const game = Game.getInstance();
 
@@ -48,18 +53,17 @@ Assets.addBundle(BUNDLE.IMAGES, {
 });
 
 const assetBundles = [
-  Assets.loadBundle(BUNDLE.IMAGES, progress.setImage),
-  Loader.loadAudios(BUNDLE.AUDIOS, progress.setAudio),
+  Assets.loadBundle(BUNDLE.IMAGES, progress.setImage.bind(progress)),
+  Loader.loadAudios(BUNDLE.AUDIOS, progress.setAudio.bind(progress)),
 ];
 
 const spin = document.querySelector('#spin') as HTMLButtonElement;
-const stop = document.querySelector('#stop') as HTMLButtonElement;
 
 Promise.all(assetBundles)
   .then(([images, audios]) => {
     game.attachAudios(audios as Map<AUDIO_ASSET, HTMLAudioElement>);
-    game.attachSymbols(images as Record<IMAGE_ASSET, Texture>);
-    game.attachControls(spin, stop);
+    game.attachSymbols(images as Record<IMAGE_ASSET, PIXI.Texture>);
+    game.attachControls(spin);
   })
   //.then(() => delay())
   .then(() => game.start())

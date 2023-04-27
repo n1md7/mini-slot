@@ -3,13 +3,7 @@ import { Block } from './components/Block';
 import { Container } from 'pixi.js';
 
 import ms from 'ms';
-import { REEL } from '/src/game/enums';
-
-export enum ReelStatus {
-  Spinning,
-  Stopped,
-  Stopping,
-}
+import { BLOCK, REEL } from '/src/game/enums';
 
 export type ReelOptions = {
   spinTime: `${number} sec`;
@@ -17,85 +11,56 @@ export type ReelOptions = {
 };
 
 export class Reel extends Container {
-  public blocks: Block[] = [];
-
-  private startedAt: NonNullable<number>;
-  private status: NonNullable<ReelStatus>;
-  private invalidBlocks = 0;
-  private top: number = 0;
+  private _blocks: Block[] = [];
 
   constructor(private readonly reelOptions: ReelOptions) {
     super();
 
-    this.width = REEL.WIDTH;
-    this.height = REEL.HEIGHT;
-
     this.x = reelOptions.id * REEL.WIDTH;
-    this.startedAt = -1;
-    this.status = ReelStatus.Stopped;
+    this.y = 0;
+  }
+
+  private _size = 0;
+
+  public get size(): number {
+    return this._blocks.length * BLOCK.HEIGHT;
   }
 
   public get id(): number {
     return this.reelOptions.id;
   }
 
-  public get isSpinning() {
-    return this.status === ReelStatus.Spinning;
-  }
-
-  public get isStopping() {
-    return this.status === ReelStatus.Stopping;
-  }
-
-  public get isStopped() {
-    return this.status === ReelStatus.Stopped;
+  public get spinTime(): number {
+    return ms(this.reelOptions.spinTime);
   }
 
   private get offsetX(): number {
     return this.reelOptions.id * this.width;
   }
 
-  public outOfBlocks() {
-    return this.invalidBlocks >= this.blocks.length;
-  }
-
   public addBlock(block: Block): void {
-    this.blocks.push(block);
+    this._blocks.push(block);
+    block.y = -this._blocks.length * BLOCK.HEIGHT;
+    this._size += BLOCK.HEIGHT + BLOCK.LINE_THICKNESS * 2;
     this.addChild(block);
   }
 
-  public addBlocks(blocks: Block[]): void {
-    for (const block of blocks) {
-      this.addBlock(block);
-    }
-  }
-
   public clearBlocks() {
-    this.blocks = [];
+    this._blocks = [];
+    this.removeChildren();
   }
 
   public shuffle(): void {
-    Random.shuffleList(this.blocks);
+    Random.shuffleList(this._blocks);
   }
 
   public getSpinTime(): number {
     return ms(this.reelOptions.spinTime);
   }
 
-  public setStartedAt(time: number): void {
-    this.startedAt = time;
-  }
-
-  public getStartedAt(): number {
-    return this.startedAt;
-  }
-
-  public stop() {
-    this.status = ReelStatus.Stopped;
-  }
-
-  public spin() {
-    this.startedAt = Date.now();
-    this.status = ReelStatus.Spinning;
+  public reset() {
+    this.clearBlocks();
+    this.y = (this.size - 1) * BLOCK.HEIGHT;
+    this._size = 0;
   }
 }

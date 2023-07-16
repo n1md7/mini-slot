@@ -1,8 +1,11 @@
 import { Sprite, Texture, Graphics } from 'pixi.js';
-import { BLOCK } from '/src/game/enums';
+import { BLOCK } from '@/src/game/enums';
 
 export class Block extends Graphics {
-  constructor(texture: Texture, public readonly id: number) {
+  constructor(
+    texture: Texture,
+    public readonly id: number,
+  ) {
     super();
 
     this.width = BLOCK.WIDTH;

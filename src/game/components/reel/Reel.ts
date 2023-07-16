@@ -1,9 +1,9 @@
-import { Random } from '/src/utils/random';
-import { Block } from './components/Block';
+import { Random } from '@/src/utils/random';
+import { Block } from '@/src/game/components/reel/components/Block';
 import { Container } from 'pixi.js';
 
 import ms from 'ms';
-import { BLOCK, REEL } from '/src/game/enums';
+import { BLOCK, REEL } from '@/src/game/enums';
 
 export type ReelOptions = {
   spinTime: `${number} sec`;
@@ -12,6 +12,7 @@ export type ReelOptions = {
 
 export class Reel extends Container {
   private _blocks: Block[] = [];
+  private _spinning = false;
 
   constructor(private readonly reelOptions: ReelOptions) {
     super();
@@ -24,6 +25,14 @@ export class Reel extends Container {
 
   public get size(): number {
     return this._blocks.length * BLOCK.HEIGHT;
+  }
+
+  public get isSpinning(): boolean {
+    return this._spinning;
+  }
+
+  public set isSpinning(value: boolean) {
+    this._spinning = value;
   }
 
   public get id(): number {

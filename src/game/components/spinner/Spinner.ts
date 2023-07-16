@@ -1,5 +1,5 @@
 import { Container, Text } from 'pixi.js';
-import { CANVAS } from '/src/game/enums';
+import { CANVAS } from '@/src/game/enums';
 
 export class Spinner extends Container {
   private readonly progress: Text;

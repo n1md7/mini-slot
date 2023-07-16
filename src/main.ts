@@ -12,16 +12,14 @@ import * as PIXI from 'pixi.js';
 import { gsap } from 'gsap';
 import { PixiPlugin } from 'gsap/PixiPlugin';
 
-import { AUDIO_ASSET, BUNDLE, IMAGE_ASSET } from '/src/game/enums';
-import { Game } from '/src/game/Game';
-import { delay } from '/src/utils/functions';
-import { Loader } from '/src/sound/loader';
-import { Random } from '/src/utils/random';
+import { AUDIO_ASSET, BUNDLE, IMAGE_ASSET } from '@/src/game/enums';
+import { Game } from '@/src/game/Game';
+import { Loader } from '@/src/sound/loader';
+import { Random } from '@/src/utils/random';
 
 gsap.registerPlugin(PixiPlugin);
 PixiPlugin.registerPIXI(PIXI);
 
-PIXI.utils.skipHello();
 PIXI.settings.ROUND_PIXELS = true;
 
 const game = Game.getInstance();

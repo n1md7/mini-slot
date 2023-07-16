@@ -20,7 +20,8 @@ export class Game {
   private app!: Application;
 
   private constructor() {
-    this.init();
+    this.createPixiApplication();
+    this.renderSpinner();
   }
 
   public static getInstance(): Game {
@@ -57,10 +58,16 @@ export class Game {
 
   public attachControls(spin: HTMLButtonElement): void {
     spin.addEventListener('click', () => {
+      if (this.reelIsSpinning()) return;
+
       this.reset();
       this.addBlocks();
       this.spin();
     });
+  }
+
+  private reelIsSpinning(): boolean {
+    return this.slotReels.some((reel) => reel.isSpinning);
   }
 
   private attachReels() {
@@ -90,11 +97,6 @@ export class Game {
     this.spinner.destroy();
   }
 
-  private init(): void {
-    this.createPixiApplication();
-    this.renderSpinner();
-  }
-
   private createPixiApplication(): void {
     const slot = document.getElementById('slot');
     if (!slot) throw new Error('#slot not found in the document');
@@ -104,8 +106,9 @@ export class Game {
       width: CANVAS.WIDTH,
       height: CANVAS.HEIGHT,
       backgroundColor: 0x000,
-      resolution: window.devicePixelRatio || 1,
+      resolution: Math.min(window.devicePixelRatio, 2),
       antialias: true,
+      hello: false,
     });
   }
 
@@ -131,11 +134,16 @@ export class Game {
 
   private spin(): void {
     for (const reel of this.slotReels) {
-      gsap.to(reel, {
-        pixi: { y: reel.size },
-        duration: reel.spinTime / 1000,
-        ease: 'back.out(0.4)',
-      });
+      reel.isSpinning = true;
+      gsap
+        .to(reel, {
+          pixi: { y: reel.size },
+          duration: reel.spinTime / 1000,
+          ease: 'back.out(0.4)',
+        })
+        .then(() => {
+          reel.isSpinning = false;
+        });
     }
   }
 

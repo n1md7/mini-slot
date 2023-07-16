@@ -11,22 +11,22 @@
   },
   "devDependencies": {
     "@types/ms": "^0.7.31",
-    "husky": "^8.0.1",
-    "jest": "^28.1.3",
-    "jest-environment-jsdom": "^29.0.2",
-    "lint-staged": "^13.0.3",
-    "prettier": "2.7.1",
-    "sass": "^1.54.8",
-    "ts-jest": "^28.0.8",
-    "typescript": "^4.8.2",
-    "vite": "^3.0.7"
+    "husky": "^8.0.3",
+    "lint-staged": "^13.2.3",
+    "prettier": "3.0.0",
+    "sass": "^1.63.6",
+    "typescript": "^5.1.6",
+    "vite": "^4.4.4",
+    "vite-plugin-glsl": "^1.1.2",
+    "vite-plugin-html": "^3.2.0",
+    "vitest": "^0.33.0"
   },
   "lint-staged": {
     "**/*": "prettier --write --ignore-unknown"
   },
   "dependencies": {
     "@pixi/assets": "^7.2.4",
-    "gsap": "^3.11.5",
+    "gsap": "^3.12.2",
     "ms": "^2.1.3",
     "pixi.js": "^7.2.4"
   },

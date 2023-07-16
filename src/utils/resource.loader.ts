@@ -1,4 +1,4 @@
-import { Extension } from './extension';
+import { Extension } from '@/src/utils/extension';
 
 export type ProgressCallback = (data: { progress: number; loaded: number; total: number; done: boolean }) => void;
 

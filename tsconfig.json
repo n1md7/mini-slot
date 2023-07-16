@@ -19,7 +19,8 @@
     "paths": {
       "/src/*": ["src/*"],
       "/images/*": ["images/*"],
-      "/sounds/*": ["sounds/*"]
+      "/sounds/*": ["sounds/*"],
+      "@/*": ["./*"]
     }
   },
   "include": ["src", "node_modules/ts-jest/globals.d.ts"]

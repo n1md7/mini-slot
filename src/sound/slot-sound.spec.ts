@@ -1,12 +1,13 @@
 import { SlotSound } from './slot-sound';
+import { describe, it, expect, vi } from 'vitest';
 
 describe('SlotSound', () => {
   describe('playSpin', () => {
     it('should play with default volume', () => {
       const winAudio = new Audio('win');
       const spinAudio = new Audio('spin');
-      const winAudioMock = jest.spyOn(winAudio, 'play');
-      const spinAudioMock = jest.spyOn(spinAudio, 'play');
+      const winAudioMock = vi.spyOn(winAudio, 'play');
+      const spinAudioMock = vi.spyOn(spinAudio, 'play');
       const sound = new SlotSound(winAudio, spinAudio);
       sound.playSpin();
 

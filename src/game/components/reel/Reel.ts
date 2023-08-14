@@ -4,6 +4,7 @@ import { Container } from 'pixi.js';
 
 import ms from 'ms';
 import { BLOCK, REEL } from '@/src/game/enums';
+import { gsap } from 'gsap';
 
 export type ReelOptions = {
   spinTime: `${number} sec`;
@@ -18,33 +19,38 @@ export class Reel extends Container {
     super();
 
     this.x = reelOptions.id * REEL.WIDTH;
-    this.y = 0;
-  }
-
-  private _size = 0;
-
-  public get size(): number {
-    return this._blocks.length * BLOCK.HEIGHT;
+    this.reset();
   }
 
   public get isSpinning(): boolean {
     return this._spinning;
   }
 
-  public set isSpinning(value: boolean) {
-    this._spinning = value;
-  }
-
   public get id(): number {
     return this.reelOptions.id;
   }
 
-  public get spinTime(): number {
+  private _size = 0;
+
+  private get size(): number {
+    return this._blocks.length * BLOCK.HEIGHT;
+  }
+
+  private get spinTime(): number {
     return ms(this.reelOptions.spinTime);
   }
 
-  private get offsetX(): number {
-    return this.reelOptions.id * this.width;
+  spin() {
+    this._spinning = true;
+    return gsap
+      .to(this, {
+        pixi: { y: this.size },
+        duration: this.spinTime / 1000,
+        ease: 'back.out(0.4)',
+      })
+      .then(() => {
+        this._spinning = false;
+      });
   }
 
   public addBlock(block: Block): void {
@@ -55,21 +61,17 @@ export class Reel extends Container {
   }
 
   public clearBlocks() {
-    this._blocks = [];
-    this.removeChildren();
+    if (this._blocks.length > 2) this._blocks.length = 3;
+    if (this.children.length > 2) this.removeChildren(3);
   }
 
   public shuffle(): void {
     Random.shuffleList(this._blocks);
   }
 
-  public getSpinTime(): number {
-    return ms(this.reelOptions.spinTime);
-  }
-
   public reset() {
     this.clearBlocks();
-    this.y = (this.size - 1) * BLOCK.HEIGHT;
+    this.y = this.size + 2 * BLOCK.HEIGHT;
     this._size = 0;
   }
 }

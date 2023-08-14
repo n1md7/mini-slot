@@ -7,16 +7,23 @@ import { Reel } from '/src/game/components/reel/Reel';
 import { Block } from '/src/game/components/reel/components/Block';
 import { Random } from '/src/utils/random';
 import { Point } from '/src/game/components/reel/components/Point';
-import { gsap } from 'gsap';
 
 export class Game {
   private static instance: Game;
 
   private readonly spinner = new Spinner();
 
+  private readonly symbols = [
+    IMAGE_ASSET.SEVEN,
+    IMAGE_ASSET.CHERRY,
+    IMAGE_ASSET.BARx1,
+    IMAGE_ASSET.BARx2,
+    IMAGE_ASSET.BARx3,
+  ];
+
   private slotSound!: SlotSound;
   private slotSymbols!: Symbols;
-  private slotReels!: [Reel, Reel, Reel];
+  private reels!: [Reel, Reel, Reel];
   private app!: Application;
 
   private constructor() {
@@ -57,36 +64,34 @@ export class Game {
   }
 
   public attachControls(spin: HTMLButtonElement): void {
-    spin.addEventListener('click', () => {
+    spin.addEventListener('click', async () => {
       if (this.reelIsSpinning()) return;
 
-      this.reset();
+      await this.reset();
       this.addBlocks();
-      this.spin();
+      await this.spin();
     });
   }
 
   private reelIsSpinning(): boolean {
-    return this.slotReels.some((reel) => reel.isSpinning);
+    return this.reels.some((reel) => reel.isSpinning);
   }
 
   private attachReels() {
-    this.slotReels = [
+    this.reels = [
       new Reel({ spinTime: '2.0 sec', id: 0 }),
       new Reel({ spinTime: '2.4 sec', id: 1 }),
       new Reel({ spinTime: '2.8 sec', id: 2 }),
     ];
-    this.app.stage.addChild(...this.slotReels);
+    this.app.stage.addChild(...this.reels);
   }
 
   private addBlocks() {
-    const [reel01, reel02, reel03] = this.slotReels;
+    const [reel01, reel02, reel03] = this.reels;
 
-    const symbols = [IMAGE_ASSET.SEVEN, IMAGE_ASSET.CHERRY, IMAGE_ASSET.BARx1, IMAGE_ASSET.BARx2, IMAGE_ASSET.BARx3];
-
-    const reel01Symbols = Random.pick(symbols, 4);
-    const reel02Symbols = Random.pick(symbols, 8);
-    const reel03Symbols = Random.pick(symbols, 16);
+    const reel01Symbols = Random.pick(this.symbols, 8);
+    const reel02Symbols = Random.pick(this.symbols, 16);
+    const reel03Symbols = Random.pick(this.symbols, 24);
 
     for (const { val, idx } of reel01Symbols) reel01.addBlock(new Block(this.slotSymbols.get(val)!, idx));
     for (const { val, idx } of reel02Symbols) reel02.addBlock(new Block(this.slotSymbols.get(val)!, idx));
@@ -132,24 +137,11 @@ export class Game {
     this.drawStoppingLines();
   }
 
-  private spin(): void {
-    for (const reel of this.slotReels) {
-      reel.isSpinning = true;
-      gsap
-        .to(reel, {
-          pixi: { y: reel.size },
-          duration: reel.spinTime / 1000,
-          ease: 'back.out(0.4)',
-        })
-        .then(() => {
-          reel.isSpinning = false;
-        });
-    }
+  private spin() {
+    return Promise.all(this.reels.map((reel) => reel.spin()));
   }
 
-  private reset(): void {
-    for (const reel of this.slotReels) {
-      reel.reset();
-    }
+  private reset() {
+    return Promise.all(this.reels.map((reel) => reel.reset()));
   }
 }

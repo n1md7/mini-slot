@@ -6,20 +6,21 @@
   "scripts": {
     "dev": "vite",
     "build": "tsc && vite build",
+    "test": "vitest --mode=test --no-watch",
     "preview": "vite preview",
+    "format": "npx lint-staged",
     "prepare": "husky install"
   },
   "devDependencies": {
     "@types/ms": "^0.7.31",
     "husky": "^8.0.3",
-    "lint-staged": "^13.2.3",
-    "prettier": "3.0.0",
-    "sass": "^1.63.6",
+    "lint-staged": "^14.0.0",
+    "prettier": "3.0.1",
+    "sass": "^1.65.1",
     "typescript": "^5.1.6",
-    "vite": "^4.4.4",
+    "vite": "^4.4.9",
     "vite-plugin-glsl": "^1.1.2",
-    "vite-plugin-html": "^3.2.0",
-    "vitest": "^0.33.0"
+    "vitest": "^0.34.1"
   },
   "lint-staged": {
     "**/*": "prettier --write --ignore-unknown"
@@ -30,33 +31,9 @@
     "ms": "^2.1.3",
     "pixi.js": "^7.2.4"
   },
-  "jest": {
-    "verbose": false,
-    "collectCoverageFrom": [
-      "<rootDir>/src/**/*.{(j|t)s}"
-    ],
-    "modulePathIgnorePatterns": [
-      "index.ts"
-    ],
-    "testMatch": [
-      "**/?(*.)+(spec|test).[tj]s"
-    ],
-    "moduleFileExtensions": [
-      "ts",
-      "js"
-    ],
-    "transform": {
-      "^.+\\.ts$": "ts-jest"
-    },
-    "moduleDirectories": [
-      "node_modules",
-      "src"
-    ],
-    "testEnvironment": "jsdom",
-    "moduleNameMapper": {},
-    "coverageDirectory": "<rootDir>/test/reports",
-    "setupFiles": [
-      "<rootDir>/test/setup.js"
-    ]
-  }
+  "engines": {
+    "node": "18.17.0",
+    "npm": ">=9.0.0"
+  },
+  "engineStrict": true
 }

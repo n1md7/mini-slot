@@ -1,13 +1,12 @@
 /// <reference types="vitest" />
 
-import { createHtmlPlugin } from 'vite-plugin-html';
 import { defineConfig } from 'vite';
 import glsl from 'vite-plugin-glsl';
+
 export default defineConfig({
-  appType: 'spa',
-  envPrefix: 'SLOT_GAME_',
-  envDir: process.cwd(),
   publicDir: 'public',
+  envPrefix: 'VITE_',
+  envDir: process.cwd(),
   server: {
     port: 4096,
     host: '0.0.0.0',
@@ -22,22 +21,22 @@ export default defineConfig({
   build: {
     chunkSizeWarningLimit: 700,
     sourcemap: true,
-    assetsDir: 'assets',
+    assetsDir: '.',
     emptyOutDir: true,
+    rollupOptions: {
+      input: {
+        index: 'index.html',
+      },
+    },
   },
-  plugins: [
-    glsl(),
-    createHtmlPlugin({
-      minify: true,
-    }),
-  ],
+  plugins: [glsl()],
   test: {
     setupFiles: ['./tests/unit/__setup__/setup.ts'],
     globals: true,
     environment: 'jsdom',
     coverage: {
       all: true,
-      provider: 'c8',
+      provider: 'v8',
       reporter: ['cobertura', 'text', 'html'],
       exclude: ['*.cjs', '*.config.*', 'dist/**', 'src/**.d.ts', 'tests'],
     },

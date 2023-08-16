@@ -73,5 +73,6 @@ export class Reel extends Container {
     this.clearBlocks();
     this.y = this.size + 2 * BLOCK.HEIGHT;
     this._size = 0;
+    // comment
   }
 }

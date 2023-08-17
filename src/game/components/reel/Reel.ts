@@ -11,6 +11,8 @@ export type ReelOptions = {
   id: 0 | 1 | 2;
 };
 
+export type StopType = 'Partial' | 'Full';
+
 export class Reel extends Container {
   private _blocks: Block[] = [];
   private _spinning = false;
@@ -26,10 +28,6 @@ export class Reel extends Container {
     return this._spinning;
   }
 
-  public get id(): number {
-    return this.reelOptions.id;
-  }
-
   private _size = 0;
 
   private get size(): number {
@@ -41,10 +39,13 @@ export class Reel extends Container {
   }
 
   spin() {
+    const PartialStop = Math.floor(Math.random() * 2) === 1;
+    const partial = this.size - BLOCK.HEIGHT / 2;
+    const stopAt = PartialStop ? partial : this.size;
     this._spinning = true;
     return gsap
       .to(this, {
-        pixi: { y: this.size },
+        pixi: { y: stopAt },
         duration: this.spinTime / 1000,
         ease: 'back.out(0.4)',
       })
@@ -73,6 +74,5 @@ export class Reel extends Container {
     this.clearBlocks();
     this.y = this.size + 2 * BLOCK.HEIGHT;
     this._size = 0;
-    // comment
   }
 }

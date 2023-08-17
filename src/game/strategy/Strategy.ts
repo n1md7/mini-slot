@@ -1,10 +1,9 @@
 import { Reel } from '/src/game/components/reel/Reel';
 import { IMAGE_ASSET } from '/src/game/enums';
 import { Symbols } from '/src/game/components/reel/components/Symbols';
-import { FixedType } from '/src/game/Game';
 
 export abstract class Strategy {
-  protected readonly symbols = [
+  public readonly symbols = [
     IMAGE_ASSET.SEVEN,
     IMAGE_ASSET.CHERRY,
     IMAGE_ASSET.BARx1,
@@ -15,7 +14,6 @@ export abstract class Strategy {
   protected constructor(
     protected readonly reels: Reel[],
     protected readonly reelSymbols: Symbols,
-    protected readonly fixed: FixedType,
   ) {}
 
   abstract addBlocks(): void;

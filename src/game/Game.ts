@@ -4,11 +4,8 @@ import { Strategy } from '/src/game/strategy/Strategy';
 import { Random } from '/src/game/strategy/Random';
 import { IMAGE_ASSET } from '/src/game/enums';
 import { Fixed } from '/src/game/strategy/Fixed';
+import { gui } from '/src/utils/gui';
 
-export type FixedType = {
-  position: 'top' | 'middle' | 'bottom';
-  symbol: IMAGE_ASSET;
-};
 export class Game extends Setup {
   private static instance: Game;
 
@@ -18,7 +15,7 @@ export class Game extends Setup {
     Random: Strategy;
     Fixed: Fixed;
   };
-  private readonly fixed: FixedType = {};
+  private gui = gui.addFolder('Game');
 
   private constructor() {
     super();
@@ -26,12 +23,13 @@ export class Game extends Setup {
     this.createPixiApplication();
     this.renderSpinner();
     this.modes = {
-      Random: new Random(this.reels, this.slotSymbols, this.fixed),
-      Fixed: new Fixed(this.reels, this.slotSymbols, this.fixed),
+      Random: new Random(this.reels, this.slotSymbols),
+      Fixed: new Fixed(this.reels, this.slotSymbols),
     };
     this.mode = this.modes.Fixed;
-    this.fixed.position = 'top';
-    this.fixed.symbol = IMAGE_ASSET.SEVEN;
+
+    this.spin = this.spin.bind(this);
+    this.addToGUI();
   }
 
   public static getInstance(): Game {
@@ -51,13 +49,15 @@ export class Game extends Setup {
   }
 
   public attachControls(spin: HTMLButtonElement): void {
-    spin.addEventListener('click', async () => {
-      if (this.stillRunning()) return;
+    spin.addEventListener('click', this.spin);
+  }
 
-      this.mode.reset();
-      this.mode.addBlocks();
-      await this.mode.spin();
-    });
+  private async spin() {
+    if (this.stillRunning()) return;
+
+    this.mode.reset();
+    this.mode.addBlocks();
+    await this.mode.spin();
   }
 
   private stillRunning(): boolean {
@@ -69,5 +69,31 @@ export class Game extends Setup {
     this.reels.push(new Reel({ spinTime: '1.4 sec', id: 1 }));
     this.reels.push(new Reel({ spinTime: '1.8 sec', id: 2 }));
     this.app.stage.addChild(...this.reels);
+  }
+
+  private addToGUI() {
+    const positions = ['top', 'middle', 'bottom'];
+    const symbols = this.mode.symbols;
+    const modes = Object.keys(this.modes);
+    const fixedModeDir = this.gui.addFolder('Fixed Mode');
+    fixedModeDir.hide();
+    fixedModeDir.add(this.mode, 'position', positions).onChange(() => {
+      this.mode.reset();
+      this.mode.addBlocks();
+    });
+    fixedModeDir.add(this.mode, 'symbol', symbols).onChange(() => {
+      this.mode.reset();
+      this.mode.addBlocks();
+    });
+    this.gui
+      .add(this.mode, 'name', modes)
+      .setValue('Random')
+      .name('Select mode')
+      .onChange(() => {
+        if (this.mode === this.modes.Fixed) fixedModeDir.show();
+        else fixedModeDir.hide();
+      });
+
+    this.gui.add(this, 'spin');
   }
 }

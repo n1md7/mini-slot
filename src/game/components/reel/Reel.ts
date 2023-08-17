@@ -46,6 +46,12 @@ export class Reel extends Container {
     this._stopAt = 'Full block';
   }
 
+  public setStopAtByPosition(position: 'top' | 'middle' | 'bottom') {
+    if (position === 'middle') return this.stopAtPartial();
+
+    this.stopAtFull();
+  }
+
   async spin() {
     const PartialStop = this._stopAt === 'Partial block';
     const partial = this.size - BLOCK.HEIGHT / 2;

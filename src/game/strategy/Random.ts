@@ -3,11 +3,10 @@ import { Block } from '/src/game/components/reel/components/Block';
 import { Random as Randomizer } from '/src/utils/random';
 import { Reel } from '/src/game/components/reel/Reel';
 import { Symbols } from '/src/game/components/reel/components/Symbols';
-import { FixedType } from '/src/game/Game';
 
 export class Random extends Strategy {
-  constructor(reels: Reel[], reelSymbols: Symbols, fixed: FixedType) {
-    super(reels, reelSymbols, fixed);
+  constructor(reels: Reel[], reelSymbols: Symbols) {
+    super(reels, reelSymbols);
   }
 
   public addBlocks(): void {

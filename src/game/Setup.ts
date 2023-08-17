@@ -10,13 +10,6 @@ export abstract class Setup {
   protected app!: Application;
   protected slotSound!: SlotSound;
   protected slotSymbols: Symbols;
-  protected readonly symbols = [
-    IMAGE_ASSET.SEVEN,
-    IMAGE_ASSET.CHERRY,
-    IMAGE_ASSET.BARx1,
-    IMAGE_ASSET.BARx2,
-    IMAGE_ASSET.BARx3,
-  ];
 
   protected constructor() {
     this.slotSymbols = new Symbols();

@@ -1,4 +1,3 @@
-import { Random } from '@/src/utils/random';
 import { Block } from '@/src/game/components/reel/components/Block';
 import { Container } from 'pixi.js';
 
@@ -11,11 +10,12 @@ export type ReelOptions = {
   id: 0 | 1 | 2;
 };
 
-export type StopType = 'Partial' | 'Full';
+export type StopType = 'Partial block' | 'Full block';
 
 export class Reel extends Container {
   private _blocks: Block[] = [];
   private _spinning = false;
+  private _stopAt: StopType = 'Full block';
 
   constructor(private readonly reelOptions: ReelOptions) {
     super();
@@ -38,16 +38,24 @@ export class Reel extends Container {
     return ms(this.reelOptions.spinTime);
   }
 
-  spin() {
-    const PartialStop = Math.floor(Math.random() * 2) === 1;
+  public stopAtPartial() {
+    this._stopAt = 'Partial block';
+  }
+
+  public stopAtFull() {
+    this._stopAt = 'Full block';
+  }
+
+  async spin() {
+    const PartialStop = this._stopAt === 'Partial block';
     const partial = this.size - BLOCK.HEIGHT / 2;
     const stopAt = PartialStop ? partial : this.size;
     this._spinning = true;
-    return gsap
+    await gsap
       .to(this, {
         pixi: { y: stopAt },
         duration: this.spinTime / 1000,
-        ease: 'back.out(0.4)',
+        ease: `back.out(0.4)`,
       })
       .then(() => {
         this._spinning = false;
@@ -62,17 +70,14 @@ export class Reel extends Container {
   }
 
   public clearBlocks() {
-    if (this._blocks.length > 2) this._blocks.length = 3;
-    if (this.children.length > 2) this.removeChildren(3);
-  }
-
-  public shuffle(): void {
-    Random.shuffleList(this._blocks);
+    this._blocks = [];
+    this.removeChildren();
   }
 
   public reset() {
     this.clearBlocks();
     this.y = this.size + 2 * BLOCK.HEIGHT;
     this._size = 0;
+    Math.random() > 0.5 ? this.stopAtPartial() : this.stopAtFull();
   }
 }

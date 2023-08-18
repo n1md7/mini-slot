@@ -2,7 +2,6 @@ import { Reel } from '/src/game/components/reel/Reel';
 import { Setup } from '/src/game/Setup';
 import { Strategy } from '/src/game/strategy/Strategy';
 import { Random } from '/src/game/strategy/Random';
-import { IMAGE_ASSET } from '/src/game/enums';
 import { Fixed } from '/src/game/strategy/Fixed';
 import { gui } from '/src/utils/gui';
 

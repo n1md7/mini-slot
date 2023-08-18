@@ -6,13 +6,14 @@ import { SlotSound } from '/src/sound/slot-sound';
 import { Symbols } from '/src/game/components/reel/components/Symbols';
 
 export abstract class Setup {
-  protected readonly spinner = new Spinner();
+  protected readonly spinner: Spinner;
   protected app!: Application;
   protected slotSound!: SlotSound;
   protected slotSymbols: Symbols;
 
   protected constructor() {
     this.slotSymbols = new Symbols();
+    this.spinner = new Spinner();
   }
 
   public attachAudios(audios: Map<AUDIO_ASSET, HTMLAudioElement>) {

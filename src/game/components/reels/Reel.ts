@@ -1,10 +1,12 @@
-import { Block } from '@/src/game/components/reel/components/Block';
+import { Block } from '/src/game/components/reels/components/Block';
 import { Container } from 'pixi.js';
 
 import ms from 'ms';
 import { BLOCK, REEL } from '@/src/game/enums';
 import { gsap } from 'gsap';
 import { Position } from '/src/game/strategy/Fixed';
+import { iSubscribe } from '/src/game/interfaces/subscribe';
+import GUI from 'lil-gui';
 
 export type ReelOptions = {
   spinTime: `${number} sec`;
@@ -13,12 +15,15 @@ export type ReelOptions = {
 
 export type StopType = 'Partial block' | 'Full block';
 
-export class Reel extends Container {
+export class Reel extends Container implements iSubscribe {
   private _blocks: Block[] = [];
   private _spinning = false;
   private _stopAt: StopType = 'Full block';
 
-  constructor(private readonly reelOptions: ReelOptions) {
+  constructor(
+    private readonly reelOptions: ReelOptions,
+    private readonly gui: GUI,
+  ) {
     super();
 
     this.x = reelOptions.id * REEL.WIDTH;
@@ -37,6 +42,19 @@ export class Reel extends Container {
 
   private get spinTime(): number {
     return ms(this.reelOptions.spinTime);
+  }
+
+  public subscribe() {
+    const id = this.reelOptions.id + 1;
+    const name = String(id).padStart(2, '0');
+    const section = this.gui.addFolder(`Reel ${name}`);
+    const options = ['1.0 sec', '1.4 sec', '1.8 sec', '2.2 sec', '2.6 sec', '3.0 sec'];
+    section
+      .add(this.reelOptions, 'spinTime', options)
+      .name('Spin time')
+      .onChange((spinTime: `${number} sec`) => {
+        this.reelOptions.spinTime = spinTime;
+      });
   }
 
   public stopAtPartial() {

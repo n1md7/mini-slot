@@ -1,18 +1,22 @@
 import { Strategy } from '/src/game/strategy/Strategy';
-import { Reel } from '/src/game/components/reel/Reel';
-import { Symbols } from '/src/game/components/reel/components/Symbols';
+import { Symbols } from '/src/game/components/reels/components/Symbols';
 import { Random as Randomizer } from '/src/utils/random';
-import { Block } from '/src/game/components/reel/components/Block';
+import { Block } from '/src/game/components/reels/components/Block';
 import { IMAGE_ASSET } from '/src/game/enums';
+import { Reels } from '/src/game/components/reels/Reels';
+import GUI from 'lil-gui';
 
 export type Position = 'Top' | 'Middle' | 'Bottom';
+
 export class Fixed extends Strategy {
   private position: Position;
   private symbol: IMAGE_ASSET;
+  private section: GUI;
 
-  constructor(reels: Reel[], reelSymbols: Symbols) {
+  constructor(reels: Reels, reelSymbols: Symbols, gui: GUI) {
     super(reels, reelSymbols);
 
+    this.section = gui.addFolder('Fixed mode options');
     this.position = 'Middle';
     this.symbol = IMAGE_ASSET.SEVEN;
   }
@@ -25,8 +29,20 @@ export class Fixed extends Strategy {
     this.symbol = symbol;
   }
 
+  override hideGui() {
+    super.hideGui();
+
+    this.section.hide();
+  }
+
+  override showGui() {
+    super.showGui();
+
+    this.section.show();
+  }
+
   addBlocks() {
-    for (const [idx, reel] of this.reels.entries()) {
+    for (const [idx, reel] of this.reels.toArray().entries()) {
       reel.setStopAtByPosition(this.position);
       const symbols = Randomizer.pick(this.symbols, (idx + 1) * 8);
       const index = this.getIndex(symbols.length);
@@ -35,6 +51,30 @@ export class Fixed extends Strategy {
         reel.addBlock(new Block(this.reelSymbols.get(value)!, idx));
       }
     }
+  }
+
+  override subscribe() {
+    super.subscribe();
+
+    this.section.hide();
+    const positions = ['Top', 'Middle', 'Bottom'] as const;
+    this.section
+      .add(this, 'position', positions)
+      .name('Position')
+      .setValue('Middle')
+      .onChange((position: Position) => {
+        this.reset();
+        this.position = position;
+      });
+
+    this.section
+      .add(this, 'symbol', this.symbols)
+      .name('Symbol')
+      .setValue('Seven')
+      .onChange((symbol: IMAGE_ASSET) => {
+        this.reset();
+        this.symbol = symbol;
+      });
   }
 
   private getIndex(size: number) {

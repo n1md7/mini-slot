@@ -1,6 +1,6 @@
-import { Reel } from '/src/game/components/reel/Reel';
 import { IMAGE_ASSET } from '/src/game/enums';
-import { Symbols } from '/src/game/components/reel/components/Symbols';
+import { Symbols } from '/src/game/components/reels/components/Symbols';
+import { Reels } from '/src/game/components/reels/Reels';
 
 export abstract class Strategy {
   public readonly symbols = [
@@ -12,14 +12,22 @@ export abstract class Strategy {
   ];
 
   protected constructor(
-    protected readonly reels: Reel[],
+    protected readonly reels: Reels,
     protected readonly reelSymbols: Symbols,
   ) {}
 
   abstract addBlocks(): void;
 
   public async spin() {
-    const spins = this.reels.map((reel) => reel.spin());
+    if (this.reels.areRunning()) return;
+
+    this.reset();
+    this.addBlocks();
+
+    const spins: Promise<void>[] = [];
+    for (const reel of this.reels) {
+      spins.push(reel.spin());
+    }
 
     await Promise.all(spins);
   }
@@ -29,4 +37,10 @@ export abstract class Strategy {
       reel.reset();
     }
   }
+
+  public subscribe() {}
+
+  public hideGui() {}
+
+  public showGui() {}
 }

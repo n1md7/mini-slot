@@ -1,9 +1,9 @@
 import { Spinner } from '/src/game/components/spinner/Spinner';
 import { AUDIO_ASSET, BLOCK, CANVAS, IMAGE_ASSET, REEL } from '/src/game/enums';
 import { Application, Texture } from 'pixi.js';
-import { Point } from '/src/game/components/reel/components/Point';
+import { Point } from '/src/game/components/reels/components/Point';
 import { SlotSound } from '/src/sound/slot-sound';
-import { Symbols } from '/src/game/components/reel/components/Symbols';
+import { Symbols } from '/src/game/components/reels/components/Symbols';
 
 export abstract class Setup {
   protected readonly spinner: Spinner;

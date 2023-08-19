@@ -65,6 +65,6 @@ export class Game extends Setup {
         }
       });
 
-    this.section.add(this, 'spin');
+    this.section.add(this, 'spin').name('Spin');
   }
 }

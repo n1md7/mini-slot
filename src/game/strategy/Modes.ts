@@ -3,8 +3,8 @@ import { Random } from '/src/game/strategy/Random';
 import { Fixed } from '/src/game/strategy/Fixed';
 import { Reels } from '/src/game/components/reels/Reels';
 import { Symbols } from '/src/game/components/reels/components/Symbols';
-import GUI from 'lil-gui';
 import { iSubscribe } from '/src/game/interfaces/subscribe';
+import GUI from 'lil-gui';
 
 export class Modes implements iSubscribe {
   private readonly modes: {

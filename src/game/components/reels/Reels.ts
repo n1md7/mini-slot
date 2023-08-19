@@ -31,6 +31,16 @@ export class Reels implements iSubscribe {
     return false;
   }
 
+  calculate() {
+    // If stopAt is Full we need to check last two lines
+    // If its partial stop we only check middle line
+
+    // Calculate score
+    for (const _reel of this.reels) {
+      // Todo
+    }
+  }
+
   toArray() {
     return this.reels;
   }

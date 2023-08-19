@@ -18,7 +18,6 @@ export type StopType = 'Partial block' | 'Full block';
 export class Reel extends Container implements iSubscribe {
   private _blocks: Block[] = [];
   private _spinning = false;
-  private _stopAt: StopType = 'Full block';
 
   constructor(
     private readonly reelOptions: ReelOptions,
@@ -28,6 +27,12 @@ export class Reel extends Container implements iSubscribe {
 
     this.x = reelOptions.id * REEL.WIDTH;
     this.reset();
+  }
+
+  private _stopAt: StopType = 'Full block';
+
+  get stopAt() {
+    return this._stopAt;
   }
 
   public get isSpinning(): boolean {

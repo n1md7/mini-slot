@@ -4,6 +4,7 @@ import { Container } from 'pixi.js';
 import ms from 'ms';
 import { BLOCK, REEL } from '@/src/game/enums';
 import { gsap } from 'gsap';
+import { Position } from '/src/game/strategy/Fixed';
 
 export type ReelOptions = {
   spinTime: `${number} sec`;
@@ -46,8 +47,8 @@ export class Reel extends Container {
     this._stopAt = 'Full block';
   }
 
-  public setStopAtByPosition(position: 'top' | 'middle' | 'bottom') {
-    if (position === 'middle') return this.stopAtPartial();
+  public setStopAtByPosition(position: Position) {
+    if (position === 'Middle') return this.stopAtPartial();
 
     this.stopAtFull();
   }

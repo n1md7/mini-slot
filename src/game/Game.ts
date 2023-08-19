@@ -2,8 +2,9 @@ import { Reel } from '/src/game/components/reel/Reel';
 import { Setup } from '/src/game/Setup';
 import { Strategy } from '/src/game/strategy/Strategy';
 import { Random } from '/src/game/strategy/Random';
-import { Fixed } from '/src/game/strategy/Fixed';
+import { Fixed, Position } from '/src/game/strategy/Fixed';
 import { gui } from '/src/utils/gui';
+import { IMAGE_ASSET } from '/src/game/enums';
 
 export class Game extends Setup {
   private static instance: Game;
@@ -25,7 +26,7 @@ export class Game extends Setup {
       Random: new Random(this.reels, this.slotSymbols),
       Fixed: new Fixed(this.reels, this.slotSymbols),
     };
-    this.mode = this.modes.Fixed;
+    this.mode = this.modes.Random;
 
     this.spin = this.spin.bind(this);
     this.addToGUI();
@@ -37,6 +38,10 @@ export class Game extends Setup {
     }
 
     return Game.instance;
+  }
+
+  public setMode(mode: 'Random' | 'Fixed'): void {
+    this.mode = this.modes[mode];
   }
 
   public override start(): void {
@@ -71,26 +76,38 @@ export class Game extends Setup {
   }
 
   private addToGUI() {
-    const positions = ['top', 'middle', 'bottom'];
+    const positions = ['Top', 'Middle', 'Bottom'] as const;
     const symbols = this.mode.symbols;
-    const modes = Object.keys(this.modes);
-    const fixedModeDir = this.gui.addFolder('Fixed Mode');
-    fixedModeDir.hide();
-    fixedModeDir.add(this.mode, 'position', positions).onChange(() => {
-      this.mode.reset();
-      this.mode.addBlocks();
-    });
-    fixedModeDir.add(this.mode, 'symbol', symbols).onChange(() => {
-      this.mode.reset();
-      this.mode.addBlocks();
-    });
+    const modes = ['Random', 'Fixed'] as const;
+    const fixedModeSection = this.gui.addFolder('Fixed Mode');
+    fixedModeSection.hide();
+    fixedModeSection
+      .add(this.mode, 'position', positions)
+      .name('Choose position')
+      .setValue('Middle')
+      .onChange((position: Position) => {
+        const mode = this.mode as Fixed;
+        mode.reset();
+        mode.setPosition(position);
+        mode.addBlocks();
+      });
+    fixedModeSection
+      .add(this.mode, 'symbol', symbols)
+      .name('Choose symbol')
+      .setValue('Seven')
+      .onChange((symbol: IMAGE_ASSET) => {
+        const mode = this.mode as Fixed;
+        mode.reset();
+        mode.setSymbol(symbol);
+        mode.addBlocks();
+      });
     this.gui
       .add(this.mode, 'name', modes)
       .setValue('Random')
       .name('Select mode')
-      .onChange(() => {
-        if (this.mode === this.modes.Fixed) fixedModeDir.show();
-        else fixedModeDir.hide();
+      .onChange((mode: 'Fixed' | 'Random') => {
+        fixedModeSection.show(mode === 'Fixed');
+        this.setMode(mode);
       });
 
     this.gui.add(this, 'spin');

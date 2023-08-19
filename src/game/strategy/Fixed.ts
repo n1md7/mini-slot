@@ -5,7 +5,7 @@ import { Random as Randomizer } from '/src/utils/random';
 import { Block } from '/src/game/components/reel/components/Block';
 import { IMAGE_ASSET } from '/src/game/enums';
 
-type Position = 'top' | 'middle' | 'bottom';
+export type Position = 'Top' | 'Middle' | 'Bottom';
 export class Fixed extends Strategy {
   private position: Position;
   private symbol: IMAGE_ASSET;
@@ -13,7 +13,7 @@ export class Fixed extends Strategy {
   constructor(reels: Reel[], reelSymbols: Symbols) {
     super(reels, reelSymbols);
 
-    this.position = 'top';
+    this.position = 'Middle';
     this.symbol = IMAGE_ASSET.SEVEN;
   }
 
@@ -38,7 +38,7 @@ export class Fixed extends Strategy {
   }
 
   private getIndex(size: number) {
-    if (this.position === 'top') return size - 1;
+    if (this.position === 'Top') return size - 1;
     return size - 2;
   }
 }

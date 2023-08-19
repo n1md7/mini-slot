@@ -48,7 +48,7 @@ export class Fixed extends Strategy {
       const index = this.getIndex(symbols.length);
       for (const { val, idx } of symbols) {
         const value = idx === index ? this.symbol : val;
-        reel.addBlock(new Block(this.reelSymbols.get(value)!, idx));
+        reel.addBlock(new Block(this.reelSymbols.get(value)!, val, idx));
       }
     }
   }

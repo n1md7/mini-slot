@@ -46,6 +46,7 @@ export class Game extends Setup {
 
   private async spin() {
     await this.modes.current.spin();
+    this.modes.current.calculatePayout();
   }
 
   private subscribe() {

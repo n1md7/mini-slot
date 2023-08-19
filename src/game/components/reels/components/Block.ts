@@ -1,12 +1,15 @@
 import { Sprite, Texture, Graphics } from 'pixi.js';
-import { BLOCK } from '@/src/game/enums';
+import { BLOCK, IMAGE_ASSET } from '@/src/game/enums';
 
 export class Block extends Graphics {
-  constructor(
-    texture: Texture,
-    public readonly id: number,
-  ) {
+  public readonly _id: number;
+  private readonly _key: IMAGE_ASSET;
+
+  constructor(texture: Texture, key: IMAGE_ASSET, id: number) {
     super();
+
+    this._id = id;
+    this._key = key;
 
     this.width = BLOCK.WIDTH;
     this.height = BLOCK.HEIGHT;
@@ -27,12 +30,24 @@ export class Block extends Graphics {
     this.addChild(sprite);
   }
 
+  get id() {
+    return this._id;
+  }
+
+  get key() {
+    return this._key;
+  }
+
   private static reduce(val: number) {
     return {
       by(percent: number) {
         return val - (val * percent) / 100;
       },
     };
+  }
+
+  equals(...blocks: Block[]) {
+    return blocks.some((block) => block.key === this.key);
   }
 
   private alignX(sprite: Sprite) {

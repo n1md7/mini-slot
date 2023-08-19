@@ -16,8 +16,8 @@ export type ReelOptions = {
 export type StopType = 'Partial block' | 'Full block';
 
 export class Reel extends Container implements iSubscribe {
-  private _blocks: Block[] = [];
   private _spinning = false;
+  private _blocks: Block[] = [];
 
   constructor(
     private readonly reelOptions: ReelOptions,
@@ -47,6 +47,10 @@ export class Reel extends Container implements iSubscribe {
 
   private get spinTime(): number {
     return ms(this.reelOptions.spinTime);
+  }
+
+  public toBlocks() {
+    return this._blocks;
   }
 
   public subscribe() {
@@ -102,6 +106,10 @@ export class Reel extends Container implements iSubscribe {
   public clearBlocks() {
     this._blocks = [];
     this.removeChildren();
+  }
+
+  public getBlocks(): Block[] {
+    return [this._blocks.pop()!, this._blocks.pop()!, this._blocks.pop()!];
   }
 
   public reset() {

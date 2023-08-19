@@ -13,7 +13,7 @@ export class Random extends Strategy {
     for (const [idx, reel] of this.reels.toArray().entries()) {
       const symbols = Randomizer.pick(this.symbols, (idx + 1) * 8);
       for (const { val, idx } of symbols) {
-        reel.addBlock(new Block(this.reelSymbols.get(val)!, idx));
+        reel.addBlock(new Block(this.reelSymbols.get(val)!, val, idx));
       }
     }
   }

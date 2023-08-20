@@ -43,7 +43,7 @@ export class Fixed extends Strategy {
 
   addBlocks() {
     for (const [idx, reel] of this.reels.toArray().entries()) {
-      reel.setStopAtByPosition(this.position);
+      reel.stopAt.byPosition(this.position);
       const symbols = Randomizer.pick(this.symbols, (idx + 1) * 8);
       const index = this.getIndex(symbols.length);
       for (const { val, idx } of symbols) {

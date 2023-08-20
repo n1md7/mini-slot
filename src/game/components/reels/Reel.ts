@@ -1,35 +1,41 @@
 import { Block } from '/src/game/components/reels/components/Block';
-import { Container } from 'pixi.js';
-
-import ms from 'ms';
-import { BLOCK, REEL } from '@/src/game/enums';
-import { gsap } from 'gsap';
-import { Position } from '/src/game/strategy/Fixed';
 import { iSubscribe } from '/src/game/interfaces/subscribe';
+import { StopAt } from '/src/game/components/reels/StopAt';
+import { BLOCK, REEL } from '@/src/game/enums';
+import { Container } from 'pixi.js';
+import { gsap } from 'gsap';
 import GUI from 'lil-gui';
+import ms from 'ms';
 
 export type ReelOptions = {
   spinTime: `${number} sec`;
   id: 0 | 1 | 2;
 };
 
-export type StopType = 'Partial block' | 'Full block';
+export type AnimationType = {
+  current: string;
+};
 
 export class Reel extends Container implements iSubscribe {
-  private _spinning = false;
-  private _blocks: Block[] = [];
+  private _spinning: boolean;
+
+  private readonly _blocks: Block[];
+  private readonly _stopAt: StopAt;
 
   constructor(
     private readonly reelOptions: ReelOptions,
     private readonly gui: GUI,
+    private readonly ease: AnimationType,
   ) {
     super();
+
+    this._spinning = false;
+    this._blocks = [];
+    this._stopAt = new StopAt();
 
     this.x = reelOptions.id * REEL.WIDTH;
     this.reset();
   }
-
-  private _stopAt: StopType = 'Full block';
 
   get stopAt() {
     return this._stopAt;
@@ -66,30 +72,19 @@ export class Reel extends Container implements iSubscribe {
       });
   }
 
-  public stopAtPartial() {
-    this._stopAt = 'Partial block';
-  }
-
-  public stopAtFull() {
-    this._stopAt = 'Full block';
-  }
-
-  public setStopAtByPosition(position: Position) {
-    if (position === 'Middle') return this.stopAtPartial();
-
-    this.stopAtFull();
+  public stopAtEquals(...reels: Reel[]) {
+    return reels.every((reel) => reel.stopAt === this.stopAt);
   }
 
   async spin() {
-    const PartialStop = this._stopAt === 'Partial block';
     const partial = this.size - BLOCK.HEIGHT / 2;
-    const stopAt = PartialStop ? partial : this.size;
+    const stopAt = this.stopAt.isPartial() ? partial : this.size;
     this._spinning = true;
     await gsap
       .to(this, {
         pixi: { y: stopAt },
         duration: this.spinTime / 1000,
-        ease: `back.out(0.4)`,
+        ease: this.ease.current,
       })
       .then(() => {
         this._spinning = false;
@@ -104,18 +99,28 @@ export class Reel extends Container implements iSubscribe {
   }
 
   public clearBlocks() {
-    this._blocks = [];
+    this._blocks.length = 0;
     this.removeChildren();
   }
 
-  public getBlocks(): Block[] {
-    return [this._blocks.pop()!, this._blocks.pop()!, this._blocks.pop()!];
+  /**
+   * @description - Populates a new array
+   * @param count
+   */
+  public getBlocks(count = 3): Block[] {
+    let index: number = 0;
+    const blocks: Block[] = [];
+    while (++index <= count) {
+      blocks.push(this._blocks[this._blocks.length - index]);
+    }
+
+    return blocks;
   }
 
   public reset() {
     this.clearBlocks();
     this.y = this.size + 2 * BLOCK.HEIGHT;
     this._size = 0;
-    Math.random() > 0.5 ? this.stopAtPartial() : this.stopAtFull();
+    this.stopAt.chooseRandomly();
   }
 }

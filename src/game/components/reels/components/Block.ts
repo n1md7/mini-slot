@@ -47,7 +47,7 @@ export class Block extends Graphics {
   }
 
   equals(...blocks: Block[]) {
-    return blocks.some((block) => block.key === this.key);
+    return blocks.every((block) => block.key === this.key);
   }
 
   private alignX(sprite: Sprite) {

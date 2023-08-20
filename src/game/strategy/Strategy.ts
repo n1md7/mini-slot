@@ -44,19 +44,28 @@ export abstract class Strategy {
     const [block02, block12, block22] = reel02.getBlocks();
     const [block03, block13, block23] = reel03.getBlocks();
 
+    // When one of the reels is not stopped at the same stop point, we don't have a WIN
+    if (reel01.stopAtEquals(reel02, reel03)) return void 0;
+
+    if (reel01.stopAt.isFull()) {
+      // 2nd and 3rd block lines are visible
+    } else {
+      // 2nd is middle and only can be calculated
+    }
+
     // TODO: take into account Full or Partial stop to compare
     console.log(block01.key, block02.key, block03.key);
     console.log(block11.key, block12.key, block13.key);
     console.log(block21.key, block22.key, block23.key);
     if (block01.equals(block02, block03)) {
-      console.log('WIN', block01, block02, block03);
+      console.log('WIN', block01.key, block02.key, block03.key);
     }
-    if (block11.equals(block12, block13)) {
-      console.log('WIN', block11, block12, block13);
-    }
-    if (block21.equals(block22, block23)) {
-      console.log('WIN', block21, block22, block23);
-    }
+    // if (block11.equals(block12, block13)) {
+    //   console.log('WIN', block11.key, block12.key, block13.key);
+    // }
+    // if (block21.equals(block22, block23)) {
+    //   console.log('WIN', block21.key, block22.key, block23.key);
+    // }
   }
 
   public subscribe() {}

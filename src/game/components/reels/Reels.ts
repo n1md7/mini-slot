@@ -75,8 +75,8 @@ export class Reels implements iSubscribe {
     return this.reels;
   }
 
-  update(_delta: number) {
-    for (const reel of this.reels) reel.update(_delta);
+  update(_delta: number, _elapsedMS: number) {
+    for (const reel of this.reels) reel.update(_delta, _elapsedMS);
   }
 
   *[Symbol.iterator]() {

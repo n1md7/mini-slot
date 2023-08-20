@@ -111,8 +111,10 @@ export class Reel extends Container implements iSubscribe {
     return blocks;
   }
 
-  public update(_delta: number) {
-    for (const block of this._blocks) block.update(_delta);
+  public update(_delta: number, _elapsedMS: number) {
+    for (const block of this._blocks) {
+      block.update(_delta, _elapsedMS);
+    }
   }
 
   public reset() {

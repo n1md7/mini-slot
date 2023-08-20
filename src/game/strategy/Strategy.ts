@@ -59,16 +59,24 @@ export abstract class Strategy {
 
     if (!this.reels.stoppedAtSamePosition()) return 0;
 
-    // We have a win and apply filter
-    secondLine.forEach((block) => block.animateWin());
     if (this.reels.stoppedAtPartialPosition()) {
       // We only calculate middle line if we have a partial stop
-      return this.calculateMiddleLine(secondLine);
+      const value = this.calculateMiddleLine(secondLine);
+      if (value > 0) {
+        // We have a win and apply filter
+        secondLine.forEach((block) => block.highlightWinnerLine());
+
+        return value;
+      }
     }
 
-    firstLine.forEach((block) => block.animateWin());
+    const value = this.calculateTopAndBottomLines(firstLine, secondLine);
+    if (value > 0) {
+      firstLine.forEach((block) => block.highlightWinnerLine());
+      secondLine.forEach((block) => block.highlightWinnerLine());
+    }
 
-    return this.calculateTopAndBottomLines(firstLine, secondLine);
+    return value;
   }
 
   public subscribe() {}

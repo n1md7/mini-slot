@@ -1,11 +1,14 @@
 import { Sprite, Texture, Graphics } from 'pixi.js';
 import { BLOCK, IMAGE_ASSET } from '@/src/game/enums';
-import * as Filters from 'pixi-filters';
+import { Highlight } from '/src/game/components/reels/filters/Highlight';
+import { CRT } from '/src/game/components/reels/filters/CRT';
 
 export class Block extends Graphics {
   private readonly _id: number;
   private readonly _key: IMAGE_ASSET;
-  private readonly CRTFilter: Filters.CRTFilter;
+  private readonly _sprite: Sprite;
+  private readonly _default: CRT;
+  private readonly _highlight: Highlight;
 
   constructor(texture: Texture, key: IMAGE_ASSET, id: number) {
     super();
@@ -21,24 +24,20 @@ export class Block extends Graphics {
     this.endFill();
     this.zIndex = 1;
 
-    const sprite = new Sprite(texture);
+    this._sprite = new Sprite(texture);
 
-    sprite.width = Block.reduce(BLOCK.WIDTH).by(30);
-    sprite.height = Block.reduce(BLOCK.HEIGHT).by(30);
+    this._sprite.width = Block.reduce(BLOCK.WIDTH).by(30);
+    this._sprite.height = Block.reduce(BLOCK.HEIGHT).by(30);
 
-    sprite.x = this.alignX(sprite);
-    sprite.y = this.alignY(sprite);
+    this._sprite.x = this.alignX(this._sprite);
+    this._sprite.y = this.alignY(this._sprite);
 
-    this.addChild(sprite);
+    this.addChild(this._sprite);
 
-    this.CRTFilter = new Filters.CRTFilter({
-      vignettingAlpha: 0.5,
-      vignettingBlur: 0.3,
-      time: 0,
-      seed: 10,
-    });
+    this._highlight = new Highlight();
+    this._default = new CRT();
 
-    this.filters = [this.CRTFilter];
+    this._sprite.filters = [this._default.filter];
   }
 
   get id() {
@@ -89,13 +88,13 @@ export class Block extends Graphics {
     return blocks.every((block) => block.key === this.key);
   }
 
-  animateWin() {
-    // TODO: implement WIN animation
+  highlightWinnerLine() {
+    this._sprite.filters = [this._highlight.filter];
   }
 
-  update(_delta: number) {
-    this.CRTFilter.time += _delta * 0.1;
-    this.CRTFilter.seed = Math.random() * _delta;
+  update(_delta: number, _elapsedMS: number) {
+    this._highlight.update(_delta, _elapsedMS);
+    this._default.update(_delta, _elapsedMS);
   }
 
   private alignX(sprite: Sprite) {

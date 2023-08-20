@@ -2,20 +2,14 @@ import { Block } from '/src/game/components/reels/components/Block';
 import { Position } from '/src/game/strategy/Fixed';
 
 export class Calculator {
-  private _value = 0;
-
-  get value() {
-    return this._value;
-  }
-
   calculate([block01, block02, block03]: Block[], position: Position): number {
     if (block01.equals(block02, block03)) {
-      this._value = this.getValue(block01) + this.getMultiplier(block01, position);
+      return this.getValue(block01) + this.getMultiplier(block01, position);
     }
 
     if (block01.isAnyBAR && block02.isAnyBAR && block03.isAnyBAR) {
       // Any BAR combination only pays 5
-      this._value = 5;
+      return 5;
     }
 
     if (block01.isSevenOrCherry && block02.isSevenOrCherry && block03.isSevenOrCherry) {
@@ -23,7 +17,7 @@ export class Calculator {
       return 75;
     }
 
-    return this._value;
+    return 0;
   }
 
   private getMultiplier(block: Block, position: Position) {

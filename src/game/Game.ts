@@ -56,6 +56,8 @@ export class Game extends Setup {
     this.reels.subscribe();
     this.modes.subscribe();
 
+    this.app.ticker.add(this.reels.update);
+
     this.section
       .add(this.modes, 'name', ['Random', 'Fixed'])
       .setValue('Random')

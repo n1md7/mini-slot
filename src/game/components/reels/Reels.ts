@@ -30,6 +30,7 @@ export class Reels implements iSubscribe {
       new Reel({ spinTime: '1.4 sec', id: 1 }, this.section, this.animation),
       new Reel({ spinTime: '1.8 sec', id: 2 }, this.section, this.animation),
     ];
+    this.update = this.update.bind(this);
   }
 
   subscribe() {
@@ -72,6 +73,10 @@ export class Reels implements iSubscribe {
 
   toArray() {
     return this.reels;
+  }
+
+  update(_delta: number) {
+    for (const reel of this.reels) reel.update(_delta);
   }
 
   *[Symbol.iterator]() {

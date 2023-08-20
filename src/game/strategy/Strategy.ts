@@ -59,10 +59,14 @@ export abstract class Strategy {
 
     if (!this.reels.stoppedAtSamePosition()) return 0;
 
+    // We have a win and apply filter
+    secondLine.forEach((block) => block.animateWin());
     if (this.reels.stoppedAtPartialPosition()) {
       // We only calculate middle line if we have a partial stop
       return this.calculateMiddleLine(secondLine);
     }
+
+    firstLine.forEach((block) => block.animateWin());
 
     return this.calculateTopAndBottomLines(firstLine, secondLine);
   }

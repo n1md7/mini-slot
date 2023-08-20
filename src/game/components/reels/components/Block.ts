@@ -1,9 +1,11 @@
 import { Sprite, Texture, Graphics } from 'pixi.js';
 import { BLOCK, IMAGE_ASSET } from '@/src/game/enums';
+import * as Filters from 'pixi-filters';
 
 export class Block extends Graphics {
   private readonly _id: number;
   private readonly _key: IMAGE_ASSET;
+  private readonly CRTFilter: Filters.CRTFilter;
 
   constructor(texture: Texture, key: IMAGE_ASSET, id: number) {
     super();
@@ -28,6 +30,15 @@ export class Block extends Graphics {
     sprite.y = this.alignY(sprite);
 
     this.addChild(sprite);
+
+    this.CRTFilter = new Filters.CRTFilter({
+      vignettingAlpha: 0.5,
+      vignettingBlur: 0.3,
+      time: 0,
+      seed: 10,
+    });
+
+    this.filters = [this.CRTFilter];
   }
 
   get id() {
@@ -76,6 +87,15 @@ export class Block extends Graphics {
 
   equals(...blocks: Block[]) {
     return blocks.every((block) => block.key === this.key);
+  }
+
+  animateWin() {
+    // TODO: implement WIN animation
+  }
+
+  update(_delta: number) {
+    this.CRTFilter.time += _delta * 0.1;
+    this.CRTFilter.seed = Math.random() * _delta;
   }
 
   private alignX(sprite: Sprite) {

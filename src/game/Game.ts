@@ -46,7 +46,10 @@ export class Game extends Setup {
 
   private async spin() {
     await this.modes.current.spin();
-    this.modes.current.calculatePayout();
+    const win = this.modes.current.calculatePayout();
+    if (win > 0) {
+      console.log(`You won ${win} coins!`);
+    }
   }
 
   private subscribe() {

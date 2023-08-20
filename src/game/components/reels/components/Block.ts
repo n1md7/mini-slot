@@ -2,7 +2,7 @@ import { Sprite, Texture, Graphics } from 'pixi.js';
 import { BLOCK, IMAGE_ASSET } from '@/src/game/enums';
 
 export class Block extends Graphics {
-  public readonly _id: number;
+  private readonly _id: number;
   private readonly _key: IMAGE_ASSET;
 
   constructor(texture: Texture, key: IMAGE_ASSET, id: number) {
@@ -36,6 +36,34 @@ export class Block extends Graphics {
 
   get key() {
     return this._key;
+  }
+
+  get isBARx1() {
+    return this.key === IMAGE_ASSET.BARx1;
+  }
+
+  get isBARx2() {
+    return this.key === IMAGE_ASSET.BARx2;
+  }
+
+  get isBARx3() {
+    return this.key === IMAGE_ASSET.BARx3;
+  }
+
+  get isAnyBAR() {
+    return this.isBARx1 || this.isBARx2 || this.isBARx3;
+  }
+
+  get isSeven() {
+    return this.key === IMAGE_ASSET.SEVEN;
+  }
+
+  get isCherry() {
+    return this.key === IMAGE_ASSET.CHERRY;
+  }
+
+  get isSevenOrCherry() {
+    return this.isSeven || this.isCherry;
   }
 
   private static reduce(val: number) {

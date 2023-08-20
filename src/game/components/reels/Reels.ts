@@ -18,14 +18,13 @@ export class Reels implements iSubscribe {
   ];
 
   private animation: AnimationType = {
-    current: '',
+    // First one is selected by default
+    current: this.animations[0],
   };
 
   constructor(gui: GUI, app: Application) {
     this.app = app;
     this.section = gui.addFolder('Reels');
-    // First one is selected by default
-    this.animation.current = this.animations[0];
     this.reels = [
       new Reel({ spinTime: '1.0 sec', id: 0 }, this.section, this.animation),
       new Reel({ spinTime: '1.4 sec', id: 1 }, this.section, this.animation),
@@ -55,6 +54,20 @@ export class Reels implements iSubscribe {
     }
 
     return false;
+  }
+
+  stoppedAtSamePosition() {
+    const [target] = this.reels;
+
+    return target.stopAtEquals(...this.reels);
+  }
+
+  stoppedAtPartialPosition() {
+    for (const reel of this.reels) {
+      if (!reel.stopAt.isPartial()) return false;
+    }
+
+    return true;
   }
 
   toArray() {

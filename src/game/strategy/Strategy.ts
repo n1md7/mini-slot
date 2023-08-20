@@ -1,6 +1,8 @@
 import { IMAGE_ASSET } from '/src/game/enums';
 import { Symbols } from '/src/game/components/reels/components/Symbols';
 import { Reels } from '/src/game/components/reels/Reels';
+import { Calculator } from '/src/game/Calculator';
+import { Block } from '/src/game/components/reels/components/Block';
 
 export abstract class Strategy {
   public readonly symbols = [
@@ -10,11 +12,14 @@ export abstract class Strategy {
     IMAGE_ASSET.BARx2,
     IMAGE_ASSET.BARx3,
   ];
+  private readonly calculator: Calculator;
 
   protected constructor(
     protected readonly reels: Reels,
     protected readonly reelSymbols: Symbols,
-  ) {}
+  ) {
+    this.calculator = new Calculator();
+  }
 
   abstract addBlocks(): void;
 
@@ -44,28 +49,22 @@ export abstract class Strategy {
     const [block02, block12, block22] = reel02.getBlocks();
     const [block03, block13, block23] = reel03.getBlocks();
 
-    // When one of the reels is not stopped at the same stop point, we don't have a WIN
-    if (reel01.stopAtEquals(reel02, reel03)) return void 0;
+    const firstLine = [block01, block02, block03];
+    const secondLine = [block11, block12, block13];
 
-    if (reel01.stopAt.isFull()) {
-      // 2nd and 3rd block lines are visible
-    } else {
-      // 2nd is middle and only can be calculated
-    }
-
-    // TODO: take into account Full or Partial stop to compare
     console.log(block01.key, block02.key, block03.key);
     console.log(block11.key, block12.key, block13.key);
     console.log(block21.key, block22.key, block23.key);
-    if (block01.equals(block02, block03)) {
-      console.log('WIN', block01.key, block02.key, block03.key);
+    console.log('-------------------');
+
+    if (!this.reels.stoppedAtSamePosition()) return 0;
+
+    if (this.reels.stoppedAtPartialPosition()) {
+      // We only calculate middle line if we have a partial stop
+      return this.calculateMiddleLine(secondLine);
     }
-    // if (block11.equals(block12, block13)) {
-    //   console.log('WIN', block11.key, block12.key, block13.key);
-    // }
-    // if (block21.equals(block22, block23)) {
-    //   console.log('WIN', block21.key, block22.key, block23.key);
-    // }
+
+    return this.calculateTopAndBottomLines(firstLine, secondLine);
   }
 
   public subscribe() {}
@@ -73,4 +72,15 @@ export abstract class Strategy {
   public hideGui() {}
 
   public showGui() {}
+
+  private calculateMiddleLine(middleLine: Block[]) {
+    return this.calculator.calculate(middleLine, 'Middle');
+  }
+
+  private calculateTopAndBottomLines(topLine: Block[], bottomLine: Block[]) {
+    const topScore = this.calculator.calculate(topLine, 'Top');
+    const bottomScore = this.calculator.calculate(bottomLine, 'Bottom');
+
+    return topScore + bottomScore;
+  }
 }

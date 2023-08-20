@@ -9,7 +9,7 @@ export class StopAt {
 
   private _value: StopType;
 
-  public get value(): StopType {
+  get value(): StopType {
     return this._value;
   }
 
@@ -42,5 +42,9 @@ export class StopAt {
     if (position === 'Middle') return this.partial();
 
     return this.full();
+  }
+
+  equals(stopAt: StopAt) {
+    return this.value === stopAt.value;
   }
 }

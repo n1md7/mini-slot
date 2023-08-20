@@ -46,6 +46,7 @@ export class Fixed extends Strategy {
       reel.stopAt.byPosition(this.position);
       const symbols = Randomizer.pick(this.symbols, (idx + 1) * 8);
       const index = this.getIndex(symbols.length);
+      console.log(symbols, index);
       for (const { val, idx } of symbols) {
         const value = idx === index ? this.symbol : val;
         reel.addBlock(new Block(this.reelSymbols.get(value)!, val, idx));

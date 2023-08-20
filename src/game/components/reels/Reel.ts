@@ -55,10 +55,6 @@ export class Reel extends Container implements iSubscribe {
     return ms(this.reelOptions.spinTime);
   }
 
-  public toBlocks() {
-    return this._blocks;
-  }
-
   public subscribe() {
     const id = this.reelOptions.id + 1;
     const name = String(id).padStart(2, '0');
@@ -73,17 +69,15 @@ export class Reel extends Container implements iSubscribe {
   }
 
   public stopAtEquals(...reels: Reel[]) {
-    return reels.every((reel) => reel.stopAt === this.stopAt);
+    return reels.every((reel) => this.stopAt.equals(reel.stopAt));
   }
 
   async spin() {
-    const partial = this.size - BLOCK.HEIGHT / 2;
-    const stopAt = this.stopAt.isPartial() ? partial : this.size;
     this._spinning = true;
     await gsap
       .to(this, {
-        pixi: { y: stopAt },
-        duration: this.spinTime / 1000,
+        pixi: { y: this.getCalculatedStopAtPoint() },
+        duration: this.getCalculatedSpinTime(),
         ease: this.ease.current,
       })
       .then(() => {
@@ -122,5 +116,17 @@ export class Reel extends Container implements iSubscribe {
     this.y = this.size + 2 * BLOCK.HEIGHT;
     this._size = 0;
     this.stopAt.chooseRandomly();
+  }
+
+  private getCalculatedStopAtPoint() {
+    if (this.stopAt.isPartial()) {
+      return this.size - BLOCK.HEIGHT / 2;
+    }
+
+    return this.size;
+  }
+
+  private getCalculatedSpinTime() {
+    return this.spinTime / 1000;
   }
 }

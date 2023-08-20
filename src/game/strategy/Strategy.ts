@@ -61,22 +61,21 @@ export abstract class Strategy {
 
     if (this.reels.stoppedAtPartialPosition()) {
       // We only calculate middle line if we have a partial stop
-      const value = this.calculateMiddleLine(secondLine);
-      if (value > 0) {
+      const middle = this.calculateMiddleLine(secondLine);
+      if (middle > 0) {
         // We have a win and apply filter
         secondLine.forEach((block) => block.highlightWinnerLine());
 
-        return value;
+        return middle;
       }
     }
 
-    const value = this.calculateTopAndBottomLines(firstLine, secondLine);
-    if (value > 0) {
-      firstLine.forEach((block) => block.highlightWinnerLine());
-      secondLine.forEach((block) => block.highlightWinnerLine());
-    }
+    const top = this.calculateTopLine(firstLine);
+    const bottom = this.calculateBottomLine(secondLine);
+    if (top > 0) firstLine.forEach((block) => block.highlightWinnerLine());
+    if (bottom > 0) secondLine.forEach((block) => block.highlightWinnerLine());
 
-    return value;
+    return top + bottom;
   }
 
   public subscribe() {}
@@ -89,10 +88,11 @@ export abstract class Strategy {
     return this.calculator.calculate(middleLine, 'Middle');
   }
 
-  private calculateTopAndBottomLines(topLine: Block[], bottomLine: Block[]) {
-    const topScore = this.calculator.calculate(topLine, 'Top');
-    const bottomScore = this.calculator.calculate(bottomLine, 'Bottom');
+  private calculateTopLine(topLine: Block[]) {
+    return this.calculator.calculate(topLine, 'Top');
+  }
 
-    return topScore + bottomScore;
+  private calculateBottomLine(bottomLine: Block[]) {
+    return this.calculator.calculate(bottomLine, 'Bottom');
   }
 }

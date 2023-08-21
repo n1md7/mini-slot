@@ -25,7 +25,15 @@ export class Modes implements iSubscribe {
     return this.mode;
   }
 
-  changeTo(mode: 'Random' | 'Fixed') {
+  isFixed(): this is { current: Fixed } {
+    return this.mode instanceof Fixed;
+  }
+
+  isRandom(): this is { current: Random } {
+    return this.mode instanceof Random;
+  }
+
+  changeTo(mode: keyof typeof this.modes) {
     this.mode.hideGui();
     this.mode = this.modes[mode];
     this.mode.showGui();

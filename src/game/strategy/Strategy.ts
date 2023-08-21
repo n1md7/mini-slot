@@ -46,12 +46,6 @@ export abstract class Strategy {
   calculatePayout() {
     const lines = this.reels.extractLines();
 
-    console.group('Current spin');
-    console.log(lines.first.map((block) => block.key));
-    console.log(lines.second.map((block) => block.key));
-    console.log(lines.third.map((block) => block.key));
-    console.groupEnd();
-
     // No win whe we have a mixed line-stop
     if (!this.reels.stoppedAtSamePosition()) return 0;
 
@@ -74,6 +68,7 @@ export abstract class Strategy {
     // 1st and 2nd lines are fully visible, 3rd line is hidden (not calculating that at all)
     const top = this.calculateTopLine(lines.first);
     const bottom = this.calculateBottomLine(lines.second);
+
     if (top > 0) lines.first.forEach((block) => block.highlightWinnerLine());
     if (bottom > 0) lines.second.forEach((block) => block.highlightWinnerLine());
 

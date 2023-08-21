@@ -64,7 +64,7 @@ export class Game extends Setup {
       .name('Select mode')
       .onChange((mode: 'Fixed' | 'Random') => {
         this.modes.changeTo(mode);
-        if (this.modes.current instanceof Fixed) {
+        if (this.modes.isFixed()) {
           // Set default values for Fixed mode
           this.modes.current.setPosition('Middle');
           this.modes.current.setSymbol(IMAGE_ASSET.SEVEN);

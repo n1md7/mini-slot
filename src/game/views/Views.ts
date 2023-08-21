@@ -45,9 +45,14 @@ export class Views {
   }
 
   changeTo(view: keyof typeof this.views) {
-    this.view.unsubscribe();
+    this.unsubscribeAll();
     this.view = this.views[view];
     this.view.subscribe();
+  }
+
+  unsubscribeAll() {
+    this.views.Game.unsubscribe();
+    this.views.Bonus.unsubscribe();
   }
 
   subscribe() {

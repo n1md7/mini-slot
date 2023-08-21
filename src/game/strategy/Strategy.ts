@@ -66,6 +66,8 @@ export abstract class Strategy {
 
         return middle;
       }
+
+      return 0;
     }
 
     // Full-line position stop

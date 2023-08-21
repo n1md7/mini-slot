@@ -2,6 +2,7 @@ import { AnimationType, Reel } from '/src/game/components/reels/Reel';
 import { iSubscribe } from '/src/game/interfaces/subscribe';
 import { Application } from 'pixi.js';
 import GUI from 'lil-gui';
+import { Block } from '/src/game/components/reels/components/Block';
 
 export class Reels implements iSubscribe {
   private readonly reels: [Reel, Reel, Reel];
@@ -69,6 +70,25 @@ export class Reels implements iSubscribe {
     }
 
     return true;
+  }
+
+  extractLines() {
+    const lines: Block[][] = [];
+
+    let idx = -1;
+    while (++idx < 3) {
+      const line: Block[] = [];
+      for (const reel of this.reels) {
+        line.push(reel.blocks[reel.blocks.length - 1 - idx]);
+      }
+      lines.push(line);
+    }
+
+    return {
+      first: lines[0],
+      second: lines[1],
+      third: lines[2],
+    };
   }
 
   toArray() {

@@ -44,36 +44,36 @@ export abstract class Strategy {
   }
 
   calculatePayout() {
-    const [reel01, reel02, reel03] = this.reels.toArray();
-    const [block01, block11, block21] = reel01.getBlocks();
-    const [block02, block12, block22] = reel02.getBlocks();
-    const [block03, block13, block23] = reel03.getBlocks();
+    const lines = this.reels.extractLines();
 
-    const firstLine = [block01, block02, block03];
-    const secondLine = [block11, block12, block13];
+    console.group('Current spin');
+    console.log(lines.first.map((block) => block.key));
+    console.log(lines.second.map((block) => block.key));
+    console.log(lines.third.map((block) => block.key));
+    console.groupEnd();
 
-    console.log(block01.key, block02.key, block03.key);
-    console.log(block11.key, block12.key, block13.key);
-    console.log(block21.key, block22.key, block23.key);
-    console.log('-------------------');
-
+    // No win whe we have a mixed line-stop
     if (!this.reels.stoppedAtSamePosition()) return 0;
 
     if (this.reels.stoppedAtPartialPosition()) {
       // We only calculate middle line if we have a partial stop
-      const middle = this.calculateMiddleLine(secondLine);
+      // 1st and 3rd lines are partially visible
+      // 2nd line is fully visible
+      const middle = this.calculateMiddleLine(lines.second);
       if (middle > 0) {
         // We have a win and apply filter
-        secondLine.forEach((block) => block.highlightWinnerLine());
+        lines.second.forEach((block) => block.highlightWinnerLine());
 
         return middle;
       }
     }
 
-    const top = this.calculateTopLine(firstLine);
-    const bottom = this.calculateBottomLine(secondLine);
-    if (top > 0) firstLine.forEach((block) => block.highlightWinnerLine());
-    if (bottom > 0) secondLine.forEach((block) => block.highlightWinnerLine());
+    // Full-line position stop
+    // 1st and 2nd lines are fully visible, 3rd line is hidden (not calculating that at all)
+    const top = this.calculateTopLine(lines.first);
+    const bottom = this.calculateBottomLine(lines.second);
+    if (top > 0) lines.first.forEach((block) => block.highlightWinnerLine());
+    if (bottom > 0) lines.second.forEach((block) => block.highlightWinnerLine());
 
     return top + bottom;
   }

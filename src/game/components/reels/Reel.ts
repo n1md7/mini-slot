@@ -45,6 +45,10 @@ export class Reel extends Container implements iSubscribe {
     return this._spinning;
   }
 
+  public get blocks(): Block[] {
+    return this._blocks;
+  }
+
   private _size = 0;
 
   private get size(): number {
@@ -95,20 +99,6 @@ export class Reel extends Container implements iSubscribe {
   public clearBlocks() {
     this._blocks.length = 0;
     this.removeChildren();
-  }
-
-  /**
-   * @description - Populates a new array
-   * @param count
-   */
-  public getBlocks(count = 3): Block[] {
-    let index: number = 0;
-    const blocks: Block[] = [];
-    while (++index <= count) {
-      blocks.push(this._blocks[this._blocks.length - index]);
-    }
-
-    return blocks;
   }
 
   public update(_delta: number, _elapsedMS: number) {

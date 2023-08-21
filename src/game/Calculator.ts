@@ -4,7 +4,7 @@ import { Position } from '/src/game/strategy/Fixed';
 export class Calculator {
   calculate([block01, block02, block03]: Block[], position: Position): number {
     if (block01.equals(block02, block03)) {
-      return this.getValue(block01) + this.getMultiplier(block01, position);
+      return this.getValue(block01) * this.getMultiplier(block01, position);
     }
 
     if (block01.isAnyBAR && block02.isAnyBAR && block03.isAnyBAR) {

@@ -1,5 +1,4 @@
 import { Setup } from '/src/game/Setup';
-import { Fixed } from '/src/game/strategy/Fixed';
 import { gui } from '/src/utils/gui';
 import { Reels } from '/src/game/components/reels/Reels';
 import { IMAGE_ASSET } from '/src/game/enums';

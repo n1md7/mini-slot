@@ -3,8 +3,10 @@ import { iSubscribe } from '/src/game/interfaces/subscribe';
 import { Application } from 'pixi.js';
 import GUI from 'lil-gui';
 import { Block } from '/src/game/components/reels/components/Block';
+import { iUnsubscribe } from '/src/game/interfaces/unsubscribe';
+import { iInit } from '/src/game/interfaces/init';
 
-export class Reels implements iSubscribe {
+export class Reels implements iSubscribe, iUnsubscribe, iInit {
   private readonly reels: [Reel, Reel, Reel];
   private readonly section: GUI;
   private readonly app: Application;
@@ -34,7 +36,7 @@ export class Reels implements iSubscribe {
     this.update = this.update.bind(this);
   }
 
-  subscribe() {
+  init() {
     this.section
       .addFolder('Animation functions')
       .add(this.animations, '', this.animations)
@@ -45,8 +47,20 @@ export class Reels implements iSubscribe {
       });
 
     for (const reel of this.reels) {
-      reel.subscribe();
+      reel.init();
       this.app.stage.addChild(reel);
+    }
+  }
+
+  subscribe() {
+    for (const reel of this.reels) {
+      reel.subscribe();
+    }
+  }
+
+  unsubscribe() {
+    for (const reel of this.reels) {
+      reel.unsubscribe();
     }
   }
 

@@ -77,6 +77,8 @@ export abstract class Strategy {
 
   public subscribe() {}
 
+  public unsubscribe() {}
+
   public hideGui() {}
 
   public showGui() {}

@@ -1,7 +1,6 @@
 import { Spinner } from '/src/game/components/spinner/Spinner';
-import { AUDIO_ASSET, BLOCK, CANVAS, IMAGE_ASSET, REEL } from '/src/game/enums';
+import { AUDIO_ASSET, CANVAS, IMAGE_ASSET } from '/src/game/enums';
 import { Application, Texture } from 'pixi.js';
-import { Point } from '/src/game/components/reels/components/Point';
 import { SlotSound } from '/src/sound/slot-sound';
 import { Symbols } from '/src/game/components/reels/components/Symbols';
 
@@ -56,17 +55,5 @@ export abstract class Setup {
 
   protected renderSpinner() {
     this.app.stage.addChild(this.spinner);
-  }
-
-  protected drawStoppingLines(): void {
-    this.app.stage.addChild(
-      new Point(0, BLOCK.HEIGHT / 2),
-      new Point(0, REEL.HEIGHT / 2),
-      new Point(0, REEL.HEIGHT - BLOCK.HEIGHT / 2),
-
-      new Point(CANVAS.WIDTH - Point.width, BLOCK.HEIGHT / 2),
-      new Point(CANVAS.WIDTH - Point.width, REEL.HEIGHT / 2),
-      new Point(CANVAS.WIDTH - Point.width, REEL.HEIGHT - BLOCK.HEIGHT / 2),
-    );
   }
 }

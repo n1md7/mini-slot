@@ -1,5 +1,7 @@
 import { Block } from '/src/game/components/reels/components/Block';
 import { iSubscribe } from '/src/game/interfaces/subscribe';
+import { iUnsubscribe } from '/src/game/interfaces/unsubscribe';
+import { iInit } from '/src/game/interfaces/init';
 import { StopAt } from '/src/game/components/reels/StopAt';
 import { BLOCK, REEL } from '@/src/game/enums';
 import { Container } from 'pixi.js';
@@ -16,7 +18,7 @@ export type AnimationType = {
   current: string;
 };
 
-export class Reel extends Container implements iSubscribe {
+export class Reel extends Container implements iSubscribe, iUnsubscribe, iInit {
   private _spinning: boolean;
 
   private readonly _blocks: Block[];
@@ -59,7 +61,7 @@ export class Reel extends Container implements iSubscribe {
     return ms(this.reelOptions.spinTime);
   }
 
-  public subscribe() {
+  public init() {
     const id = this.reelOptions.id + 1;
     const name = String(id).padStart(2, '0');
     const section = this.gui.addFolder(`Reel ${name}`);
@@ -70,6 +72,14 @@ export class Reel extends Container implements iSubscribe {
       .onChange((spinTime: `${number} sec`) => {
         this.reelOptions.spinTime = spinTime;
       });
+  }
+
+  public subscribe() {
+    this.visible = true;
+  }
+
+  public unsubscribe() {
+    this.visible = false;
   }
 
   public stopAtEquals(...reels: Reel[]) {

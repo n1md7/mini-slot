@@ -13,7 +13,7 @@ export class Modes implements iSubscribe {
   };
   private mode: Strategy;
 
-  constructor(reels: Reels, symbols: Symbols, gui: GUI) {
+  constructor(gui: GUI, reels: Reels, symbols: Symbols) {
     this.modes = {
       Random: new Random(reels, symbols),
       Fixed: new Fixed(reels, symbols, gui),
@@ -42,5 +42,10 @@ export class Modes implements iSubscribe {
   subscribe() {
     this.modes.Random.subscribe();
     this.modes.Fixed.subscribe();
+  }
+
+  unsubscribe() {
+    this.modes.Random.unsubscribe();
+    this.modes.Fixed.unsubscribe();
   }
 }

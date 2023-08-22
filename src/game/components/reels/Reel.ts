@@ -8,14 +8,11 @@ import { Container } from 'pixi.js';
 import { gsap } from 'gsap';
 import GUI from 'lil-gui';
 import ms from 'ms';
+import { Animations } from '/src/game/components/reels/components/Animations';
 
 export type ReelOptions = {
   spinTime: `${number} sec`;
   id: 0 | 1 | 2;
-};
-
-export type AnimationType = {
-  current: string;
 };
 
 export class Reel extends Container implements iSubscribe, iUnsubscribe, iInit {
@@ -27,7 +24,7 @@ export class Reel extends Container implements iSubscribe, iUnsubscribe, iInit {
   constructor(
     private readonly reelOptions: ReelOptions,
     private readonly gui: GUI,
-    private readonly ease: AnimationType,
+    private readonly animations: Animations,
   ) {
     super();
 
@@ -92,7 +89,7 @@ export class Reel extends Container implements iSubscribe, iUnsubscribe, iInit {
       .to(this, {
         pixi: { y: this.getCalculatedStopAtPoint() },
         duration: this.getCalculatedSpinTime(),
-        ease: this.ease.current,
+        ease: this.animations.getCurrentValue(),
       })
       .then(() => {
         this._spinning = false;

@@ -1,50 +1,32 @@
-import { AnimationType, Reel } from '/src/game/components/reels/Reel';
+import { Reel } from '/src/game/components/reels/Reel';
 import { iSubscribe } from '/src/game/interfaces/subscribe';
 import { Application } from 'pixi.js';
 import GUI from 'lil-gui';
 import { Block } from '/src/game/components/reels/components/Block';
 import { iUnsubscribe } from '/src/game/interfaces/unsubscribe';
 import { iInit } from '/src/game/interfaces/init';
+import { Animations } from '/src/game/components/reels/components/Animations';
 
 export class Reels implements iSubscribe, iUnsubscribe, iInit {
   private readonly reels: [Reel, Reel, Reel];
   private readonly section: GUI;
   private readonly app: Application;
-  private readonly animations = [
-    'back.out(0.5)',
-    'bounce.out(0.9)',
-    'power1.out(0.7)',
-    'power1.inOut(0.4)',
-    'expo.out(0.4)',
-    'sine.out(0.4)',
-    'elastic.out(0.3)',
-  ];
-
-  private animation: AnimationType = {
-    // First one is selected by default
-    current: this.animations[0],
-  };
+  private readonly animations: Animations;
 
   constructor(gui: GUI, app: Application) {
     this.app = app;
     this.section = gui.addFolder('Reels');
+    this.animations = new Animations(this.section);
     this.reels = [
-      new Reel({ spinTime: '1.0 sec', id: 0 }, this.section, this.animation),
-      new Reel({ spinTime: '1.4 sec', id: 1 }, this.section, this.animation),
-      new Reel({ spinTime: '1.8 sec', id: 2 }, this.section, this.animation),
+      new Reel({ spinTime: '1.0 sec', id: 0 }, this.section, this.animations),
+      new Reel({ spinTime: '1.4 sec', id: 1 }, this.section, this.animations),
+      new Reel({ spinTime: '1.8 sec', id: 2 }, this.section, this.animations),
     ];
     this.update = this.update.bind(this);
   }
 
   init() {
-    this.section
-      .addFolder('Animation functions')
-      .add(this.animations, '', this.animations)
-      .name('Choose fn')
-      .setValue(this.animation.current)
-      .onChange((fn: string) => {
-        this.animation.current = fn;
-      });
+    this.animations.init();
 
     for (const reel of this.reels) {
       reel.init();

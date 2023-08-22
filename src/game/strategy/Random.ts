@@ -10,8 +10,8 @@ export class Random extends Strategy {
   }
 
   public addBlocks(): void {
-    for (const [idx, reel] of this.reels.toArray().entries()) {
-      const symbols = Randomizer.pick(this.symbols, (idx + 1) * 8);
+    for (const reel of this.reels) {
+      const symbols = Randomizer.pick(this.symbols, reel.capacity);
       for (const { val, idx } of symbols) {
         reel.addBlock(new Block(this.reelSymbols.get(val)!, val, idx));
       }

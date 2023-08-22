@@ -16,6 +16,8 @@ export type ReelOptions = {
 };
 
 export class Reel extends Container implements iSubscribe, iUnsubscribe, iInit {
+  public capacity: number;
+
   private _spinning: boolean;
 
   private readonly _blocks: Block[];
@@ -33,6 +35,8 @@ export class Reel extends Container implements iSubscribe, iUnsubscribe, iInit {
     this._stopAt = new StopAt();
 
     this.x = reelOptions.id * REEL.WIDTH;
+    // By default reels have 8, 16, 24 blocks
+    this.capacity = (reelOptions.id + 1) * 8;
     this.reset();
   }
 
@@ -69,6 +73,7 @@ export class Reel extends Container implements iSubscribe, iUnsubscribe, iInit {
       .onChange((spinTime: `${number} sec`) => {
         this.reelOptions.spinTime = spinTime;
       });
+    section.add(this, 'capacity', 8, 64, 1).name('Block capacity');
   }
 
   public subscribe() {

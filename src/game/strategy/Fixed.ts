@@ -42,9 +42,9 @@ export class Fixed extends Strategy {
   }
 
   addBlocks() {
-    for (const [idx, reel] of this.reels.toArray().entries()) {
+    for (const reel of this.reels) {
       reel.stopAt.byPosition(this.position);
-      const symbols = Randomizer.pick(this.symbols, (idx + 1) * 8);
+      const symbols = Randomizer.pick(this.symbols, reel.capacity);
       const index = this.getIndex(symbols.length);
       for (const { val, idx } of symbols) {
         const value = idx === index ? this.symbol : val;

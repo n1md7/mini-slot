@@ -47,7 +47,7 @@ export abstract class Setup {
       width: CANVAS.WIDTH,
       height: CANVAS.HEIGHT,
       backgroundColor: 0x000,
-      resolution: Math.min(window.devicePixelRatio, 2),
+      resolution: 1,
       antialias: true,
       hello: false,
     });

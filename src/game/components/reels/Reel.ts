@@ -35,8 +35,7 @@ export class Reel extends Container implements iSubscribe, iUnsubscribe, iInit {
     this._stopAt = new StopAt();
 
     this.x = reelOptions.id * REEL.WIDTH;
-    // By default reels have 8, 16, 24 blocks
-    this.capacity = (reelOptions.id + 1) * 8;
+    this.capacity = this.getCapacityByReelId(reelOptions.id);
     this.reset();
   }
 
@@ -124,6 +123,11 @@ export class Reel extends Container implements iSubscribe, iUnsubscribe, iInit {
     this.y = this.size + 2 * BLOCK.HEIGHT;
     this._size = 0;
     this.stopAt.chooseRandomly();
+  }
+
+  private getCapacityByReelId(id: number) {
+    // By default reels have 8, 16, 24 blocks
+    return (id + 1) * 8;
   }
 
   private getCalculatedStopAtPoint() {

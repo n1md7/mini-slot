@@ -28,7 +28,7 @@ export class Game extends View {
     this.ticker = this.ticker.bind(this);
   }
 
-  init(): void {
+  async init(): Promise<void> {
     this._container.addChild(...this.stoppingDots());
     this.app.stage.addChild(this._container);
     this._reels.init();

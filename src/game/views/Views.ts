@@ -4,12 +4,11 @@ import GUI from 'lil-gui';
 import { Game } from '/src/game/views/Game';
 import { Symbols } from '/src/game/components/reels/components/Symbols';
 import { Bonus } from '/src/game/views/Bonus';
+import { ViewType } from '/src/game/types';
+import config from '/src/utils/Config';
 
 export class Views {
-  private readonly views: {
-    Game: View;
-    Bonus: View;
-  };
+  private readonly views: Record<ViewType, View>;
 
   private readonly section: GUI;
   private readonly game: GUI;
@@ -44,10 +43,14 @@ export class Views {
     return this.view instanceof Game;
   }
 
-  changeTo(view: keyof typeof this.views) {
+  changeTo(view: ViewType) {
     this.unsubscribeAll();
     this.view = this.views[view];
     this.view.subscribe();
+  }
+
+  activateDefault() {
+    this.changeTo(config.getDefaultView());
   }
 
   unsubscribeAll() {

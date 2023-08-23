@@ -31,3 +31,14 @@ export enum BLOCK {
   HEIGHT = 120, // 240 / 2
   LINE_THICKNESS = 1,
 }
+
+export enum VIEW {
+  BONUS = 'BONUS',
+  SLOT = 'SLOT',
+}
+
+export enum ENV {
+  TEST = 'test',
+  DEV = 'development',
+  PROD = 'production',
+}

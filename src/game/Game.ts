@@ -49,7 +49,7 @@ export class Game extends Setup {
 
   private subscribe() {
     this.views.subscribe();
-    this.views.changeTo('Game');
+    this.views.activateDefault();
 
     this.section.add(this, 'spin').name('Spin');
   }

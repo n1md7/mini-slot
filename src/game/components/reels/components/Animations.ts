@@ -1,8 +1,9 @@
 import GUI from 'lil-gui';
+import config from '/src/utils/Config';
 
 export class Animations {
-  current = 'back.out';
-  strength = 0.5;
+  current = config.getAnimationFunction();
+  strength = config.getAnimationStrength();
 
   readonly fns = [
     'back.out',

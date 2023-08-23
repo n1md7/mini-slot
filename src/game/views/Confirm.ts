@@ -1,22 +1,23 @@
-import { Symbols } from '/src/game/components/reels/components/Symbols';
 import { View } from '/src/game/views/View';
 import type { Application } from 'pixi.js';
 import GUI from 'lil-gui';
 import * as PIXI from 'pixi.js';
 import { CANVAS } from '/src/game/enums';
 
-export class Bonus extends View {
+export class Confirm extends View {
+  private readonly text: string;
   private container = new PIXI.Container();
 
-  constructor(section: GUI, app: Application, _symbols: Symbols) {
+  constructor(section: GUI, app: Application, text: string) {
     super(section, app);
 
+    this.text = text;
     this.ticker = this.ticker.bind(this);
     this.reset = this.reset.bind(this);
   }
 
   init(): void {
-    const text = new PIXI.Text('Bonus level', {
+    const text = new PIXI.Text(this.text, {
       fill: 'white',
       fontFamily: 'Verdana, Geneva, sans-serif',
       fontVariant: 'small-caps',
@@ -31,18 +32,16 @@ export class Bonus extends View {
   }
 
   async run(): Promise<number> {
-    console.info('Bonus run');
+    console.info('Modal');
     return 0;
   }
 
   subscribe(): void {
     this.container.visible = true;
-    this.app.ticker.add(this.ticker);
   }
 
   unsubscribe(): void {
     this.container.visible = false;
-    this.app.ticker.remove(this.ticker);
   }
 
   private reset() {}

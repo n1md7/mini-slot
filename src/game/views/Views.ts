@@ -21,7 +21,7 @@ export class Views {
     this.section = section.addFolder('Views');
     this.game = this.section.addFolder('Game');
     this.bonus = this.section.addFolder('Bonus');
-    this.confirm = this.section.addFolder('Modal');
+    this.confirm = this.section.addFolder('Confirm');
     this.views = {
       Game: new Game(this.game, app, symbols),
       Bonus: new Bonus(this.bonus, app, symbols),
@@ -54,36 +54,41 @@ export class Views {
 
   changeTo(view: ViewType) {
     this.unsubscribeAll();
+    this.hideAll();
     this.view = this.views[view];
     this.view.subscribe();
+    this.showCurrentGui();
   }
 
   activateDefault() {
     this.changeTo(config.getDefaultView());
   }
 
-  unsubscribeAll() {
-    this.views.Game.unsubscribe();
-    this.views.Bonus.unsubscribe();
-  }
-
   subscribe() {
-    const hideAll = () => {
-      this.confirm.hide();
-      this.bonus.hide();
-      this.game.hide();
-    };
-
     this.section
       .add(this.views, 'name', Object.keys(this.views))
       .name('Choose view')
       .setValue(config.getDefaultView())
       .onChange((view: ViewType) => {
         this.changeTo(view);
-        hideAll();
-        if (this.isGame()) this.game.show();
-        if (this.isBonus()) this.bonus.show();
-        if (this.isConfirm()) this.confirm.show();
       });
+  }
+
+  private unsubscribeAll() {
+    this.views.Game.unsubscribe();
+    this.views.Bonus.unsubscribe();
+    this.views.Confirm.unsubscribe();
+  }
+
+  private hideAll() {
+    this.game.hide();
+    this.bonus.hide();
+    this.confirm.hide();
+  }
+
+  private showCurrentGui() {
+    if (this.isGame()) this.game.show();
+    if (this.isBonus()) this.bonus.show();
+    if (this.isConfirm()) this.confirm.show();
   }
 }

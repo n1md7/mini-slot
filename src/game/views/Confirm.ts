@@ -32,7 +32,7 @@ export class Confirm extends View {
   }
 
   async run(): Promise<number> {
-    console.info('Modal');
+    console.info('Confirm');
     return 0;
   }
 

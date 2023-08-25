@@ -1,1 +1,1 @@
-#### mini-slot
+#### Mini slot game

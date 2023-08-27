@@ -16,6 +16,8 @@
     "noUnusedParameters": true,
     "noImplicitReturns": true,
     "skipLibCheck": true,
+    "jsx": "react-jsx",
+    "jsxImportSource": "solid-js",
     "baseUrl": ".",
     "paths": {
       "/src/*": ["src/*"],

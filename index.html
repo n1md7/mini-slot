@@ -5,6 +5,8 @@
     <meta content="#000000" name="theme-color" />
     <link href="/vite.svg" rel="icon" type="image/svg+xml" />
     <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+    <link href="node_modules/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet" type="text/css" />
+    <script src="node_modules/bootstrap/dist/js/bootstrap.min.js" type="module"></script>
     <link href="styles/style.scss" rel="stylesheet" />
     <title>TS | Slot 🍒7️⃣1️⃣2️⃣3️⃣</title>
   </head>
@@ -12,8 +14,7 @@
     <div id="app">
       <canvas id="slot"></canvas>
       <div id="controls">
-        <button id="spin">Spin</button>
-        <button id="stop">Stop</button>
+        <button class="btn btn-sm btn-primary" id="spin">Spin</button>
       </div>
     </div>
     <!-- Pay-table modal -->
@@ -33,81 +34,7 @@
               <span aria-hidden="true">&times;</span>
             </button>
           </div>
-          <div class="modal-body">
-            <table class="table table-dark table-hover table-responsive">
-              <thead>
-                <tr>
-                  <td>Reel1</td>
-                  <td>Reel2</td>
-                  <td>Reel3</td>
-                  <td>TOP</td>
-                  <td>MIDDLE</td>
-                  <td>BOTTOM</td>
-                </tr>
-              </thead>
-              <tbody>
-                <tr>
-                  <td><img alt="img" src="./images/Cherry.png" width="40" /></td>
-                  <td><img alt="img" src="./images/Cherry.png" width="40" /></td>
-                  <td><img alt="img" src="./images/Cherry.png" width="40" /></td>
-                  <td class="v-align">2000xBET</td>
-                  <td class="v-align">1000xBET</td>
-                  <td class="v-align">4000xBET</td>
-                </tr>
-                <tr>
-                  <td><img alt="img" src="images/Seven.png" width="40" /></td>
-                  <td><img alt="img" src="images/Seven.png" width="40" /></td>
-                  <td><img alt="img" src="images/Seven.png" width="40" /></td>
-                  <td class="v-align">150xBET</td>
-                  <td class="v-align">450xBET</td>
-                  <td class="v-align">300xBET</td>
-                </tr>
-                <tr>
-                  <td colspan="3" title="Any combinations">
-                    <img alt="img" src="images/Seven.png" width="40" /> x
-                    <img alt="img" src="./images/Cherry.png" width="40" />
-                  </td>
-                  <td class="v-align">75xBET</td>
-                  <td class="v-align">75xBET</td>
-                  <td class="v-align">75xBET</td>
-                </tr>
-                <tr>
-                  <td><img alt="img" src="./images/3xBAR.png" width="40" /></td>
-                  <td><img alt="img" src="./images/3xBAR.png" width="40" /></td>
-                  <td><img alt="img" src="./images/3xBAR.png" width="40" /></td>
-                  <td class="v-align">50xBET</td>
-                  <td class="v-align">50xBET</td>
-                  <td class="v-align">50xBET</td>
-                </tr>
-                <tr>
-                  <td><img alt="img" src="./images/2xBAR.png" width="40" /></td>
-                  <td><img alt="img" src="./images/2xBAR.png" width="40" /></td>
-                  <td><img alt="img" src="./images/2xBAR.png" width="40" /></td>
-                  <td class="v-align">20xBET</td>
-                  <td class="v-align">20xBET</td>
-                  <td class="v-align">20xBET</td>
-                </tr>
-                <tr>
-                  <td><img alt="img" src="./images/1xBAR.png" width="40" /></td>
-                  <td><img alt="img" src="./images/1xBAR.png" width="40" /></td>
-                  <td><img alt="img" src="./images/1xBAR.png" width="40" /></td>
-                  <td class="v-align">10xBET</td>
-                  <td class="v-align">10xBET</td>
-                  <td class="v-align">10xBET</td>
-                </tr>
-                <tr>
-                  <td colspan="3" title="Any combinations">
-                    <img alt="img" src="./images/1xBAR.png" width="40" />x
-                    <img alt="img" src="./images/2xBAR.png" width="40" />x
-                    <img alt="img" src="./images/3xBAR.png" width="40" />
-                  </td>
-                  <td>5xBET</td>
-                  <td>5xBET</td>
-                  <td>5xBET</td>
-                </tr>
-              </tbody>
-            </table>
-          </div>
+          <div class="modal-body"></div>
         </div>
       </div>
     </div>
@@ -115,6 +42,7 @@
       <i class="fas fa-money-bill-alt"></i> Pay Table
     </button>
 
+    <script src="src/ui/index.tsx" type="module"></script>
     <script src="src/main.ts" type="module"></script>
   </body>
 </html>

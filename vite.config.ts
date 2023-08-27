@@ -2,6 +2,7 @@
 
 import { defineConfig } from 'vite';
 import glsl from 'vite-plugin-glsl';
+import solidPlugin from 'vite-plugin-solid';
 
 export default defineConfig({
   publicDir: 'public',
@@ -29,7 +30,7 @@ export default defineConfig({
       },
     },
   },
-  plugins: [glsl()],
+  plugins: [glsl(), solidPlugin()],
   test: {
     setupFiles: ['./tests/unit/__setup__/setup.ts'],
     globals: true,

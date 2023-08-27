@@ -3,7 +3,7 @@ import { iSubscribe } from '/src/game/interfaces/subscribe';
 import { iUnsubscribe } from '/src/game/interfaces/unsubscribe';
 import { iInit } from '/src/game/interfaces/init';
 import { StopAt } from '/src/game/components/reels/StopAt';
-import { BLOCK, REEL } from '@/src/game/enums';
+import { BLOCK, REEL } from '/src/game/enums';
 import { Container } from 'pixi.js';
 import { gsap } from 'gsap';
 import GUI from 'lil-gui';

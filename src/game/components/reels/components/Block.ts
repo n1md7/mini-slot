@@ -1,5 +1,5 @@
 import { Sprite, Texture, Graphics } from 'pixi.js';
-import { BLOCK, IMAGE_ASSET } from '@/src/game/enums';
+import { BLOCK, IMAGE_ASSET } from '/src/game/enums';
 import { Highlight } from '/src/game/components/reels/filters/Highlight';
 import { CRT } from '/src/game/components/reels/filters/CRT';
 

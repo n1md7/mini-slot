@@ -1,4 +1,4 @@
-import { IMAGE_ASSET } from '@/src/game/enums';
+import { IMAGE_ASSET } from '/src/game/enums';
 
 type PickRandomYieldType<T = IMAGE_ASSET> = {
   val: T;

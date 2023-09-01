@@ -27,9 +27,7 @@ export class Game extends Setup {
     return Game.instance;
   }
 
-  public override start(): void {
-    super.start();
-
+  public start(): void {
     this.hideSpinner();
     this.views.init();
     this.subscribe();

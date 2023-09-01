@@ -1,8 +1,15 @@
 import { AbstractSound } from './sound.abstract';
+import { assets } from '/src/utils/assets';
 
 export class SlotSound extends AbstractSound {
-  constructor(private readonly winSound: HTMLAudioElement, private readonly spinSound: HTMLAudioElement) {
+  private readonly winSound: HTMLAudioElement;
+  private readonly spinSound: HTMLAudioElement;
+
+  constructor() {
     super('SLOT-SOUND');
+
+    this.winSound = assets.audios.WIN;
+    this.spinSound = assets.audios.SPIN;
   }
 
   playSpin(volume?: number) {

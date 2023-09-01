@@ -1,5 +1,5 @@
 import GUI from 'lil-gui';
-import { Debug } from '/src/utils/common';
+import { Debug } from '/src/utils/Debug';
 
 export const gui = new GUI({
   title: 'Slot Machine',

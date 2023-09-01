@@ -1,6 +1,6 @@
 import { Strategy } from '/src/game/strategy/Strategy';
 import { Block } from '/src/game/components/reels/components/Block';
-import { Random as Randomizer } from '/src/utils/random';
+import { Random as Randomizer } from '/src/utils/Random';
 import { Symbols } from '/src/game/components/reels/components/Symbols';
 import { Reels } from '/src/game/components/reels/Reels';
 import { IMAGE_ASSET } from '/src/game/enums';

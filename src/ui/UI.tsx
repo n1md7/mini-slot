@@ -5,6 +5,12 @@ const UI: Component = () => {
   return (
     <>
       <PayTable />
+      <button class="btn btn-sm btn-primary">+</button>
+      <button class="btn btn-sm btn-primary">-</button>
+      <button class="btn btn-sm btn-primary">Max BET</button>
+      <button class="btn btn-sm btn-primary" id="spin">
+        Spin
+      </button>
     </>
   );
 };

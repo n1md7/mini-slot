@@ -12,10 +12,10 @@ import * as PIXI from 'pixi.js';
 import { gsap } from 'gsap';
 import { PixiPlugin } from 'gsap/PixiPlugin';
 
-import { AUDIO_ASSET, BUNDLE, IMAGE_ASSET } from '/src/game/enums';
+import { BUNDLE, IMAGE_ASSET } from '/src/game/enums';
 import { Game } from '/src/game/Game';
 import { Loader } from '/src/sound/loader';
-import { Random } from '/src/utils/random';
+import { assets } from '/src/utils/assets';
 
 gsap.registerPlugin(PixiPlugin);
 PixiPlugin.registerPIXI(PIXI);
@@ -59,17 +59,12 @@ const spin = document.querySelector('#spin') as HTMLButtonElement;
 
 Promise.all(assetBundles)
   .then(([images, audios]) => {
-    game.attachAudios(audios as Map<AUDIO_ASSET, HTMLAudioElement>);
-    game.attachSymbols(images as Record<IMAGE_ASSET, PIXI.Texture>);
+    assets.images = images;
+    assets.audios = audios;
+    game.setup();
     game.attachControls(spin);
   })
-  //.then(() => delay())
   .then(() => game.start())
-  .then(() => {
-    const symbols = [IMAGE_ASSET.SEVEN, IMAGE_ASSET.CHERRY, IMAGE_ASSET.BARx1, IMAGE_ASSET.BARx2, IMAGE_ASSET.BARx3];
-    // @ts-ignore
-    const picked = Random.pick(symbols, 8);
-  })
   .catch((err) => {
     console.error(err?.message || err);
   });

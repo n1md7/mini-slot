@@ -1,5 +1,5 @@
-import { MockedAudio } from '@/tests/unit/__setup__/Audio';
-import { Graphics } from '@/tests/unit/__setup__/Graphics';
+import { MockedAudio } from '/tests/unit/__setup__/Audio';
+import { Graphics } from '/tests/unit/__setup__/Graphics';
 import { vi } from 'vitest';
 import * as PIXI from 'pixi.js';
 

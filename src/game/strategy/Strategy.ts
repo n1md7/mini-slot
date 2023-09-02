@@ -3,6 +3,7 @@ import { Symbols } from '/src/game/components/reels/components/Symbols';
 import { Reels } from '/src/game/components/reels/Reels';
 import { Calculator } from '/src/game/Calculator';
 import { Block } from '/src/game/components/reels/components/Block';
+import { bet } from '/src/ui/store';
 
 export abstract class Strategy {
   public readonly symbols = [
@@ -58,7 +59,7 @@ export abstract class Strategy {
         // We have a win and apply filter
         lines.second.forEach((block) => block.highlightWinnerLine());
 
-        return middle;
+        return middle * bet();
       }
 
       return 0;
@@ -72,7 +73,7 @@ export abstract class Strategy {
     if (top > 0) lines.first.forEach((block) => block.highlightWinnerLine());
     if (bottom > 0) lines.second.forEach((block) => block.highlightWinnerLine());
 
-    return top + bottom;
+    return (top + bottom) * bet();
   }
 
   public subscribe() {}

@@ -1,9 +1,16 @@
-import { createStore } from 'solid-js/store';
+import { createSignal } from 'solid-js';
 
-export const [creditStore, setCreditStore] = createStore({
-  credit: 0,
-});
+const [credit, setCredit] = createSignal(0);
+const [jackpot, setJackpot] = createSignal(9999999);
+const [bet, setBet] = createSignal(0);
+
+const updateJackpot = (value: number) => setJackpot(jackpot() + value);
+const updateCredit = (value: number) => setCredit(credit() + value);
+const updateBet = (value: number) => setBet(bet() + value);
 
 setInterval(() => {
-  setCreditStore('credit', creditStore.credit + ~~(Math.random() * 100));
+  setJackpot(jackpot() - ~~(Math.random() * 100) - 50);
+  setBet(bet() + 1);
 }, 5000);
+
+export { credit, jackpot, bet, updateJackpot, updateCredit, updateBet };

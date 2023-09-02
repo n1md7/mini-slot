@@ -2,6 +2,7 @@ import { Setup } from '/src/game/Setup';
 import { gui } from '/src/utils/gui';
 import GUI from 'lil-gui';
 import { Views } from '/src/game/views/Views';
+import { updateCredit } from '/src/ui/store';
 
 export class Game extends Setup {
   private static instance: Game;
@@ -41,6 +42,7 @@ export class Game extends Setup {
     return this.views.current.run().then((win) => {
       if (win > 0) {
         console.log(`You won ${win} coins!`);
+        updateCredit(win);
       }
     });
   }

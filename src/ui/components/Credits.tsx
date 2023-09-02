@@ -1,6 +1,6 @@
 import { Component, createEffect } from 'solid-js';
 import { createRef } from '/src/ui/hooks/createRef';
-import { creditStore } from '/src/ui/store';
+import { credit } from '/src/ui/store';
 import Odometer from 'odometer';
 
 import './styles/credits.scss';
@@ -16,7 +16,7 @@ const MyCredits: Component = () => {
 
       odometer.current = new Odometer({
         el: dom.current,
-        value: 1000,
+        value: credit(),
         theme: 'slot-machine',
       });
     },
@@ -24,7 +24,7 @@ const MyCredits: Component = () => {
   );
 
   createEffect(() => {
-    odometer.current?.update(creditStore.credit);
+    odometer.current?.update(credit());
   });
 
   return (

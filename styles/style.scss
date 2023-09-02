@@ -23,7 +23,7 @@ body {
 }
 
 #slot {
-  border: solid 1px rgba(106, 110, 106, 0.91);
+  border: solid 1px $border-color;
   box-sizing: content-box;
   border-radius: $border-radius;
 }

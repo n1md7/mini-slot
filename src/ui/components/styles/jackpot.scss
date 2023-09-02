@@ -1,4 +1,7 @@
 @import '/styles/vars';
 
 .jackpot {
+  .odometer.odometer-theme-slot-machine {
+    background-image: linear-gradient(90deg, #1c1c1c 0%, #701b1b 50%);
+  }
 }

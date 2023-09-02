@@ -10,7 +10,7 @@ export class Block extends Graphics {
   private readonly _default: CRT;
   private readonly _highlight: Highlight;
 
-  constructor(texture: Texture, key: IMAGE_ASSET, id: number) {
+  constructor(texture: HTMLImageElement, key: IMAGE_ASSET, id: number) {
     super();
 
     this._id = id;
@@ -24,7 +24,7 @@ export class Block extends Graphics {
     this.endFill();
     this.zIndex = 1;
 
-    this._sprite = new Sprite(texture);
+    this._sprite = new Sprite(texture as unknown as Texture);
 
     this._sprite.width = Block.reduce(BLOCK.WIDTH).by(30);
     this._sprite.height = Block.reduce(BLOCK.HEIGHT).by(30);

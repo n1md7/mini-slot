@@ -1,6 +1,6 @@
 import { Component, createEffect } from 'solid-js';
 import { createRef } from '/src/ui/hooks/createRef';
-import { creditStore } from '/src/ui/store';
+import { bet } from '/src/ui/store';
 import Odometer from 'odometer';
 
 import './styles/bet.scss';
@@ -24,7 +24,7 @@ const TotalBet: Component = () => {
   );
 
   createEffect(() => {
-    odometer.current?.update(creditStore.credit);
+    odometer.current?.update(bet());
   });
 
   return (

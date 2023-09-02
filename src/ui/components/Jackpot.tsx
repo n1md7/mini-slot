@@ -1,7 +1,9 @@
 import { Component, createEffect } from 'solid-js';
 import { createRef } from '/src/ui/hooks/createRef';
-import { creditStore } from '/src/ui/store';
+import { jackpot } from '/src/ui/store';
 import Odometer from 'odometer';
+
+import './styles/jackpot.scss';
 
 const Jackpot: Component = () => {
   const dom = createRef<HTMLDivElement>();
@@ -22,7 +24,7 @@ const Jackpot: Component = () => {
   );
 
   createEffect(() => {
-    odometer.current?.update(creditStore.credit);
+    odometer.current?.update(jackpot());
   });
 
   return (

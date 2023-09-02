@@ -5,11 +5,8 @@
   background-image: linear-gradient(90deg, #575757 0%, #c9c3c3 50%);
 }
 
-.counter:nth-child(2) .odometer.odometer-theme-slot-machine {
-  background-image: linear-gradient(90deg, #1c1c1c 0%, #701b1b 50%);
-}
-
 .counter {
+  border: 2px solid $border-color;
   padding: 4px 8px;
   border-radius: $border-radius;
 
@@ -22,7 +19,8 @@
 
   background-image: linear-gradient(90deg, #575757 0%, #1c1c1c 50%);
 
-  width: calc($width / 3);
+  width: auto;
+  max-width: 33%;
 
   .label {
     z-index: 1;

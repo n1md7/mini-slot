@@ -9,3 +9,12 @@ vi.doMock('pixi.js', () => ({
   ...PIXI,
   Graphics,
 }));
+
+vi.doMock('/src/utils/assets', () => ({
+  assets: {
+    audios: {
+      WIN: new Audio('win'),
+      SPIN: new Audio('spin'),
+    },
+  },
+}));

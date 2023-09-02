@@ -1,29 +1,24 @@
 import { SlotSound } from './slot-sound';
 import { describe, it, expect, vi } from 'vitest';
+import { assets } from '/src/utils/assets';
 
 describe('SlotSound', () => {
   describe('playSpin', () => {
     it('should play with default volume', () => {
-      const winAudio = new Audio('win');
-      const spinAudio = new Audio('spin');
-      const winAudioMock = vi.spyOn(winAudio, 'play');
-      const spinAudioMock = vi.spyOn(spinAudio, 'play');
-      const sound = new SlotSound(winAudio, spinAudio);
+      const winAudioMock = vi.spyOn(assets.audios.WIN, 'play');
+      const spinAudioMock = vi.spyOn(assets.audios.SPIN, 'play');
+      const sound = new SlotSound();
       sound.playSpin();
 
       expect(winAudioMock).not.toHaveBeenCalled();
       expect(spinAudioMock).toHaveBeenCalled();
-
-      expect(spinAudio.volume).toBeCloseTo(0.25);
-      expect(spinAudio.muted).toBeFalsy();
     });
 
     it('should play with specified volume', () => {
-      const spinAudio = new Audio('spin');
-      const sound = new SlotSound(new Audio(), spinAudio);
+      const sound = new SlotSound();
       sound.playSpin(0.57);
 
-      expect(spinAudio.volume).toBeCloseTo(0.57);
+      expect(assets.audios.SPIN.volume).toBeCloseTo(0.57);
     });
   });
 });

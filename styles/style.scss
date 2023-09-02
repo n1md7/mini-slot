@@ -7,7 +7,11 @@ body {
 }
 
 body {
-  background: #000;
+  background-image: url('/public/background-01.jpg');
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+  background-size: cover;
+  background-position: center;
   width: 100vw;
   height: 100vh;
   display: flex;
@@ -26,10 +30,6 @@ body {
   border: solid 1px $border-color;
   box-sizing: content-box;
   border-radius: $border-radius;
-}
-
-body {
-  background: black !important;
 }
 
 .v-align {

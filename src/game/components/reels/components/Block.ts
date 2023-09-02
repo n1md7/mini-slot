@@ -19,7 +19,7 @@ export class Block extends Graphics {
     this.width = BLOCK.WIDTH;
     this.height = BLOCK.HEIGHT;
 
-    this.lineStyle(BLOCK.LINE_THICKNESS, '#6A6E6AE8', 1);
+    this.lineStyle(BLOCK.LINE_THICKNESS, '#6A6E6AE8', 0.05);
     this.drawRect(0, 0, BLOCK.WIDTH, BLOCK.HEIGHT);
     this.endFill();
     this.zIndex = 1;

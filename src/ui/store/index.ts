@@ -1,7 +1,7 @@
 import { createSignal } from 'solid-js';
 
 const [credit, setCredit] = createSignal(0);
-const [jackpot, setJackpot] = createSignal(9999999);
+const [jackpot, setJackpot] = createSignal(999999);
 const [bet, setBet] = createSignal(0);
 
 const updateJackpot = (value: number) => setJackpot(jackpot() + value);

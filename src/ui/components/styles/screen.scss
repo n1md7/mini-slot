@@ -2,7 +2,14 @@
 
 .odometer.odometer-auto-theme,
 .odometer.odometer-theme-slot-machine {
-  background-image: linear-gradient(90deg, #575757 0%, #c9c3c3 50%);
+  font-size: 1.8em;
+  line-height: 1em;
+
+  background-image: linear-gradient(90deg, #3f525e 0%, rgba(22, 40, 96, 0.83) 50%);
+
+  .odometer-inside {
+    background-image: linear-gradient(90deg, #3f525e 0%, rgba(22, 40, 96, 0.83) 50%);
+  }
 }
 
 .counter {
@@ -10,23 +17,22 @@
   padding: 4px 8px;
   border-radius: $border-radius;
 
-  font-size: 1em;
-  line-height: 1em;
-
   display: flex;
   flex-direction: column;
   justify-content: center;
 
-  background-image: linear-gradient(90deg, #575757 0%, #1c1c1c 50%);
+  background-image: linear-gradient(356deg, #5c81dbab 0%, #5666c330 50%);
 
   width: auto;
-  max-width: 33%;
+  min-width: 28%;
+  max-width: 40%;
 
   .label {
     z-index: 1;
     padding: 4px;
     color: white;
     text-align: center;
-    font-family: 'Rye', sans-serif;
+    font-family: 'Black Ops One', sans-serif;
+    font-size: 1.5em !important;
   }
 }

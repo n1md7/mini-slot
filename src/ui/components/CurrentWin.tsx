@@ -1,11 +1,11 @@
 import { Component, createEffect } from 'solid-js';
 import { createRef } from '/src/ui/hooks/createRef';
-import { jackpot } from '/src/ui/store';
+import { win } from '/src/ui/store';
 import Odometer from 'odometer';
 
-import './styles/jackpot.scss';
+import './styles/win.scss';
 
-const Jackpot: Component = () => {
+const CurrentWin: Component = () => {
   const dom = createRef<HTMLDivElement>();
   const odometer = createRef<Odometer>();
 
@@ -16,25 +16,26 @@ const Jackpot: Component = () => {
 
       odometer.current = new Odometer({
         el: dom.current,
-        value: jackpot(),
+        value: win(),
         theme: 'slot-machine',
+        duration: 300,
       });
     },
     { layout: true },
   );
 
   createEffect(() => {
-    odometer.current?.update(jackpot());
+    odometer.current?.update(win());
   });
 
   return (
     <>
-      <div class="counter jackpot">
-        <div class="label">Jackpot</div>
+      <div class="counter current-win">
+        <div class="label">Win</div>
         <div ref={dom.current}></div>
       </div>
     </>
   );
 };
 
-export default Jackpot;
+export default CurrentWin;

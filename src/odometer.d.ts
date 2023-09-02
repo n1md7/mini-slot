@@ -3,7 +3,7 @@ declare module 'odometer' {
     constructor(options: {
       el: HTMLElement;
       value?: number | string;
-      theme?: string;
+      theme?: 'minimal' | 'slot-machine' | 'car' | 'default' | 'plaza' | 'digital' | 'train-station';
       format?: string;
       duration?: number;
       animation?: string;

@@ -1,5 +1,37 @@
 @import '/styles/vars';
 
 .total-bet {
+  display: block;
   font-family: 'Handjet', sans-serif;
+  padding: 4px 4px;
+  color: white;
+  width: 15%;
+  margin: 4px auto;
+  user-select: none;
+  border: solid 1px $border-color;
+  border-radius: $border-radius;
+
+  .label {
+    text-transform: uppercase;
+    line-height: 1em;
+  }
+
+  .controls {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    button:first-child {
+      margin-right: 8px;
+    }
+
+    button:last-child {
+      margin-left: 8px;
+    }
+
+    .value {
+      font-size: 1.8em;
+      line-height: 1em;
+    }
+  }
 }

@@ -1,11 +1,9 @@
 import type { Component } from 'solid-js';
-import PayTable from '/src/ui/pay-table';
 
-const UI: Component = () => {
+const Controls: Component = () => {
   return (
     <>
-      <PayTable />
-      <button class="btn btn-sm btn-primary">+</button>
+      <button class="three-d-button">+</button>
       <button class="btn btn-sm btn-primary">-</button>
       <button class="btn btn-sm btn-primary">Max BET</button>
       <button class="btn btn-sm btn-primary" id="spin">
@@ -15,4 +13,4 @@ const UI: Component = () => {
   );
 };
 
-export default UI;
+export default Controls;

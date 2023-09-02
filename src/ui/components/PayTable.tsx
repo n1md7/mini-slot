@@ -1,7 +1,7 @@
 import { Component, createSignal } from 'solid-js';
 import { Button, Modal } from 'solid-bootstrap';
 
-const Table: Component = () => {
+const PayTable: Component = () => {
   const [show, setShow] = createSignal(false);
   const handleOpen = () => setShow(true);
   const handleClose = () => setShow(false);
@@ -45,13 +45,13 @@ const Table: Component = () => {
               </tr>
               <tr>
                 <td>
-                  <img alt="img" src="images/Seven.png" width="40" />
+                  <img alt="img" src="../../../images/Seven.png" width="40" />
                 </td>
                 <td>
-                  <img alt="img" src="images/Seven.png" width="40" />
+                  <img alt="img" src="../../../images/Seven.png" width="40" />
                 </td>
                 <td>
-                  <img alt="img" src="images/Seven.png" width="40" />
+                  <img alt="img" src="../../../images/Seven.png" width="40" />
                 </td>
                 <td class="v-align">150xBET</td>
                 <td class="v-align">450xBET</td>
@@ -59,7 +59,7 @@ const Table: Component = () => {
               </tr>
               <tr>
                 <td colspan="3" title="Any combinations">
-                  <img alt="img" src="images/Seven.png" width="40" /> x
+                  <img alt="img" src="../../../images/Seven.png" width="40" /> x
                   <img alt="img" src="./images/Cherry.png" width="40" />
                 </td>
                 <td class="v-align">75xBET</td>
@@ -128,4 +128,4 @@ const Table: Component = () => {
     </>
   );
 };
-export default Table;
+export default PayTable;

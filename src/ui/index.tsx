@@ -1,8 +1,7 @@
 import { render } from 'solid-js/web';
-import UI from '/src/ui/UI';
+import { controls, screen } from '/src/ui/dom';
+import Controls from '/src/ui/Controls';
+import Screen from '/src/ui/Screen';
 
-const controls = document.getElementById('controls');
-
-if (!controls) throw new Error('Controls element not found!');
-
-render(() => <UI />, controls);
+render(() => <Controls />, controls);
+render(() => <Screen />, screen);

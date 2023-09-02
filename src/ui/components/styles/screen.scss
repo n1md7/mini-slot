@@ -1,0 +1,34 @@
+@import '/styles/vars';
+
+.odometer.odometer-auto-theme,
+.odometer.odometer-theme-slot-machine {
+  background-image: linear-gradient(90deg, #575757 0%, #c9c3c3 50%);
+}
+
+.counter:nth-child(2) .odometer.odometer-theme-slot-machine {
+  background-image: linear-gradient(90deg, #1c1c1c 0%, #701b1b 50%);
+}
+
+.counter {
+  padding: 4px 8px;
+  border-radius: $border-radius;
+
+  font-size: 1em;
+  line-height: 1em;
+
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+
+  background-image: linear-gradient(90deg, #575757 0%, #1c1c1c 50%);
+
+  width: calc($width / 3);
+
+  .label {
+    z-index: 1;
+    padding: 4px;
+    color: white;
+    text-align: center;
+    font-family: 'Rye', sans-serif;
+  }
+}

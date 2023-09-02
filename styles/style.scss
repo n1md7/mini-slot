@@ -1,3 +1,5 @@
+@import '/styles/vars';
+
 html,
 body {
   padding: 0;
@@ -8,16 +10,22 @@ body {
   background: #000;
   width: 100vw;
   height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 #app {
   text-align: center;
+  display: flex;
+  flex-direction: column;
+  width: 640px; /* TODO configure for different screen sizes*/
 }
 
 #slot {
-  margin-top: 16%;
   border: solid 1px rgba(106, 110, 106, 0.91);
   box-sizing: content-box;
+  border-radius: $border-radius;
 }
 
 body {

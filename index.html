@@ -3,17 +3,23 @@
   <head>
     <meta charset="UTF-8" />
     <meta content="#000000" name="theme-color" />
-    <link href="/vite.svg" rel="icon" type="image/svg+xml" />
     <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+    <link href="/vite.svg" rel="icon" type="image/svg+xml" />
     <link href="node_modules/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet" type="text/css" />
-    <script src="node_modules/bootstrap/dist/js/bootstrap.min.js" type="module"></script>
+    <link href="node_modules/odometer/themes/odometer-theme-slot-machine.css" rel="stylesheet" />
+    <link href="node_modules/odometer/themes/odometer-theme-minimal.css" rel="stylesheet" />
+    <link href="node_modules/odometer/themes/odometer-theme-car.css" rel="stylesheet" />
+    <link href="node_modules/odometer/themes/odometer-theme-train-station.css" rel="stylesheet" />
+    <link href="node_modules/odometer/themes/odometer-theme-digital.css" rel="stylesheet" />
     <link href="styles/style.scss" rel="stylesheet" />
+    <script src="node_modules/bootstrap/dist/js/bootstrap.min.js" type="module"></script>
     <title>TS | Slot 🍒7️⃣1️⃣2️⃣3️⃣</title>
   </head>
   <body>
     <div id="app">
+      <div id="screen"></div>
       <canvas id="slot"></canvas>
-      <div class="d-flex justify-content-center gap-2" id="controls"></div>
+      <div id="controls"></div>
     </div>
 
     <script src="src/ui/index.tsx" type="module"></script>

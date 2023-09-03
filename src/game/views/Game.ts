@@ -5,6 +5,7 @@ import { BLOCK, CANVAS, IMAGE_ASSET, REEL } from '/src/game/enums';
 import { Reels } from '/src/game/components/reels/Reels';
 import { Modes } from '/src/game/strategy/Modes';
 import { Symbols } from '/src/game/components/reels/components/Symbols';
+import { bet, subCredit } from '/src/ui/store';
 import GUI from 'lil-gui';
 
 export class Game extends View {
@@ -36,6 +37,7 @@ export class Game extends View {
   }
 
   async run(): Promise<number> {
+    subCredit(bet()); // Pay for spin
     await this._modes.current.spin();
 
     return this._modes.current.calculatePayout();

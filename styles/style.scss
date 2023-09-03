@@ -1,5 +1,6 @@
 @import '/styles/vars';
 @import '/styles/fonts';
+@import '/styles/animations';
 
 html,
 body {
@@ -116,11 +117,22 @@ button#auto-spin {
   margin: 4px 0;
 }
 
-@keyframes glow {
-  0% {
-    background-position: 40% 40%; /* Start with the gradient at the top-left corner */
-  }
-  100% {
-    background-position: 80% 80%; /* Move the gradient to the bottom-right corner */
-  }
+button.btn-bonus {
+  border: 2px solid $border-color;
+  padding: 4px 8px;
+  border-radius: $border-radius;
+  color: white;
+  font-family: 'Black Ops One', sans-serif;
+  font-size: 1.5em !important;
+  text-transform: uppercase;
+  margin: 4px 0;
+  width: 30%;
+}
+
+button#bonus-red {
+  background-image: linear-gradient(356deg, rgba(218, 13, 13, 0.67) 0%, #5666c330 50%);
+}
+
+button#bonus-blue {
+  background-image: linear-gradient(356deg, rgba(13, 13, 218, 0.67) 0%, #5666c330 50%);
 }

@@ -1,0 +1,8 @@
+@keyframes glow {
+  0% {
+    background-position: 40% 40%; /* Start with the gradient at the top-left corner */
+  }
+  100% {
+    background-position: 80% 80%; /* Move the gradient to the bottom-right corner */
+  }
+}

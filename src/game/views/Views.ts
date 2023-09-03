@@ -7,6 +7,7 @@ import { Bonus } from '/src/game/views/Bonus';
 import { ViewType } from '/src/game/types';
 import config from '/src/utils/Config';
 import { Confirm } from '/src/game/views/Confirm';
+import { setView } from '/src/ui/store';
 
 export class Views {
   private readonly views: Record<ViewType, View>;
@@ -44,8 +45,8 @@ export class Views {
     return this.view instanceof Game;
   }
 
-  isBonus(): this is { current: Game } {
-    return this.view instanceof Game;
+  isBonus(): this is { current: Bonus } {
+    return this.view instanceof Bonus;
   }
 
   isConfirm(): this is { current: Confirm } {
@@ -58,6 +59,10 @@ export class Views {
     this.view = this.views[view];
     this.view.subscribe();
     this.showCurrentGui();
+    setView({
+      isGame: this.isGame(),
+      isBonus: this.isBonus(),
+    });
   }
 
   activateDefault() {

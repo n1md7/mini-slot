@@ -1,8 +1,8 @@
-import BARx1 from '/images/1xBAR.png';
-import BARx2 from '/images/2xBAR.png';
-import BARx3 from '/images/3xBAR.png';
-import Seven from '/images/Seven.png';
-import Cherry from '/images/Cherry.png';
+import BARx1 from '/images/symbols/1xBAR.png';
+import BARx2 from '/images/symbols/2xBAR.png';
+import BARx3 from '/images/symbols/3xBAR.png';
+import Seven from '/images/symbols/Seven.png';
+import Cherry from '/images/symbols/Cherry.png';
 
 import WinSound from '/sounds/win.mp3';
 import SpinSound from '/sounds/spin.mp3';

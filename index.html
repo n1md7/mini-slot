@@ -1,9 +1,24 @@
 <!doctype html>
 <html lang="en">
   <head>
+    <base href="%VITE_BASE_URL%" />
+
     <meta charset="UTF-8" />
     <meta content="#000000" name="theme-color" />
     <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+
+    <meta content="%VITE_TITLE%" property="og:title" />
+    <meta content="%VITE_DESCRIPTION%" property="og:description" />
+    <meta content="" property="og:image" />
+    <meta content="%VITE_BASE_URL%" property="og:url" />
+
+    <meta content="summary_large_image" name="twitter:card" />
+    <meta content="%VITE_TITLE%" name="twitter:title" />
+    <meta content="%VITE_DESCRIPTION%" name="twitter:description" />
+    <meta content="" name="twitter:image" />
+
+    <meta content="%VITE_ENV%" name="application-environment" />
+
     <link href="/vite.svg" rel="icon" type="image/svg+xml" />
     <link href="node_modules/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet" type="text/css" />
     <link href="node_modules/odometer/themes/odometer-theme-slot-machine.css" rel="stylesheet" />
@@ -13,7 +28,7 @@
     <link href="node_modules/odometer/themes/odometer-theme-digital.css" rel="stylesheet" />
     <link href="styles/style.scss" rel="stylesheet" />
     <script src="node_modules/bootstrap/dist/js/bootstrap.min.js" type="module"></script>
-    <title>TS | Slot 🍒7️⃣1️⃣2️⃣3️⃣</title>
+    <title>%VITE_TITLE%</title>
   </head>
   <body>
     <div id="app">

@@ -19,7 +19,7 @@ export default defineConfig((env) => {
         '@': process.cwd(),
       },
     },
-    base: env.mode === 'production' ? '/mini-slot/' : './',
+    base: './',
     build: {
       chunkSizeWarningLimit: 700,
       sourcemap: true,

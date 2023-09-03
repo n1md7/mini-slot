@@ -5,7 +5,8 @@
   "type": "module",
   "scripts": {
     "dev": "vite --mode=development",
-    "build": "tsc && vite --mode=production build",
+    "build": "tsc && vite --mode=github build",
+    "build:crazy": "tsc && vite --mode=crazy build",
     "test": "vitest --mode=test --no-watch",
     "preview": "vite preview",
     "format": "npx lint-staged",

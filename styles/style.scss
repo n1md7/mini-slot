@@ -8,11 +8,12 @@ body {
 }
 
 body {
-  background-image: url('/background-01.jpg');
+  background-image: url('/backgrounds/background-01.jpg');
   background-repeat: no-repeat;
   background-attachment: fixed;
   background-size: cover;
   background-position: center;
+  background-color: #000000de;
   width: 100vw;
   height: 100vh;
   display: flex;
@@ -34,7 +35,7 @@ body {
 }
 
 .v-align {
-  vertical-align: inherit !important;
+  vertical-align: middle !important;
 }
 
 div.modal-footer,

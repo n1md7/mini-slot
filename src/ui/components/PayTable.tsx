@@ -1,5 +1,10 @@
 import { Component, createSignal } from 'solid-js';
 import { Button, Modal } from 'solid-bootstrap';
+import BARx1 from '/images/symbols/1xBAR.png';
+import BARx2 from '/images/symbols/2xBAR.png';
+import BARx3 from '/images/symbols/3xBAR.png';
+import Seven from '/images/symbols/Seven.png';
+import Cherry from '/images/symbols/Cherry.png';
 
 const PayTable: Component = () => {
   const [show, setShow] = createSignal(false);
@@ -8,7 +13,7 @@ const PayTable: Component = () => {
 
   return (
     <>
-      <Button variant="secondary" class="align-items-center" onClick={handleOpen}>
+      <Button variant="link" class="align-items-center" onClick={handleOpen}>
         Pay Table
       </Button>
 
@@ -31,99 +36,138 @@ const PayTable: Component = () => {
             <tbody>
               <tr>
                 <td>
-                  <img alt="img" src="./images/Cherry.png" width="40" />
+                  <img alt="img" src={Cherry} width="40" />
                 </td>
                 <td>
-                  <img alt="img" src="./images/Cherry.png" width="40" />
+                  <img alt="img" src={Cherry} width="40" />
                 </td>
                 <td>
-                  <img alt="img" src="./images/Cherry.png" width="40" />
+                  <img alt="img" src={Cherry} width="40" />
                 </td>
-                <td class="v-align">2000xBET</td>
-                <td class="v-align">1000xBET</td>
-                <td class="v-align">4000xBET</td>
+                <td class="v-align">
+                  <b>2000</b>xBET
+                </td>
+                <td class="v-align">
+                  <b>1000</b>xBET
+                </td>
+                <td class="v-align">
+                  <b>4000</b>xBET
+                </td>
               </tr>
               <tr>
                 <td>
-                  <img alt="img" src="../../../images/Seven.png" width="40" />
+                  <img alt="img" src={Seven} width="40" />
                 </td>
                 <td>
-                  <img alt="img" src="../../../images/Seven.png" width="40" />
+                  <img alt="img" src={Seven} width="40" />
                 </td>
                 <td>
-                  <img alt="img" src="../../../images/Seven.png" width="40" />
+                  <img alt="img" src={Seven} width="40" />
                 </td>
-                <td class="v-align">150xBET</td>
-                <td class="v-align">450xBET</td>
-                <td class="v-align">300xBET</td>
-              </tr>
-              <tr>
-                <td colspan="3" title="Any combinations">
-                  <img alt="img" src="../../../images/Seven.png" width="40" /> x
-                  <img alt="img" src="./images/Cherry.png" width="40" />
+                <td class="v-align">
+                  <b>150</b>xBET
                 </td>
-                <td class="v-align">75xBET</td>
-                <td class="v-align">75xBET</td>
-                <td class="v-align">75xBET</td>
-              </tr>
-              <tr>
-                <td>
-                  <img alt="img" src="./images/3xBAR.png" width="40" />
+                <td class="v-align">
+                  <b>450</b>xBET
                 </td>
-                <td>
-                  <img alt="img" src="./images/3xBAR.png" width="40" />
+                <td class="v-align">
+                  <b>300</b>xBET
                 </td>
-                <td>
-                  <img alt="img" src="./images/3xBAR.png" width="40" />
-                </td>
-                <td class="v-align">50xBET</td>
-                <td class="v-align">50xBET</td>
-                <td class="v-align">50xBET</td>
-              </tr>
-              <tr>
-                <td>
-                  <img alt="img" src="./images/2xBAR.png" width="40" />
-                </td>
-                <td>
-                  <img alt="img" src="./images/2xBAR.png" width="40" />
-                </td>
-                <td>
-                  <img alt="img" src="./images/2xBAR.png" width="40" />
-                </td>
-                <td class="v-align">20xBET</td>
-                <td class="v-align">20xBET</td>
-                <td class="v-align">20xBET</td>
-              </tr>
-              <tr>
-                <td>
-                  <img alt="img" src="./images/1xBAR.png" width="40" />
-                </td>
-                <td>
-                  <img alt="img" src="./images/1xBAR.png" width="40" />
-                </td>
-                <td>
-                  <img alt="img" src="./images/1xBAR.png" width="40" />
-                </td>
-                <td class="v-align">10xBET</td>
-                <td class="v-align">10xBET</td>
-                <td class="v-align">10xBET</td>
               </tr>
               <tr>
                 <td colspan="3" title="Any combinations">
-                  <img alt="img" src="./images/1xBAR.png" width="40" />x
-                  <img alt="img" src="./images/2xBAR.png" width="40" />x
-                  <img alt="img" src="./images/3xBAR.png" width="40" />
+                  <img alt="img" src={Seven} width="40" /> x
+                  <img alt="img" src={Cherry} width="40" />
                 </td>
-                <td>5xBET</td>
-                <td>5xBET</td>
-                <td>5xBET</td>
+                <td class="v-align">
+                  <b>75</b>xBET
+                </td>
+                <td class="v-align">
+                  <b>75</b>xBET
+                </td>
+                <td class="v-align">
+                  <b>75</b>xBET
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <img alt="img" src={BARx3} width="40" />
+                </td>
+                <td>
+                  <img alt="img" src={BARx3} width="40" />
+                </td>
+                <td>
+                  <img alt="img" src={BARx3} width="40" />
+                </td>
+                <td class="v-align">
+                  <b>50</b>xBET
+                </td>
+                <td class="v-align">
+                  <b>50</b>xBET
+                </td>
+                <td class="v-align">
+                  <b>50</b>xBET
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <img alt="img" src={BARx2} width="40" />
+                </td>
+                <td>
+                  <img alt="img" src={BARx2} width="40" />
+                </td>
+                <td>
+                  <img alt="img" src={BARx2} width="40" />
+                </td>
+                <td class="v-align">
+                  <b>20</b>xBET
+                </td>
+                <td class="v-align">
+                  <b>20</b>xBET
+                </td>
+                <td class="v-align">
+                  <b>20</b>xBET
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <img alt="img" src={BARx1} width="40" />
+                </td>
+                <td>
+                  <img alt="img" src={BARx1} width="40" />
+                </td>
+                <td>
+                  <img alt="img" src={BARx1} width="40" />
+                </td>
+                <td class="v-align">
+                  <b>10</b>xBET
+                </td>
+                <td class="v-align">
+                  <b>10</b>xBET
+                </td>
+                <td class="v-align">
+                  <b>10</b>xBET
+                </td>
+              </tr>
+              <tr>
+                <td colspan="3" title="Any combinations">
+                  <img alt="img" src={BARx1} width="40" />x
+                  <img alt="img" src={BARx2} width="40" />x
+                  <img alt="img" src={BARx3} width="40" />
+                </td>
+                <td>
+                  <b>5</b>xBET
+                </td>
+                <td>
+                  <b>5</b>xBET
+                </td>
+                <td>
+                  <b>5</b>xBET
+                </td>
               </tr>
             </tbody>
           </table>
         </Modal.Body>
-        <Modal.Footer>
-          <Button onClick={handleClose}>Close</Button>
-        </Modal.Footer>
       </Modal>
     </>
   );

@@ -5,6 +5,12 @@ import glsl from 'vite-plugin-glsl';
 import solidPlugin from 'vite-plugin-solid';
 
 export default defineConfig((env) => {
+  const getBase = () => {
+    if (env.mode === 'github') return '/mini-slot';
+
+    return './';
+  };
+
   return {
     publicDir: 'public',
     envPrefix: 'VITE_',
@@ -19,7 +25,7 @@ export default defineConfig((env) => {
         '@': process.cwd(),
       },
     },
-    base: './',
+    base: getBase(),
     build: {
       chunkSizeWarningLimit: 700,
       sourcemap: true,

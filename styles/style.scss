@@ -56,3 +56,71 @@ table td {
 .lil-gui.autoPlace {
   right: 0 !important;
 }
+
+#controls .btn-container {
+  gap: 4px;
+
+  button,
+  .total-bet {
+    animation: glow 3s infinite ease-in-out alternate;
+    background-size: 200% 200%;
+  }
+}
+
+button#spin {
+  background-image: linear-gradient(356deg, rgba(95, 218, 13, 0.67) 0%, #5666c330 50%);
+  border: 2px solid $border-color;
+  padding: 4px 8px;
+  border-radius: $border-radius;
+  color: white;
+  font-family: 'Black Ops One', sans-serif;
+  font-size: 1.5em !important;
+  text-transform: uppercase;
+  margin: 4px 0;
+  flex-grow: 1;
+}
+
+button#double {
+  background-image: linear-gradient(356deg, rgba(218, 160, 13, 0.67) 0%, #5666c330 50%);
+  border: 2px solid $border-color;
+  padding: 4px 8px;
+  border-radius: $border-radius;
+  color: white;
+  font-family: 'Black Ops One', sans-serif;
+  font-size: 1.5em !important;
+  text-transform: uppercase;
+  margin: 4px 0;
+}
+
+button#take-win {
+  background-image: linear-gradient(356deg, rgba(105, 5, 32, 0.67) 0%, #5666c330 50%);
+  border: 2px solid $border-color;
+  padding: 4px 8px;
+  border-radius: $border-radius;
+  color: white;
+  font-family: 'Black Ops One', sans-serif;
+  font-size: 1.5em !important;
+  text-transform: uppercase;
+  margin: 4px 0;
+}
+
+button#auto-spin {
+  background-image: linear-gradient(356deg, rgba(218, 13, 13, 0.67) 0%, #5666c330 50%);
+  border: 2px solid $border-color;
+  padding: 4px 8px;
+  border-radius: $border-radius;
+  color: white;
+  font-family: 'Black Ops One', sans-serif;
+  font-size: 1.5em !important;
+  text-transform: uppercase;
+  margin: 4px 0;
+}
+
+@keyframes glow {
+  0% {
+    background-position: 40% 40%; /* Start with the gradient at the top-left corner */
+  }
+  100% {
+    background-position: 80% 80%; /* Move the gradient to the bottom-right corner */
+  }
+}

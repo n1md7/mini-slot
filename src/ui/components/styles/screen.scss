@@ -8,32 +8,94 @@
   background-image: linear-gradient(90deg, #3f525e 0%, rgba(22, 40, 96, 0.83) 50%);
 
   .odometer-inside {
-    background-image: linear-gradient(90deg, #3f525e 0%, rgba(22, 40, 96, 0.83) 50%);
+    background-image: linear-gradient(90deg, #3f525e61 0%, rgb(49 72 145 / 25%) 50%);
   }
 }
 
-.counter {
+.screen {
+  border-left: solid 1px $border-color;
+  border-right: solid 1px $border-color;
+  border-top: solid 1px $border-color;
+
+  border-top-left-radius: $border-radius;
+  border-top-right-radius: $border-radius;
+
+  overflow: hidden;
+
+  .counter {
+    padding: 4px 8px;
+
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+
+    background-color: #041238a8;
+
+    width: auto;
+    min-width: 28%;
+    max-width: 48%;
+
+    .label {
+      z-index: 1;
+      padding: 4px;
+      color: white;
+      text-align: center;
+      font-family: 'Black Ops One', sans-serif;
+      font-size: 1.5em !important;
+      text-transform: uppercase;
+    }
+  }
+}
+
+#controls .btn-container {
+  gap: 4px;
+}
+
+button#spin {
+  background-image: linear-gradient(356deg, rgba(95, 218, 13, 0.67) 0%, #5666c330 50%);
   border: 2px solid $border-color;
   padding: 4px 8px;
   border-radius: $border-radius;
+  color: white;
+  font-family: 'Black Ops One', sans-serif;
+  font-size: 1.5em !important;
+  text-transform: uppercase;
+  margin: 4px 0;
+  flex-grow: 1;
+}
 
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
+button#double {
+  background-image: linear-gradient(356deg, rgba(218, 160, 13, 0.67) 0%, #5666c330 50%);
+  border: 2px solid $border-color;
+  padding: 4px 8px;
+  border-radius: $border-radius;
+  color: white;
+  font-family: 'Black Ops One', sans-serif;
+  font-size: 1.5em !important;
+  text-transform: uppercase;
+  margin: 4px 0;
+}
 
-  background-image: linear-gradient(356deg, #5c81dbab 0%, #5666c330 50%);
+button#take-win {
+  background-image: linear-gradient(356deg, rgba(105, 5, 32, 0.67) 0%, #5666c330 50%);
+  border: 2px solid $border-color;
+  padding: 4px 8px;
+  border-radius: $border-radius;
+  color: white;
+  font-family: 'Black Ops One', sans-serif;
+  font-size: 1.5em !important;
+  text-transform: uppercase;
+  margin: 4px 0;
+}
 
-  width: auto;
-  min-width: 28%;
-  max-width: 48%;
-
-  .label {
-    z-index: 1;
-    padding: 4px;
-    color: white;
-    text-align: center;
-    font-family: 'Black Ops One', sans-serif;
-    font-size: 1.5em !important;
-    text-transform: uppercase;
-  }
+button#auto-spin {
+  background-image: linear-gradient(356deg, rgba(218, 13, 13, 0.67) 0%, #5666c330 50%);
+  border: 2px solid $border-color;
+  padding: 4px 8px;
+  border-radius: $border-radius;
+  color: white;
+  font-family: 'Black Ops One', sans-serif;
+  font-size: 1.5em !important;
+  text-transform: uppercase;
+  margin: 4px 0;
 }

@@ -7,7 +7,7 @@ import './components/styles/screen.scss';
 
 const Screen: Component = () => {
   return (
-    <div class="d-flex justify-content-around my-1 screen">
+    <div class="d-flex justify-content-around screen">
       <Credits />
       <Jackpot />
       <CurrentWin />

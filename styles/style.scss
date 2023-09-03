@@ -30,7 +30,8 @@ body {
 #slot {
   border: solid 1px $border-color;
   box-sizing: content-box;
-  border-radius: $border-radius;
+  border-bottom-left-radius: $border-radius;
+  border-bottom-right-radius: $border-radius;
 }
 
 .v-align {

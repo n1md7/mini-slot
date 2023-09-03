@@ -1,6 +1,7 @@
 import { Component, createEffect } from 'solid-js';
 import { createRef } from '/src/ui/hooks/createRef';
 import { bet, incrementBet, decrementBet } from '/src/ui/store';
+import { AiOutlinePlus, AiOutlineMinus } from 'solid-icons/ai';
 import Odometer from 'odometer';
 
 import './styles/bet.scss';
@@ -43,12 +44,12 @@ const TotalBet: Component = () => {
       <div class="total-bet">
         <div class="label">Bet</div>
         <div class="controls">
-          <button class="btn btn-sm btn-secondary" onclick={decrement}>
-            -
+          <button class="btn btn-sm btn-outline-light" onclick={decrement}>
+            <AiOutlineMinus />
           </button>
           <span class="value">{bet()}</span>
-          <button class="btn btn-sm btn-secondary" onclick={increment}>
-            +
+          <button class="btn btn-sm btn-outline-light" onclick={increment}>
+            <AiOutlinePlus />
           </button>
         </div>
       </div>

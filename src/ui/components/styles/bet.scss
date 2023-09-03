@@ -1,15 +1,18 @@
 @import '/styles/vars';
 
 .total-bet {
-  display: block;
-  font-family: 'Handjet', sans-serif;
-  padding: 4px 4px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  font-family: 'Black Ops One', sans-serif;
+  padding: 4px 8px;
   color: white;
-  width: 15%;
   margin: 4px auto;
   user-select: none;
-  border: solid 1px $border-color;
+  border: solid 2px $border-color;
   border-radius: $border-radius;
+  font-size: 1.5em !important;
+  background-image: linear-gradient(356deg, rgba(13, 143, 104, 0.67) 0%, #5666c330 50%);
 
   .label {
     text-transform: uppercase;
@@ -30,8 +33,7 @@
     }
 
     .value {
-      font-size: 1.8em;
-      line-height: 1em;
+      width: 20px;
     }
   }
 }

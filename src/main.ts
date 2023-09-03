@@ -3,6 +3,7 @@ import BARx2 from '/images/symbols/2xBAR.png';
 import BARx3 from '/images/symbols/3xBAR.png';
 import Seven from '/images/symbols/Seven.png';
 import Cherry from '/images/symbols/Cherry.png';
+import Background from '/backgrounds/background-01.jpg';
 
 import WinSound from '/sounds/win.mp3';
 import SpinSound from '/sounds/spin.mp3';
@@ -48,6 +49,7 @@ Assets.addBundle(BUNDLE.IMAGES, {
   [IMAGE_ASSET.BARx3]: BARx3,
   [IMAGE_ASSET.SEVEN]: Seven,
   [IMAGE_ASSET.CHERRY]: Cherry,
+  [IMAGE_ASSET.BACKGROUND]: Background,
 });
 
 const assetBundles = [
@@ -61,6 +63,7 @@ Promise.all(assetBundles)
   .then(([images, audios]) => {
     assets.images = images;
     assets.audios = audios;
+    document.body.style.backgroundImage = `url(${Background})`;
     game.setup();
     game.attachControls(spin);
   })

@@ -4,6 +4,7 @@ export enum IMAGE_ASSET {
   BARx1 = 'BARx1',
   BARx2 = 'BARx2',
   BARx3 = 'BARx3',
+  BACKGROUND = 'BACKGROUND',
 }
 
 export enum AUDIO_ASSET {

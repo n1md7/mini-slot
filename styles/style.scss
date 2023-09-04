@@ -58,21 +58,32 @@ table td {
   right: 0 !important;
 }
 
-#controls .btn-container {
-  gap: 4px;
+#controls {
+  position: relative;
 
-  button,
-  .total-bet {
-    animation: glow 3s infinite ease-in-out alternate;
-    background-size: 200% 200%;
+  .double-controls {
+    position: absolute;
+    top: -64px;
+    width: 100%;
+  }
 
-    &[disabled] {
-      opacity: 0.5 !important;
-    }
+  .btn-container {
+    gap: 4px;
 
-    &:hover {
-      animation: none;
-      background-position: right center;
+    button,
+    .total-bet {
+      animation: glow 3s infinite ease-in-out alternate;
+      background-size: 200% 200%;
+
+      &[disabled],
+      &.disabled {
+        opacity: 0.5 !important;
+      }
+
+      &:hover {
+        animation: none;
+        background-position: right center;
+      }
     }
   }
 }

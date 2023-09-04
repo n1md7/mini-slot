@@ -70,6 +70,9 @@ export class Game extends Setup {
   private takeWin() {
     store.addCredit(store.win());
     store.resetWin();
+    if (this.views.isDouble()) {
+      this.views.activateDefault();
+    }
   }
 
   private doubleWin() {

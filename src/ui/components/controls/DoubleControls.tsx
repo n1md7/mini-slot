@@ -1,8 +1,8 @@
 import { Component } from 'solid-js';
 
-const BonusControls: Component = () => {
+const DoubleControls: Component = () => {
   return (
-    <div class="d-flex justify-content-around">
+    <div class="d-flex justify-content-around double-controls">
       <button class="btn btn-bonus btn-primary" id="bonus-blue">
         Blue
       </button>
@@ -13,4 +13,4 @@ const BonusControls: Component = () => {
   );
 };
 
-export default BonusControls;
+export default DoubleControls;

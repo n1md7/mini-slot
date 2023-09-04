@@ -1,4 +1,4 @@
-import { Component, createEffect } from 'solid-js';
+import { Component, createEffect, createSignal } from 'solid-js';
 import { createRef } from '/src/ui/hooks/createRef';
 import { bet, incrementBet, decrementBet } from '/src/ui/store';
 import { AiOutlinePlus, AiOutlineMinus } from 'solid-icons/ai';
@@ -6,7 +6,12 @@ import Odometer from 'odometer';
 
 import './styles/bet.scss';
 
-const TotalBet: Component = () => {
+type Props = {
+  disabled: boolean;
+};
+const TotalBet: Component<Props> = (props) => {
+  const [disabled, setDisabled] = createSignal(false);
+  const [className, setClassName] = createSignal('');
   const dom = createRef<HTMLDivElement>();
   const odometer = createRef<Odometer>();
 
@@ -39,16 +44,21 @@ const TotalBet: Component = () => {
     odometer.current?.update(bet());
   });
 
+  createEffect(() => {
+    setDisabled(props.disabled);
+    setClassName(props.disabled ? 'disabled' : '');
+  });
+
   return (
     <>
-      <div class="total-bet">
+      <div class={`total-bet ${className()}`}>
         <div class="label">Bet</div>
         <div class="controls">
-          <button class="btn btn-sm btn-outline-light" onclick={decrement}>
+          <button disabled={disabled()} class="btn btn-sm btn-outline-light" onclick={decrement}>
             <AiOutlineMinus />
           </button>
           <span class="value">{bet()}</span>
-          <button class="btn btn-sm btn-outline-light" onclick={increment}>
+          <button disabled={disabled()} class="btn btn-sm btn-outline-light" onclick={increment}>
             <AiOutlinePlus />
           </button>
         </div>

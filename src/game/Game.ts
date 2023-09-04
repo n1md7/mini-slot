@@ -69,6 +69,8 @@ export class Game extends Setup {
     // If he doesn't, we need to show him a message to add more credits by watching an ad
     if (store.credit() < store.bet()) {
       alert('You need more credits to spin the reels!');
+      store.setAutoSpin(false);
+      return;
     }
 
     // If there is a previous win, we need to add it to the credits (auto take win)

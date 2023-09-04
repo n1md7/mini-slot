@@ -19,7 +19,7 @@ const SpinControls: Component = () => {
   const [takeWinDisabled, setTakeWinDisabled] = createSignal(false);
 
   createEffect(() => {
-    setSpinDisabled(store.view.isDouble || store.autoSpin());
+    setSpinDisabled(store.view.isDouble);
     setDoubleDisabled(store.win() === 0 || store.view.isDouble || store.autoSpin());
     setTakeWinDisabled(store.win() === 0);
     setAutoSpinDisabled(store.view.isDouble);

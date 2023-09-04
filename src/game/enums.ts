@@ -43,3 +43,8 @@ export enum ENV {
   DEV = 'development',
   PROD = 'production',
 }
+
+export enum DOUBLE {
+  RED = 'RED',
+  BLUE = 'BLUE',
+}

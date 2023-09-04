@@ -34,6 +34,10 @@ export class Game extends Setup {
     this.subscribe();
   }
 
+  public showDefaultView(): void {
+    this.views.activateDefault();
+  }
+
   public subscribeControls(spin: HTMLButtonElement, takeWin: HTMLButtonElement, doubleWin: HTMLButtonElement): void {
     spin.addEventListener('click', this.spin.bind(this));
     takeWin.addEventListener('click', this.takeWin.bind(this));

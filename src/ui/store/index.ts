@@ -16,6 +16,7 @@ const subCredit = (value: number) => setCredit(credit() - value);
 const incrementBet = () => setBet(bet() + 1);
 const decrementBet = () => setBet(bet() - 1);
 const resetWin = () => setWin(0);
+const doubleWin = () => setWin(win() * 2);
 
 setInterval(() => {
   setJackpot(jackpot() - ~~(Math.random() * 100) - 50);
@@ -32,6 +33,7 @@ export {
   decrementBet,
   win,
   setWin,
+  doubleWin,
   resetWin,
   view,
   setView,

@@ -8,7 +8,7 @@ import { Symbols } from '/src/game/components/reels/components/Symbols';
 import { bet, subCredit } from '/src/ui/store';
 import GUI from 'lil-gui';
 
-export class Game extends View {
+export class Slot extends View {
   private readonly _container: Container;
   private readonly _reels: Reels;
   private readonly _modes: Modes;

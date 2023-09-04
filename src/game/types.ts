@@ -1,1 +1,1 @@
-export type ViewType = 'Game' | 'Bonus';
+export type ViewType = 'Slot' | 'Double';

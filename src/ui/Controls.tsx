@@ -7,10 +7,10 @@ import { view } from '/src/ui/store';
 const Controls: Component = () => {
   return (
     <>
-      <Show when={view.isGame}>
+      <Show when={view.isSlot}>
         <SpinControls />
       </Show>
-      <Show when={view.isBonus}>
+      <Show when={view.isDouble}>
         <BonusControls />
       </Show>
     </>

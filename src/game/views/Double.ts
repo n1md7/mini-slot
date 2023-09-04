@@ -5,7 +5,7 @@ import GUI from 'lil-gui';
 import * as PIXI from 'pixi.js';
 import { CANVAS } from '/src/game/enums';
 
-export class Bonus extends View {
+export class Double extends View {
   private container = new PIXI.Container();
 
   constructor(section: GUI, app: Application, _symbols: Symbols) {

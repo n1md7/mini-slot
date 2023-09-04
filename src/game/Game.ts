@@ -73,7 +73,7 @@ export class Game extends Setup {
   }
 
   private doubleWin() {
-    this.views.changeTo('Bonus');
+    this.views.changeTo('Double');
   }
 
   private subscribe() {

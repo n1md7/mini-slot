@@ -6,8 +6,8 @@ const [jackpot, setJackpot] = createSignal(999999);
 const [bet, setBet] = createSignal(1);
 const [win, setWin] = createSignal(0);
 const [view, setView] = createStore({
-  isGame: true,
-  isBonus: false,
+  isSlot: true,
+  isDouble: false,
 });
 
 const addJackpot = (value: number) => setJackpot(jackpot() + value);

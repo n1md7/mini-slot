@@ -1,4 +1,4 @@
-import { Component, createEffect } from 'solid-js';
+import { Component, createEffect, createSignal, Show } from 'solid-js';
 import TotalBet from '/src/ui/components/TotalBet';
 import { ImSpinner11 } from 'solid-icons/im';
 import { Game } from '/src/game/Game';
@@ -13,29 +13,44 @@ const SpinControls: Component = () => {
   const double = createRef<HTMLButtonElement>();
   const takeWin = createRef<HTMLButtonElement>();
 
+  const [spinDisabled, setSpinDisabled] = createSignal(false);
+  const [autoSpinDisabled, setAutoSpinDisabled] = createSignal(false);
+  const [doubleDisabled, setDoubleDisabled] = createSignal(false);
+  const [takeWinDisabled, setTakeWinDisabled] = createSignal(false);
+
+  createEffect(() => {
+    setSpinDisabled(store.view.isDouble || store.autoSpin());
+    setDoubleDisabled(store.win() === 0 || store.view.isDouble || store.autoSpin());
+    setTakeWinDisabled(store.win() === 0);
+    setAutoSpinDisabled(store.view.isDouble);
+  });
+
   createEffect(() => {
     if (spin) {
-      gameInstance.subscribeControls(spin.current!, takeWin.current!, double.current!);
+      gameInstance.subscribeControls(spin.current!, takeWin.current!, double.current!, autoSpin.current!);
     }
 
     return () => {
-      gameInstance.unsubscribeControls(spin.current!, takeWin.current!, double.current!);
+      gameInstance.unsubscribeControls(spin.current!, takeWin.current!, double.current!, autoSpin.current!);
     };
   });
 
   return (
     <div class="d-flex justify-content-around btn-container">
-      <button disabled={store.view.isDouble} ref={autoSpin.current} class="btn" id="auto-spin">
-        Auto <br /> OFF
+      <button disabled={autoSpinDisabled()} ref={autoSpin.current} class="btn" id="auto-spin">
+        Auto <br />{' '}
+        <Show when={store.autoSpin()} fallback="OFF">
+          ON
+        </Show>
       </button>
-      <button disabled={store.win() === 0 || store.view.isDouble} ref={double.current} class="btn" id="double">
+      <button disabled={doubleDisabled()} ref={double.current} class="btn" id="double">
         Double <br />
         Win
       </button>
-      <button disabled={store.view.isDouble} ref={spin.current} class="btn" id="spin">
+      <button disabled={spinDisabled()} ref={spin.current} class="btn" id="spin">
         Spin <br /> <ImSpinner11 />
       </button>
-      <button disabled={store.win() === 0} ref={takeWin.current} class="btn" id="take-win">
+      <button disabled={takeWinDisabled()} ref={takeWin.current} class="btn" id="take-win">
         Take <br /> Win
       </button>
       <TotalBet disabled={store.view.isDouble} />

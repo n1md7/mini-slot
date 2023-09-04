@@ -5,10 +5,12 @@
   font-size: 1.8em;
   line-height: 1em;
 
-  background-image: linear-gradient(90deg, #3f525e 0%, rgba(22, 40, 96, 0.83) 50%);
+  background-image: unset !important;
+  background-color: unset !important;
+  border: 0 !important;
 
   .odometer-inside {
-    background-image: linear-gradient(90deg, #3f525e61 0%, rgb(49 72 145 / 25%) 50%);
+    background-image: unset !important;
   }
 }
 

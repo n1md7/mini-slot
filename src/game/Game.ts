@@ -3,6 +3,7 @@ import { gui } from '/src/utils/gui';
 import GUI from 'lil-gui';
 import { Views } from '/src/game/views/Views';
 import * as store from '/src/ui/store';
+import { delay } from '/src/utils/utils';
 
 export class Game extends Setup {
   private static instance: Game;
@@ -38,16 +39,28 @@ export class Game extends Setup {
     this.views.activateDefault();
   }
 
-  public subscribeControls(spin: HTMLButtonElement, takeWin: HTMLButtonElement, doubleWin: HTMLButtonElement): void {
+  public subscribeControls(
+    spin: HTMLButtonElement,
+    takeWin: HTMLButtonElement,
+    doubleWin: HTMLButtonElement,
+    autoSpin: HTMLButtonElement,
+  ): void {
     spin.addEventListener('click', this.spin.bind(this));
     takeWin.addEventListener('click', this.takeWin.bind(this));
     doubleWin.addEventListener('click', this.doubleWin.bind(this));
+    autoSpin.addEventListener('click', this.autoSpin.bind(this));
   }
 
-  public unsubscribeControls(spin: HTMLButtonElement, takeWin: HTMLButtonElement, doubleWin: HTMLButtonElement): void {
+  public unsubscribeControls(
+    spin: HTMLButtonElement,
+    takeWin: HTMLButtonElement,
+    doubleWin: HTMLButtonElement,
+    autoSpin: HTMLButtonElement,
+  ): void {
     spin.removeEventListener('click', this.spin.bind(this));
     takeWin.removeEventListener('click', this.takeWin.bind(this));
     doubleWin.removeEventListener('click', this.doubleWin.bind(this));
+    autoSpin.removeEventListener('click', this.autoSpin.bind(this));
   }
 
   private async spin() {
@@ -61,14 +74,22 @@ export class Game extends Setup {
     // If there is a previous win, we need to add it to the credits (auto take win)
     this.takeWin();
 
-    return this.views.current.run().then((win) => {
-      if (win > 0) {
-        console.log(`You won ${win} coins!`);
-        // Hold it temporarily and update the UI
-        // User can take it or double it
-        store.setWin(win);
-      }
-    });
+    const win = await this.views.current.run();
+
+    if (win > 0) {
+      console.log(`You won ${win} coins!`);
+      // Hold it temporarily and update the UI
+      // User can take it or double it
+      store.setWin(win);
+    }
+
+    // When auto-spin is enabled, we need to spin again
+    if (store.autoSpin()) {
+      // Make sure user sees the win
+      win > 0 && (await delay(3000));
+      // Spin again
+      await this.spin();
+    }
   }
 
   private takeWin() {
@@ -81,6 +102,9 @@ export class Game extends Setup {
 
   private doubleWin() {
     this.views.changeTo('Double');
+  }
+  private autoSpin() {
+    store.toggleAutoSpin();
   }
 
   private subscribe() {

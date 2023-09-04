@@ -58,7 +58,7 @@ body {
 }
 
 /** Mobile */
-@media (orientation: landscape) and (max-height: 640px) {
+@media (orientation: landscape) and (max-width: 640px) {
   #app {
     transform: scale(0.35);
 

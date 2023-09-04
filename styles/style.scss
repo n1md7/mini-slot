@@ -21,6 +21,11 @@ body {
   align-items: center;
 }
 
+#menu {
+  position: absolute;
+  top: 0;
+}
+
 #app {
   text-align: center;
   display: flex;

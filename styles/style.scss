@@ -46,10 +46,21 @@ body {
   }
 }
 
-/* Mobile */
+/** Mobile Landscape */
 @media (max-width: 768px) {
   #app {
     transform: scale(0.65);
+
+    .odometer .odometer-theme-slot-machine {
+      font-size: 1.2em;
+    }
+  }
+}
+
+/** Mobile */
+@media (orientation: landscape) and (max-height: 640px) {
+  #app {
+    transform: scale(0.35);
 
     .odometer .odometer-theme-slot-machine {
       font-size: 1.4em;

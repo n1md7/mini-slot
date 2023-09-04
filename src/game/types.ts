@@ -1,1 +1,1 @@
-export type ViewType = 'Game' | 'Bonus' | 'Confirm';
+export type ViewType = 'Game' | 'Bonus';

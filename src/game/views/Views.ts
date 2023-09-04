@@ -6,7 +6,6 @@ import { Symbols } from '/src/game/components/reels/components/Symbols';
 import { Bonus } from '/src/game/views/Bonus';
 import { ViewType } from '/src/game/types';
 import config from '/src/utils/Config';
-import { Confirm } from '/src/game/views/Confirm';
 import { setView } from '/src/ui/store';
 
 export class Views {
@@ -26,7 +25,6 @@ export class Views {
     this.views = {
       Game: new Game(this.game, app, symbols),
       Bonus: new Bonus(this.bonus, app, symbols),
-      Confirm: new Confirm(this.confirm, app, 'Double it?'),
     };
     this.view = this.views.Game;
   }
@@ -38,7 +36,6 @@ export class Views {
   init() {
     this.views.Game.init();
     this.views.Bonus.init();
-    this.views.Confirm.init();
   }
 
   isGame(): this is { current: Game } {
@@ -47,10 +44,6 @@ export class Views {
 
   isBonus(): this is { current: Bonus } {
     return this.view instanceof Bonus;
-  }
-
-  isConfirm(): this is { current: Confirm } {
-    return this.view instanceof Confirm;
   }
 
   changeTo(view: ViewType) {
@@ -82,7 +75,6 @@ export class Views {
   private unsubscribeAll() {
     this.views.Game.unsubscribe();
     this.views.Bonus.unsubscribe();
-    this.views.Confirm.unsubscribe();
   }
 
   private hideAll() {
@@ -94,6 +86,5 @@ export class Views {
   private showCurrentGui() {
     if (this.isGame()) this.game.show();
     if (this.isBonus()) this.bonus.show();
-    if (this.isConfirm()) this.confirm.show();
   }
 }

@@ -38,6 +38,7 @@ export class Game extends View {
 
   async run(): Promise<number> {
     subCredit(bet()); // Pay for spin
+
     await this._modes.current.spin();
 
     return this._modes.current.calculatePayout();

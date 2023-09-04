@@ -1,6 +1,5 @@
 export const app = document.getElementById('app') as HTMLDivElement;
 export const controls = document.getElementById('controls') as HTMLDivElement;
-export const canvas = document.getElementById('canvas') as HTMLCanvasElement;
 export const screen = document.getElementById('screen') as HTMLDivElement;
 
 if (!controls) throw new Error('Controls element not found!');

@@ -57,15 +57,12 @@ const assetBundles = [
   Loader.loadAudios(BUNDLE.AUDIOS, progress.setAudio.bind(progress)),
 ];
 
-const spin = document.querySelector('#spin') as HTMLButtonElement;
-
 Promise.all(assetBundles)
   .then(([images, audios]) => {
     assets.images = images;
     assets.audios = audios;
     document.body.style.backgroundImage = `url(${Background})`;
     game.setup();
-    game.attachControls(spin);
   })
   .then(() => game.start())
   .catch((err) => {

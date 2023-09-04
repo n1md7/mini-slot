@@ -65,6 +65,15 @@ table td {
   .total-bet {
     animation: glow 3s infinite ease-in-out alternate;
     background-size: 200% 200%;
+
+    &[disabled] {
+      opacity: 0.5 !important;
+    }
+
+    &:hover {
+      animation: none;
+      background-position: right center;
+    }
   }
 }
 

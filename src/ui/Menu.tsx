@@ -1,18 +1,23 @@
-import { Component } from 'solid-js';
-import PayTable from '/src/ui/components/PayTable';
+import { Component, createSignal } from 'solid-js';
 import GetMoreCredits from '/src/ui/components/GetMoreCredits';
 import GetOneMoreChance from '/src/ui/components/GetOneMoreChance';
+import Settings from '/src/ui/components/Settings';
+import { Button } from 'solid-bootstrap';
+import { VsGear } from 'solid-icons/vs';
 
 export const Menu: Component = () => {
+  const [show, setShow] = createSignal(false);
+  const hide = () => setShow(false);
+  const handleShow = () => setShow(true);
+
   return (
     <>
       <GetMoreCredits />
       <GetOneMoreChance />
-      <div class="d-flex justify-content-center">
-        <button class="btn btn-link">Get more credits</button>
-        <PayTable />
-        <button class="btn btn-link">Settings</button>
-      </div>
+      <Button variant="secondary" onClick={handleShow}>
+        <VsGear />
+      </Button>
+      <Settings show={show()} hide={hide} />
     </>
   );
 };

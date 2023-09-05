@@ -45,13 +45,13 @@ const PayTable: Component = () => {
                   <img alt="img" src={Cherry} width="40" />
                 </td>
                 <td class="v-align">
-                  <b>2000</b>xBET
+                  <b>600</b>xBET
                 </td>
                 <td class="v-align">
-                  <b>1000</b>xBET
+                  <b>300</b>xBET
                 </td>
                 <td class="v-align">
-                  <b>4000</b>xBET
+                  <b>900</b>xBET
                 </td>
               </tr>
               <tr>

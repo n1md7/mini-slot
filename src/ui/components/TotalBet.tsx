@@ -16,7 +16,7 @@ const TotalBet: Component<Props> = (props) => {
   const odometer = createRef<Odometer>();
 
   const MIN = 1;
-  const MAX = 5;
+  const MAX = 15;
 
   const increment = () => {
     if (bet() < MAX) incrementBet();

@@ -152,7 +152,7 @@ describe('Calculator', () => {
       const result = calculator.calculate([block01, block02, block03], 'Top');
 
       // Assert
-      expect(result).toBe(2000);
+      expect(result).toBe(600);
     });
 
     it('should calculate MIDDLE line', () => {
@@ -160,7 +160,7 @@ describe('Calculator', () => {
       const result = calculator.calculate([block01, block02, block03], 'Middle');
 
       // Assert
-      expect(result).toBe(1000);
+      expect(result).toBe(300);
     });
 
     it('should calculate BOTTOM line', () => {
@@ -168,7 +168,7 @@ describe('Calculator', () => {
       const result = calculator.calculate([block01, block02, block03], 'Bottom');
 
       // Assert
-      expect(result).toBe(4000);
+      expect(result).toBe(900);
     });
   });
 

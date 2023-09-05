@@ -24,7 +24,7 @@ export class Calculator {
     if (block.isCherry) {
       if (position === 'Top') return 2;
       if (position === 'Middle') return 1;
-      if (position === 'Bottom') return 4;
+      if (position === 'Bottom') return 3;
     }
 
     if (block.isSeven) {
@@ -41,7 +41,7 @@ export class Calculator {
     if (block.isBARx2) return 20;
     if (block.isBARx3) return 50;
     if (block.isSeven) return 150;
-    if (block.isCherry) return 1000;
+    if (block.isCherry) return 300;
 
     return 0;
   }

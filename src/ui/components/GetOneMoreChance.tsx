@@ -8,7 +8,7 @@ const GetOneMoreChance: Component = () => {
   return (
     <Modal centered show={store.alert.oneMoreChance} onHide={adWatchRejected}>
       <Modal.Header closeButton>
-        <Modal.Title>Information</Modal.Title>
+        <Modal.Title>Need one chance?</Modal.Title>
       </Modal.Header>
       <Modal.Body>
         Watch an advertisement to earn an additional chance and retain half of your current winnings.

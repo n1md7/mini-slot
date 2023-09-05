@@ -26,5 +26,5 @@
       "/sounds/*": ["sounds/*"]
     }
   },
-  "include": ["src", "tests"]
+  "include": ["src", "tests", "src/**/*.d.ts"]
 }

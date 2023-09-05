@@ -18,6 +18,13 @@ import { Game } from '/src/game/Game';
 import { Loader } from '/src/sound/loader';
 import { assets } from '/src/utils/assets';
 
+window.CrazyGames.SDK.game
+  .sdkGameLoadingStart()
+  .then(() => console.info('CrazyGames SDK loading started'))
+  .catch((error) => {
+    console.error(`Error while loading CrazyGames SDK: ${error}`);
+  });
+
 gsap.registerPlugin(PixiPlugin);
 PixiPlugin.registerPIXI(PIXI);
 
@@ -64,7 +71,13 @@ Promise.all(assetBundles)
     document.body.style.backgroundImage = `url(${Background})`;
     game.setup();
   })
+  .then(() => window.CrazyGames.SDK.game.sdkGameLoadingStop())
   .then(() => game.start())
   .catch((err) => {
     console.error(err?.message || err);
   });
+
+window.addEventListener('wheel', (event) => event.preventDefault(), { passive: false });
+window.addEventListener('keydown', (event) => {
+  if (['ArrowUp', 'ArrowDown', ' '].includes(event.key)) event.preventDefault();
+});

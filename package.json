@@ -6,9 +6,11 @@
   "scripts": {
     "dev": "vite --mode=development",
     "build": "tsc && vite --mode=github build",
+    "preview": "vite preview --open index.html",
     "build:crazy": "tsc && vite --mode=crazy build",
+    "prepreview:crazy": "npm run build:crazy",
+    "preview:crazy": "vite preview --open sdk.html ",
     "test": "vitest --mode=test --no-watch",
-    "preview": "vite preview",
     "format": "npx lint-staged",
     "prepare": "husky install"
   },

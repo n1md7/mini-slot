@@ -1,10 +1,10 @@
 $font-path: '/fonts/';
 $fonts: (
-  'Russo One': 'Russo_One/RussoOne-Regular.ttf',
-  'Lobster': 'Lobster/Lobster-Regular.ttf',
-  'Permanent Marker': 'Permanent_Marker/PermanentMarker-Regular.ttf',
-  'Handjet': 'Handjet/Handjet-VariableFont_ELGR,ELSH,wght.ttf',
-  'Black Ops One': 'Black_Ops_One/BlackOpsOne-Regular.ttf',
+  'Russo One': 'RussoOne-Regular.ttf',
+  'Lobster': 'Lobster-Regular.ttf',
+  'Permanent Marker': 'PermanentMarker-Regular.ttf',
+  'Handjet': 'Handjet-VariableFont_ELGR,ELSH,wght.ttf',
+  'Black Ops One': 'BlackOpsOne-Regular.ttf',
 );
 
 @each $font, $path in $fonts {

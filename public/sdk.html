@@ -1,0 +1,45 @@
+<!doctype html>
+<html>
+  <head>
+    <title>Crazy Games</title>
+    <script src="https://gameframe.crazygames.com/crazygames-gameframe-v1.bundle.js"></script>
+    <meta charset="UTF-8" />
+    <meta content="text/html; charset=utf-8" http-equiv="Content-Type" />
+  </head>
+
+  <body>
+    <script type="text/javascript">
+      var slugify = (text) => {
+        return (text || '')
+          .replace(/&/g, ' and ')
+          .replace(/[^a-zA-Z0-9]/g, ' ')
+          .trim()
+          .replace(/\s+/g, '-')
+          .toLowerCase();
+      };
+      var options = {
+        author: 'n1md7',
+        gameName: 'Lucky Slot',
+        gameSlug: slugify('Lucky Slot'),
+        gameLink: 'https://www.crazygames.com/game/game-name',
+        thumbnail: 'https://github.com/n1md7/mini-slot/assets/6734058/45520654-473c-4f26-991b-1da09ea14fe7',
+        allowFullscreen: true,
+        locale: 'en_US',
+        loader: 'iframe',
+        loaderOptions: {
+          url: (new URL(window.location).origin + '/index.html').toString(),
+        },
+        category: 'HTML5 SDK',
+        categoryLink: 'https://www.crazygames.com',
+        gameStatus: 'published',
+        forceTestAds: true,
+        dollarRate: 1,
+      };
+      // document.referrer must be set, reloading it forces your browser to set it
+      if (!document.referrer) {
+        location.reload();
+      }
+      Crazygames.load(options);
+    </script>
+  </body>
+</html>

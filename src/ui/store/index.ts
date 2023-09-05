@@ -1,7 +1,7 @@
 import { createSignal } from 'solid-js';
 import { createStore } from 'solid-js/store';
 
-export const [credit, setCredit] = createSignal(99);
+export const [credit, setCredit] = createSignal(35);
 export const [jackpot, setJackpot] = createSignal(92345);
 export const [bet, setBet] = createSignal(1);
 export const [win, setWin] = createSignal(0);

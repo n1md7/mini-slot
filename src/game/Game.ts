@@ -4,6 +4,7 @@ import GUI from 'lil-gui';
 import { Views } from '/src/game/views/Views';
 import * as store from '/src/ui/store';
 import { delay } from '/src/utils/utils';
+import env from '/src/utils/Env';
 
 export class Game extends Setup {
   private static instance: Game;
@@ -68,7 +69,7 @@ export class Game extends Setup {
     // If he does, we can spin the reels
     // If he doesn't, we need to show him a message to add more credits by watching an ad
     if (store.credit() < store.bet()) {
-      alert('You need more credits to spin the reels!');
+      store.showGetMoreCredits();
       store.setAutoSpin(false);
       return;
     }
@@ -79,6 +80,8 @@ export class Game extends Setup {
     const win = await this.views.current.run();
 
     if (win > 0) {
+      // Celebrate the win
+      if (env.isCrazyGames() && win > 300) await window.CrazyGames.SDK.game.happytime();
       console.log(`You won ${win} coins!`);
       // Hold it temporarily and update the UI
       // User can take it or double it

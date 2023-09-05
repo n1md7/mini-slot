@@ -42,6 +42,8 @@ export enum ENV {
   TEST = 'test',
   DEV = 'development',
   PROD = 'production',
+  CRAZY_GAMES = 'crazy',
+  GITHUB_PAGES = 'github',
 }
 
 export enum DOUBLE {

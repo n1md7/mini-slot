@@ -14,6 +14,10 @@ export class Config {
   getAnimationStrength() {
     return this.vars['VITE_ANIMATION_STRENGTH'];
   }
+
+  getDoubleDelay() {
+    return +this.vars['VITE_DOUBLE_DELAY'];
+  }
 }
 
 export default new Config(import.meta.env);

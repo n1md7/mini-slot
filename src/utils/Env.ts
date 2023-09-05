@@ -7,6 +7,14 @@ export class Env {
     return this.mode === ENV.DEV;
   }
 
+  isCrazyGames() {
+    return this.mode === ENV.CRAZY_GAMES;
+  }
+
+  isGithubPages() {
+    return this.mode === ENV.GITHUB_PAGES;
+  }
+
   isProd() {
     return this.mode === ENV.PROD;
   }

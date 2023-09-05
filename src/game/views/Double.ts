@@ -7,14 +7,19 @@ import * as store from '/src/ui/store';
 import { BLOCK, CANVAS, DOUBLE } from '/src/game/enums';
 import { Timestamp } from '/src/game/utils/Timestamp';
 import { doubleEmitter } from '/src/utils/Emitter';
+import config from '/src/utils/Config';
+import env from '/src/utils/Env';
+import { paused, setWin, win } from '/src/ui/store';
 
 export class Double extends View {
   private readonly container = new PIXI.Container();
   private readonly red = new PIXI.Graphics();
   private readonly blue = new PIXI.Graphics();
   private readonly timestamp = new Timestamp();
+  private readonly defaultDelay = config.getDoubleDelay() || 1000;
 
   private level = 1;
+  private oneChanceUsed = false;
   private currentlyVisible: DOUBLE = DOUBLE.BLUE;
 
   constructor(section: GUI, app: Application, _symbols: Symbols) {
@@ -23,13 +28,16 @@ export class Double extends View {
     this.ticker = this.ticker.bind(this);
     this.reset = this.reset.bind(this);
     this.onPress = this.onPress.bind(this);
+    this.onAdError = this.onAdError.bind(this);
+    this.onAdFinished = this.onAdFinished.bind(this);
+    this.onAdRejected = this.onAdRejected.bind(this);
 
     this.drawShape(this.red, 'red', 0xff0000);
     this.drawShape(this.blue, 'blue', 0x0000ff);
   }
 
   private get delay() {
-    return 1000 / this.level;
+    return this.defaultDelay / this.level;
   }
 
   init(): void {
@@ -61,12 +69,18 @@ export class Double extends View {
     this.container.visible = true;
     this.app.ticker.add(this.ticker, this);
     doubleEmitter.on('onPress', this.onPress);
+    doubleEmitter.on('adError', this.onAdError);
+    doubleEmitter.on('adFinished', this.onAdFinished);
+    doubleEmitter.on('adRejected', this.onAdRejected);
   }
 
   unsubscribe(): void {
     this.container.visible = false;
     this.app.ticker.remove(this.ticker, this);
     doubleEmitter.off('onPress', this.onPress);
+    doubleEmitter.off('adError', this.onAdError);
+    doubleEmitter.off('adFinished', this.onAdFinished);
+    doubleEmitter.off('adRejected', this.onAdRejected);
     this.reset();
   }
 
@@ -84,6 +98,7 @@ export class Double extends View {
     this.currentlyVisible = DOUBLE.BLUE;
     this.red.visible = false;
     this.blue.visible = true;
+    this.oneChanceUsed = false;
   }
 
   private toggleShape() {
@@ -93,6 +108,7 @@ export class Double extends View {
   }
 
   private ticker(_delta: number) {
+    if (paused()) return;
     if (this.timestamp.delta < this.delay) return;
 
     this.toggleShape();
@@ -102,7 +118,23 @@ export class Double extends View {
   private onPress(pressed: DOUBLE) {
     if (pressed === this.currentlyVisible) return this.processWin();
 
+    if (this.hasChance()) return;
+
     this.processLose();
+  }
+
+  private onAdError() {
+    this.processLose();
+  }
+
+  private onAdRejected() {
+    this.processLose();
+  }
+
+  private onAdFinished() {
+    console.info('Ad complete');
+    // Only giving half of the win
+    setWin(Math.floor(win() / 2));
   }
 
   private processWin() {
@@ -112,6 +144,18 @@ export class Double extends View {
 
   private processLose() {
     store.resetWin();
+  }
+
+  private hasChance() {
+    if (env.isCrazyGames()) {
+      if (!this.oneChanceUsed) {
+        this.oneChanceUsed = true;
+        store.showOneMoreChance();
+        return true;
+      }
+    }
+
+    return false;
   }
 
   private addGui() {

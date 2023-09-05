@@ -73,6 +73,7 @@ Promise.all(assetBundles)
   })
   .then(() => window.CrazyGames.SDK.game.sdkGameLoadingStop())
   .then(() => game.start())
+  .then(() => window.CrazyGames.SDK.game.gameplayStart())
   .catch((err) => {
     console.error(err?.message || err);
   });

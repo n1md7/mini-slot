@@ -17,13 +17,16 @@ import { BUNDLE, IMAGE_ASSET } from '/src/game/enums';
 import { Game } from '/src/game/Game';
 import { Loader } from '/src/sound/loader';
 import { assets } from '/src/utils/assets';
+import env from '/src/utils/Env';
 
-window.CrazyGames.SDK.game
-  .sdkGameLoadingStart()
-  .then(() => console.info('CrazyGames SDK loading started'))
-  .catch((error) => {
-    console.error(`Error while loading CrazyGames SDK: ${error}`);
-  });
+if (env.isCrazyGames()) {
+  window.CrazyGames.SDK.game
+    .sdkGameLoadingStart()
+    .then(() => console.info('CrazyGames SDK loading started'))
+    .catch((error) => {
+      console.error(`Error while loading CrazyGames SDK: ${error}`);
+    });
+}
 
 gsap.registerPlugin(PixiPlugin);
 PixiPlugin.registerPIXI(PIXI);
@@ -71,9 +74,13 @@ Promise.all(assetBundles)
     document.body.style.backgroundImage = `url(${Background})`;
     game.setup();
   })
-  .then(() => window.CrazyGames.SDK.game.sdkGameLoadingStop())
+  .then(() => {
+    env.isCrazyGames() && window.CrazyGames.SDK.game.sdkGameLoadingStop();
+  })
   .then(() => game.start())
-  .then(() => window.CrazyGames.SDK.game.gameplayStart())
+  .then(() => {
+    env.isCrazyGames() && window.CrazyGames.SDK.game.gameplayStart();
+  })
   .catch((err) => {
     console.error(err?.message || err);
   });

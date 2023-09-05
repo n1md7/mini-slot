@@ -21,7 +21,7 @@ const PayTable: Component = () => {
         <Modal.Header closeButton>
           <Modal.Title id="contained-modal-title-vcenter">Pay Table</Modal.Title>
         </Modal.Header>
-        <Modal.Body>
+        <Modal.Body class="overflow-auto">
           <table class="table table-dark table-hover table-responsive">
             <thead>
               <tr>

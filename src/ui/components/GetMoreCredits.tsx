@@ -2,10 +2,11 @@ import { Component } from 'solid-js';
 import { Button, Modal } from 'solid-bootstrap';
 import * as store from '/src/ui/store';
 import { handleWatchAdReward, hideAlerts } from '/src/ui/store';
+import { BiSolidVideos } from 'solid-icons/bi';
 
 const GetMoreCredits: Component = () => {
   return (
-    <Modal show={store.alert.getMoreCredits} onHide={hideAlerts}>
+    <Modal centered show={store.alert.getMoreCredits} onHide={hideAlerts}>
       <Modal.Header closeButton>
         <Modal.Title>Information</Modal.Title>
       </Modal.Header>
@@ -15,7 +16,7 @@ const GetMoreCredits: Component = () => {
           No, thank you
         </Button>
         <Button variant="primary" onClick={handleWatchAdReward}>
-          Watch
+          Watch <BiSolidVideos />
         </Button>
       </Modal.Footer>
     </Modal>

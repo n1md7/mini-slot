@@ -201,3 +201,12 @@ button#bonus-red {
 button#bonus-blue {
   background-image: linear-gradient(356deg, rgba(13, 13, 218, 0.67) 0%, #5666c330 50%);
 }
+
+div.modal-header,
+div.modal-body,
+div.modal-footer {
+  background-color: rgba(0, 0, 0, 0.8705882353);
+  color: white;
+  background-image: linear-gradient(45deg, #03132096, transparent);
+  font-family: 'Black Ops One', sans-serif;
+}

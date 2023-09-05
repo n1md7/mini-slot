@@ -1,17 +1,1 @@
-$font-path: '/fonts/';
-$fonts: (
-  'Russo One': 'RussoOne-Regular.ttf',
-  'Lobster': 'Lobster-Regular.ttf',
-  'Permanent Marker': 'PermanentMarker-Regular.ttf',
-  'Handjet': 'Handjet-VariableFont_ELGR,ELSH,wght.ttf',
-  'Black Ops One': 'BlackOpsOne-Regular.ttf',
-);
-
-@each $font, $path in $fonts {
-  @font-face {
-    font-family: $font;
-    src: url('#{$font-path}#{$path}') format('woff2');
-    font-weight: normal;
-    font-style: normal;
-  }
-}
+@import url('https://fonts.googleapis.com/css2?family=Black+Ops+One&family=Permanent+Marker&family=Roboto:ital,wght@1,300&display=swap');

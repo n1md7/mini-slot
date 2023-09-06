@@ -28,6 +28,9 @@ const SpinControls: Component = () => {
   createEffect(() => {
     if (spin) {
       gameInstance.subscribeControls(spin.current!, takeWin.current!, double.current!, autoSpin.current!);
+      document.onkeydown = (e) => {
+        if (e.code === 'Space') spin.current?.click();
+      };
     }
 
     return () => {

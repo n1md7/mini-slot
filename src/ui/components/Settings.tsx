@@ -27,7 +27,7 @@ const Settings: Component<Props> = (props) => {
   const disabled = () => <span class="text-danger">Disabled</span>;
 
   return (
-    <Modal centered show={props.show} onHide={props.hide}>
+    <Modal centered show={props.show} onHide={props.hide} fullscreen={'md-down'}>
       <Modal.Header closeButton>
         <Modal.Title>Settings</Modal.Title>
       </Modal.Header>

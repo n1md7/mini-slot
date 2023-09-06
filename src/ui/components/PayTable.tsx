@@ -17,7 +17,7 @@ const PayTable: Component = () => {
         Pay Table
       </Button>
 
-      <Modal show={show()} onHide={handleClose} size="lg" centered scrollable>
+      <Modal show={show()} onHide={handleClose} size="lg" centered scrollable fullscreen={'md-down'}>
         <Modal.Header closeButton>
           <Modal.Title id="contained-modal-title-vcenter">Pay Table</Modal.Title>
         </Modal.Header>
@@ -168,6 +168,11 @@ const PayTable: Component = () => {
             </tbody>
           </table>
         </Modal.Body>
+        <Modal.Footer>
+          <Button variant="secondary" onClick={handleClose}>
+            Close
+          </Button>
+        </Modal.Footer>
       </Modal>
     </>
   );

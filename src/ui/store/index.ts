@@ -67,6 +67,8 @@ export const handleWatchAdReward = async () => {
     return;
   }
 
+  const mute = { state: isMuted() };
+  changeMute(false);
   await window.CrazyGames.SDK.game.gameplayStop();
   window.CrazyGames.SDK.ad.requestAd('rewarded', {
     adStarted: () => {
@@ -77,17 +79,21 @@ export const handleWatchAdReward = async () => {
       console.log('Ad error!', error);
       setCredit(credit() + 10);
       window.CrazyGames.SDK.game.gameplayStart();
+      changeMute(!mute.state);
     },
     adFinished: () => {
       hideAlerts();
       console.log('Ad rewarded!');
       setCredit(credit() + 30);
       window.CrazyGames.SDK.game.gameplayStart();
+      changeMute(!mute.state);
     },
   });
 };
 
 export const handleWatchAdOneChance = async () => {
+  const mute = { state: isMuted() };
+  changeMute(false);
   await window.CrazyGames.SDK.game.gameplayStop();
   window.CrazyGames.SDK.ad.requestAd('rewarded', {
     adStarted: () => {
@@ -98,11 +104,13 @@ export const handleWatchAdOneChance = async () => {
       console.log('Ad error!', error);
       doubleEmitter.emit('adError');
       window.CrazyGames.SDK.game.gameplayStart();
+      changeMute(!mute.state);
     },
     adFinished: () => {
       hideAlerts();
       doubleEmitter.emit('adFinished');
       window.CrazyGames.SDK.game.gameplayStart();
+      changeMute(!mute.state);
     },
   });
 };

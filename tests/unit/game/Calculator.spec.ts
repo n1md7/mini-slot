@@ -20,7 +20,7 @@ describe('Calculator', () => {
       const result = calculator.calculate([block01, block02, block03], 'Top');
 
       // Assert
-      expect(result).toBe(10);
+      expect(result).toBe(4);
     });
 
     it('should calculate MIDDLE line', () => {
@@ -28,7 +28,7 @@ describe('Calculator', () => {
       const result = calculator.calculate([block01, block02, block03], 'Middle');
 
       // Assert
-      expect(result).toBe(10);
+      expect(result).toBe(4);
     });
 
     it('should calculate BOTTOM line', () => {
@@ -36,7 +36,7 @@ describe('Calculator', () => {
       const result = calculator.calculate([block01, block02, block03], 'Bottom');
 
       // Assert
-      expect(result).toBe(10);
+      expect(result).toBe(4);
     });
   });
 
@@ -53,7 +53,7 @@ describe('Calculator', () => {
       const result = calculator.calculate([block01, block02, block03], 'Top');
 
       // Assert
-      expect(result).toBe(20);
+      expect(result).toBe(8);
     });
 
     it('should calculate MIDDLE line', () => {
@@ -61,7 +61,7 @@ describe('Calculator', () => {
       const result = calculator.calculate([block01, block02, block03], 'Middle');
 
       // Assert
-      expect(result).toBe(20);
+      expect(result).toBe(8);
     });
 
     it('should calculate BOTTOM line', () => {
@@ -69,7 +69,7 @@ describe('Calculator', () => {
       const result = calculator.calculate([block01, block02, block03], 'Bottom');
 
       // Assert
-      expect(result).toBe(20);
+      expect(result).toBe(8);
     });
   });
 
@@ -86,7 +86,7 @@ describe('Calculator', () => {
       const result = calculator.calculate([block01, block02, block03], 'Top');
 
       // Assert
-      expect(result).toBe(50);
+      expect(result).toBe(16);
     });
 
     it('should calculate MIDDLE line', () => {
@@ -94,7 +94,7 @@ describe('Calculator', () => {
       const result = calculator.calculate([block01, block02, block03], 'Middle');
 
       // Assert
-      expect(result).toBe(50);
+      expect(result).toBe(16);
     });
 
     it('should calculate BOTTOM line', () => {
@@ -102,7 +102,7 @@ describe('Calculator', () => {
       const result = calculator.calculate([block01, block02, block03], 'Bottom');
 
       // Assert
-      expect(result).toBe(50);
+      expect(result).toBe(16);
     });
   });
 
@@ -119,7 +119,7 @@ describe('Calculator', () => {
       const result = calculator.calculate([block01, block02, block03], 'Top');
 
       // Assert
-      expect(result).toBe(5);
+      expect(result).toBe(2);
     });
 
     it('should calculate MIDDLE line', () => {
@@ -127,7 +127,7 @@ describe('Calculator', () => {
       const result = calculator.calculate([block01, block02, block03], 'Middle');
 
       // Assert
-      expect(result).toBe(5);
+      expect(result).toBe(2);
     });
 
     it('should calculate BOTTOM line', () => {
@@ -135,7 +135,7 @@ describe('Calculator', () => {
       const result = calculator.calculate([block01, block02, block03], 'Bottom');
 
       // Assert
-      expect(result).toBe(5);
+      expect(result).toBe(2);
     });
   });
 
@@ -152,7 +152,7 @@ describe('Calculator', () => {
       const result = calculator.calculate([block01, block02, block03], 'Top');
 
       // Assert
-      expect(result).toBe(600);
+      expect(result).toBe(512);
     });
 
     it('should calculate MIDDLE line', () => {
@@ -160,7 +160,7 @@ describe('Calculator', () => {
       const result = calculator.calculate([block01, block02, block03], 'Middle');
 
       // Assert
-      expect(result).toBe(300);
+      expect(result).toBe(256);
     });
 
     it('should calculate BOTTOM line', () => {
@@ -168,7 +168,7 @@ describe('Calculator', () => {
       const result = calculator.calculate([block01, block02, block03], 'Bottom');
 
       // Assert
-      expect(result).toBe(900);
+      expect(result).toBe(512 + 256);
     });
   });
 
@@ -185,7 +185,7 @@ describe('Calculator', () => {
       const result = calculator.calculate([block01, block02, block03], 'Top');
 
       // Assert
-      expect(result).toBe(150);
+      expect(result).toBe(256);
     });
 
     it('should calculate MIDDLE line', () => {
@@ -193,7 +193,7 @@ describe('Calculator', () => {
       const result = calculator.calculate([block01, block02, block03], 'Middle');
 
       // Assert
-      expect(result).toBe(450);
+      expect(result).toBe(3 * 128);
     });
 
     it('should calculate BOTTOM line', () => {
@@ -201,7 +201,7 @@ describe('Calculator', () => {
       const result = calculator.calculate([block01, block02, block03], 'Bottom');
 
       // Assert
-      expect(result).toBe(300);
+      expect(result).toBe(256);
     });
   });
 
@@ -218,7 +218,7 @@ describe('Calculator', () => {
       const result = calculator.calculate([block01, block02, block03], 'Top');
 
       // Assert
-      expect(result).toBe(75);
+      expect(result).toBe(64);
     });
 
     it('should calculate MIDDLE line', () => {
@@ -226,7 +226,7 @@ describe('Calculator', () => {
       const result = calculator.calculate([block01, block02, block03], 'Middle');
 
       // Assert
-      expect(result).toBe(75);
+      expect(result).toBe(64);
     });
 
     it('should calculate BOTTOM line', () => {
@@ -234,7 +234,7 @@ describe('Calculator', () => {
       const result = calculator.calculate([block01, block02, block03], 'Bottom');
 
       // Assert
-      expect(result).toBe(75);
+      expect(result).toBe(64);
     });
   });
 });

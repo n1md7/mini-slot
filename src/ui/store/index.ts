@@ -17,6 +17,9 @@ export const [alert, setAlert] = createStore({
   oneMoreChance: false,
 });
 export const [paused, setPaused] = createSignal(false);
+export const [music, setMusic] = createSignal(10);
+export const [sound, setSound] = createSignal(30);
+export const [isMuted, setIsMuted] = createSignal(false);
 
 export const hideAlerts = () => {
   setAlert({ getMoreCredits: false, oneMoreChance: false });

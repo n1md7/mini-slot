@@ -54,3 +54,8 @@ export enum DOUBLE {
   RED = 'RED',
   BLUE = 'BLUE',
 }
+
+export enum SOUND_STATUS {
+  ON = 'ON',
+  OFF = 'OFF',
+}

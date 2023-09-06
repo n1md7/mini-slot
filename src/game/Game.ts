@@ -14,6 +14,7 @@ export class Game extends Setup {
   private readonly section: GUI;
 
   private interacted = false;
+  private spinning = false;
 
   private constructor() {
     super();
@@ -68,6 +69,7 @@ export class Game extends Setup {
   }
 
   private async spin() {
+    if (this.spinning) return;
     if (!this.interacted) {
       await assets.audios.BACKGROUND_MUSIC.play();
       this.interacted = true;
@@ -84,7 +86,9 @@ export class Game extends Setup {
     // If there is a previous win, we need to add it to the credits (auto take win)
     await this.takeWin();
 
+    this.spinning = true;
     const win = await this.views.current.run();
+    this.spinning = false;
 
     if (win > 0) {
       await assets.audios.WIN_ALERT.play();

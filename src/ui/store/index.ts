@@ -92,6 +92,8 @@ export const decrementBet = () => setBet(bet() - 1);
 export const resetWin = () => setWin(0);
 export const doubleWin = () => setWin(win() * 2);
 export const toggleAutoSpin = () => setAutoSpin(!autoSpin());
+export const setDoubleView = () => setView({ isSlot: false, isDouble: true });
+export const setSlotView = () => setView({ isSlot: true, isDouble: false });
 
 (function jackPotChange() {
   !paused() && setJackpot(jackpot() - ~~(Math.random() * 30) - 5);

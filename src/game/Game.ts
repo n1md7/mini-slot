@@ -5,6 +5,7 @@ import { Views } from '/src/game/views/Views';
 import * as store from '/src/ui/store';
 import { delay } from '/src/utils/utils';
 import env from '/src/utils/Env';
+import { setDoubleView } from '/src/ui/store';
 
 export class Game extends Setup {
   private static instance: Game;
@@ -92,8 +93,8 @@ export class Game extends Setup {
     if (store.autoSpin()) {
       // Make sure user sees the win
       win > 0 && (await delay(3000));
-      // Spin again
-      await this.spin();
+      // Spin again if the status is still auto-spin
+      store.autoSpin() && (await this.spin());
     }
   }
 
@@ -102,11 +103,14 @@ export class Game extends Setup {
     store.resetWin();
     if (this.views.isDouble()) {
       this.views.activateDefault();
+      store.setSlotView();
     }
   }
 
   private doubleWin() {
     this.views.changeTo('Double');
+    store.setAutoSpin(false);
+    store.setDoubleView();
   }
   private autoSpin() {
     store.toggleAutoSpin();

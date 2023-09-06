@@ -14,7 +14,7 @@ export const Menu: Component = () => {
     <>
       <GetMoreCredits />
       <GetOneMoreChance />
-      <Button variant="secondary" onClick={handleShow}>
+      <Button variant="outline-secondary" onClick={handleShow}>
         <VsGear />
       </Button>
       <Settings show={show()} hide={hide} />

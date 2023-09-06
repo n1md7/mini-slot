@@ -3,24 +3,31 @@ import { isMuted, sound } from '/src/ui/store';
 export class Sound {
   private readonly _sound: HTMLAudioElement;
   private readonly _startAt: number;
+  private readonly _endAt: number;
   private readonly _volume: number;
 
   /**
    * @param {string} src - path to sound file
    * @param {number} startAt - in seconds, depends on sound length
+   * @param {number} endAt - in seconds, depends on sound length, must be greater than {@link startAt}
    * @param {number} maxVolume - in percent (0 - 100)
    */
-  constructor(src: string, startAt: number, maxVolume: number) {
+  constructor(src: string, startAt: number, endAt: number, maxVolume: number) {
     this._sound = new Audio(src);
     this._startAt = startAt;
+    this._endAt = endAt;
     this._volume = maxVolume;
   }
 
-  public play() {
+  public async play() {
     this._sound.currentTime = this._startAt;
     this._sound.volume = this.calculatedVolume();
 
-    return this._sound.play().catch(console.error);
+    await this._sound.play().catch(console.error);
+
+    const delta = this._endAt - this._startAt;
+    const stopAfter = delta * 1000;
+    setTimeout(() => this.stop(), stopAfter);
   }
 
   public stop() {

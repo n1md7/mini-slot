@@ -5,6 +5,7 @@ import { Views } from '/src/game/views/Views';
 import * as store from '/src/ui/store';
 import { delay } from '/src/utils/utils';
 import env from '/src/utils/Env';
+import { assets } from '/src/utils/assets';
 
 export class Game extends Setup {
   private static instance: Game;
@@ -75,11 +76,12 @@ export class Game extends Setup {
     }
 
     // If there is a previous win, we need to add it to the credits (auto take win)
-    this.takeWin();
+    await this.takeWin();
 
     const win = await this.views.current.run();
 
     if (win > 0) {
+      await assets.audios.WIN_ALERT.play();
       // Celebrate the win
       if (env.isCrazyGames() && win >= 64) await window.CrazyGames.SDK.game.happytime();
       console.log(`You won ${win} coins!`);
@@ -97,7 +99,9 @@ export class Game extends Setup {
     }
   }
 
-  private takeWin() {
+  private async takeWin() {
+    // Play audio if there is a win to take
+    if (store.win() > 0) await assets.audios.COIN_WIN.play();
     store.addCredit(store.win());
     store.resetWin();
     if (this.views.isDouble()) {

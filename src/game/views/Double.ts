@@ -10,6 +10,7 @@ import { doubleEmitter } from '/src/utils/Emitter';
 import config from '/src/utils/Config';
 import env from '/src/utils/Env';
 import { paused, setWin, win } from '/src/ui/store';
+import { assets } from '/src/utils/assets';
 
 export class Double extends View {
   private readonly container = new PIXI.Container();
@@ -144,6 +145,7 @@ export class Double extends View {
 
   private processLose() {
     store.resetWin();
+    assets.audios.LOSE_BEEPS.play();
   }
 
   private hasChance() {

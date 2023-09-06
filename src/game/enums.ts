@@ -10,6 +10,10 @@ export enum IMAGE_ASSET {
 export enum AUDIO_ASSET {
   WIN = 'WIN',
   SPIN = 'SPIN',
+  COIN_WIN = 'COIN_WIN',
+  LOSE_BEEPS = 'LOSE_BEEPS',
+  REEL_SPIN = 'REEL_SPIN',
+  WIN_ALERT = 'WIN_ALERT',
 }
 
 export enum BUNDLE {

@@ -1,7 +1,15 @@
 import { Component } from 'solid-js';
 import { Button, Modal, Form, Row, Col } from 'solid-bootstrap';
 import PayTable from '/src/ui/components/PayTable';
-import { isMuted, music, setIsMuted, setMusic, setSound, sound } from '/src/ui/store';
+import {
+  changeMusicVolume,
+  changeMute,
+  changeSoundVolume,
+  isMuted,
+  music,
+  resetAudioSettings,
+  sound,
+} from '/src/ui/store';
 
 type Props = {
   show: boolean;
@@ -10,17 +18,17 @@ type Props = {
 const Settings: Component<Props> = (props) => {
   const handleMusicChange = ({ target }: Event) => {
     const { value } = target as HTMLInputElement;
-    setMusic(+value);
+    changeMusicVolume(+value);
   };
 
   const handleSoundChange = ({ target }: Event) => {
     const { value } = target as HTMLInputElement;
-    setSound(+value);
+    changeSoundVolume(+value);
   };
 
   const handleMuteChange = ({ target }: Event) => {
     const { checked } = target as HTMLInputElement;
-    setIsMuted(!checked);
+    changeMute(checked);
   };
 
   const enabled = () => <span class="text-success">Enabled</span>;
@@ -50,13 +58,20 @@ const Settings: Component<Props> = (props) => {
           <Row>
             <Col>
               <Form.Label>Music | {music()}%</Form.Label>
-              <Form.Range onChange={handleMusicChange} min={0} max={100} value={music()} />
+              <Form.Range disabled={isMuted()} onChange={handleMusicChange} min={0} max={100} value={music()} />
             </Col>
           </Row>
           <Row>
             <Col>
               <Form.Label>Sound | {sound()}%</Form.Label>
-              <Form.Range onChange={handleSoundChange} min={0} max={100} value={sound()} />
+              <Form.Range disabled={isMuted()} onChange={handleSoundChange} min={0} max={100} value={sound()} />
+            </Col>
+          </Row>
+          <Row>
+            <Col>
+              <Button onClick={resetAudioSettings} variant="outline-warning">
+                Reset audio settings
+              </Button>
             </Col>
           </Row>
         </div>

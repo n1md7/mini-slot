@@ -11,6 +11,7 @@ import CoinWinSound from '/sounds/coin-win.wav';
 import LoseBeepsSound from '/sounds/lose-beeps.wav';
 import ReelSpinSound from '/sounds/reel-spin.wav';
 import WinAlertSound from '/sounds/win-alert.wav';
+import BackgroundMusic from '/sounds/background-music.mp3';
 
 import { Assets } from '@pixi/assets';
 import * as PIXI from 'pixi.js';
@@ -23,6 +24,7 @@ import { Loader } from '/src/sound/loader';
 import { assets } from '/src/utils/assets';
 import env from '/src/utils/Env';
 import { Sound } from '/src/sound/Sound';
+import { Music } from '/src/sound/Music';
 
 if (env.isCrazyGames()) {
   window.CrazyGames.SDK.game
@@ -56,7 +58,7 @@ const progress = {
   },
 };
 
-Loader.addAudios([WinSound, SpinSound, CoinWinSound, LoseBeepsSound, ReelSpinSound, WinAlertSound]);
+Loader.addAudios([WinSound, SpinSound, CoinWinSound, LoseBeepsSound, ReelSpinSound, WinAlertSound, BackgroundMusic]);
 
 Assets.addBundle(BUNDLE.IMAGES, {
   [IMAGE_ASSET.BARx1]: BARx1,
@@ -80,8 +82,9 @@ Promise.all(assetBundles)
       SPIN: new Sound(audios.get(SpinSound)?.src, 0, 3, 30),
       COIN_WIN: new Sound(audios.get(CoinWinSound)?.src, 0, 3, 30),
       LOSE_BEEPS: new Sound(audios.get(LoseBeepsSound)?.src, 0, 3, 30),
-      REEL_SPIN: new Sound(audios.get(ReelSpinSound)?.src, 0, 3, 30),
+      REEL_SPIN: new Sound(audios.get(ReelSpinSound)?.src, 0, 0, 30),
       WIN_ALERT: new Sound(audios.get(WinAlertSound)?.src, 0, 3, 30),
+      BACKGROUND_MUSIC: new Music(audios.get(BackgroundMusic)?.src, 0, 0, 5),
     };
     document.body.style.backgroundImage = `url(${Background})`;
     game.setup();

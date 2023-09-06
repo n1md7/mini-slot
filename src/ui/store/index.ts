@@ -7,12 +7,24 @@ import { SOUND_STATUS } from '/src/game/enums';
 const SOUND_KEY = 'sound';
 const USER_CREDIT_KEY = 'user-credit';
 const USER_JACKPOT_KEY = 'user-jackpot';
+const SOUND_VOLUME_KEY = 'sound-volume';
+const MUSIC_VOLUME_KEY = 'music-volume';
 
 const status = <SOUND_STATUS>localStorage.getItem(SOUND_KEY);
 const soundIsOFF = status === SOUND_STATUS.OFF;
 
-const userCredit = parseInt(localStorage.getItem(USER_CREDIT_KEY) || '0') || 35;
-const userJackpot = parseInt(localStorage.getItem(USER_JACKPOT_KEY) || '0') || 64000;
+const defaults = {
+  sound: 15,
+  music: 5,
+  credit: 35,
+  jackpot: 64000,
+  muted: false,
+};
+
+const userCredit = parseInt(localStorage.getItem(USER_CREDIT_KEY) || '0') || defaults.credit;
+const userJackpot = parseInt(localStorage.getItem(USER_JACKPOT_KEY) || '0') || defaults.jackpot;
+const soundVolume = parseInt(localStorage.getItem(SOUND_VOLUME_KEY) || '0') || defaults.sound;
+const musicVolume = parseInt(localStorage.getItem(MUSIC_VOLUME_KEY) || '0') || defaults.music;
 
 export const [credit, setCredit] = createSignal(userCredit);
 export const [jackpot, setJackpot] = createSignal(userJackpot);
@@ -28,8 +40,8 @@ export const [alert, setAlert] = createStore({
   oneMoreChance: false,
 });
 export const [paused, setPaused] = createSignal(false);
-export const [music, setMusic] = createSignal(5);
-export const [sound, setSound] = createSignal(15);
+export const [music, setMusic] = createSignal(musicVolume);
+export const [sound, setSound] = createSignal(soundVolume);
 export const [isMuted, setIsMuted] = createSignal(soundIsOFF);
 
 export const hideAlerts = () => {
@@ -111,11 +123,38 @@ export const resetWin = () => setWin(0);
 export const doubleWin = () => setWin(win() * 2);
 export const toggleAutoSpin = () => setAutoSpin(!autoSpin());
 export const toggleMute = () => {
-  setIsMuted(!isMuted());
-  localStorage.setItem(SOUND_KEY, isMuted() ? SOUND_STATUS.OFF : SOUND_STATUS.ON);
+  const value = !isMuted();
+  setIsMuted(value);
+  doubleEmitter.emit('volumeChange');
+  localStorage.setItem(SOUND_KEY, value ? SOUND_STATUS.OFF : SOUND_STATUS.ON);
+};
+export const changeMute = (value: boolean) => {
+  setIsMuted(!value);
+  doubleEmitter.emit('volumeChange');
+  localStorage.setItem(SOUND_KEY, !value ? SOUND_STATUS.OFF : SOUND_STATUS.ON);
 };
 export const setDoubleView = () => setView({ isSlot: false, isDouble: true });
 export const setSlotView = () => setView({ isSlot: true, isDouble: false });
+export const changeMusicVolume = (value: number) => {
+  setMusic(value);
+  doubleEmitter.emit('volumeChange');
+  localStorage.setItem(MUSIC_VOLUME_KEY, value.toString());
+};
+export const changeSoundVolume = (value: number) => {
+  setSound(value);
+  doubleEmitter.emit('volumeChange');
+  localStorage.setItem(SOUND_VOLUME_KEY, value.toString());
+};
+
+export const resetAudioSettings = () => {
+  localStorage.setItem(SOUND_VOLUME_KEY, defaults.sound.toString());
+  localStorage.setItem(MUSIC_VOLUME_KEY, defaults.music.toString());
+  localStorage.setItem(SOUND_KEY, SOUND_STATUS.ON);
+  setMusic(defaults.music);
+  setSound(defaults.sound);
+  setIsMuted(false);
+  doubleEmitter.emit('volumeChange');
+};
 
 (function jackPotChange() {
   if (!paused()) {

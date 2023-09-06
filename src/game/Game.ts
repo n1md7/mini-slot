@@ -13,6 +13,8 @@ export class Game extends Setup {
   private readonly views: Views;
   private readonly section: GUI;
 
+  private interacted = false;
+
   private constructor() {
     super();
 
@@ -66,6 +68,10 @@ export class Game extends Setup {
   }
 
   private async spin() {
+    if (!this.interacted) {
+      await assets.audios.BACKGROUND_MUSIC.play();
+      this.interacted = true;
+    }
     // When user clicks spin, we need to check if he has enough credits
     // If he does, we can spin the reels
     // If he doesn't, we need to show him a message to add more credits by watching an ad

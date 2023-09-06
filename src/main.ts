@@ -84,8 +84,3 @@ Promise.all(assetBundles)
   .catch((err) => {
     console.error(err?.message || err);
   });
-
-window.addEventListener('wheel', (event) => event.preventDefault(), { passive: false });
-window.addEventListener('keydown', (event) => {
-  if (['ArrowUp', 'ArrowDown', ' '].includes(event.key)) event.preventDefault();
-});

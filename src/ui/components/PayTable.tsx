@@ -45,13 +45,13 @@ const PayTable: Component = () => {
                   <img alt="img" src={Cherry} width="40" />
                 </td>
                 <td class="v-align">
-                  <b>600</b>xBET
+                  <b>{2 * 256}</b>xBET
                 </td>
                 <td class="v-align">
-                  <b>300</b>xBET
+                  <b>{1 * 256}</b>xBET
                 </td>
                 <td class="v-align">
-                  <b>900</b>xBET
+                  <b>{3 * 256}</b>xBET
                 </td>
               </tr>
               <tr>
@@ -65,13 +65,13 @@ const PayTable: Component = () => {
                   <img alt="img" src={Seven} width="40" />
                 </td>
                 <td class="v-align">
-                  <b>150</b>xBET
+                  <b>{1 * 128}</b>xBET
                 </td>
                 <td class="v-align">
-                  <b>450</b>xBET
+                  <b>{3 * 128}</b>xBET
                 </td>
                 <td class="v-align">
-                  <b>300</b>xBET
+                  <b>{2 * 128}</b>xBET
                 </td>
               </tr>
               <tr>
@@ -80,13 +80,13 @@ const PayTable: Component = () => {
                   <img alt="img" src={Cherry} width="40" />
                 </td>
                 <td class="v-align">
-                  <b>75</b>xBET
+                  <b>{64}</b>xBET
                 </td>
                 <td class="v-align">
-                  <b>75</b>xBET
+                  <b>{64}</b>xBET
                 </td>
                 <td class="v-align">
-                  <b>75</b>xBET
+                  <b>{64}</b>xBET
                 </td>
               </tr>
               <tr>
@@ -100,13 +100,13 @@ const PayTable: Component = () => {
                   <img alt="img" src={BARx3} width="40" />
                 </td>
                 <td class="v-align">
-                  <b>50</b>xBET
+                  <b>{16}</b>xBET
                 </td>
                 <td class="v-align">
-                  <b>50</b>xBET
+                  <b>{16}</b>xBET
                 </td>
                 <td class="v-align">
-                  <b>50</b>xBET
+                  <b>{16}</b>xBET
                 </td>
               </tr>
               <tr>
@@ -120,13 +120,13 @@ const PayTable: Component = () => {
                   <img alt="img" src={BARx2} width="40" />
                 </td>
                 <td class="v-align">
-                  <b>20</b>xBET
+                  <b>{8}</b>xBET
                 </td>
                 <td class="v-align">
-                  <b>20</b>xBET
+                  <b>{8}</b>xBET
                 </td>
                 <td class="v-align">
-                  <b>20</b>xBET
+                  <b>{8}</b>xBET
                 </td>
               </tr>
               <tr>
@@ -140,13 +140,13 @@ const PayTable: Component = () => {
                   <img alt="img" src={BARx1} width="40" />
                 </td>
                 <td class="v-align">
-                  <b>10</b>xBET
+                  <b>{4}</b>xBET
                 </td>
                 <td class="v-align">
-                  <b>10</b>xBET
+                  <b>{4}</b>xBET
                 </td>
                 <td class="v-align">
-                  <b>10</b>xBET
+                  <b>{4}</b>xBET
                 </td>
               </tr>
               <tr>
@@ -156,13 +156,13 @@ const PayTable: Component = () => {
                   <img alt="img" src={BARx3} width="40" />
                 </td>
                 <td>
-                  <b>5</b>xBET
+                  <b>{2}</b>xBET
                 </td>
                 <td>
-                  <b>5</b>xBET
+                  <b>{2}</b>xBET
                 </td>
                 <td>
-                  <b>5</b>xBET
+                  <b>{2}</b>xBET
                 </td>
               </tr>
             </tbody>

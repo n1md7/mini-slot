@@ -8,13 +8,13 @@ export class Calculator {
     }
 
     if (block01.isAnyBAR && block02.isAnyBAR && block03.isAnyBAR) {
-      // Any BAR combination only pays 5
-      return 5;
+      // Any BAR combination
+      return 2;
     }
 
     if (block01.isSevenOrCherry && block02.isSevenOrCherry && block03.isSevenOrCherry) {
-      // Any 3 Seven or Cherry combination pays 75
-      return 75;
+      // Any Seven or Cherry combination
+      return 64;
     }
 
     return 0;
@@ -37,11 +37,11 @@ export class Calculator {
   }
 
   private getValue(block: Block) {
-    if (block.isBARx1) return 10;
-    if (block.isBARx2) return 20;
-    if (block.isBARx3) return 50;
-    if (block.isSeven) return 150;
-    if (block.isCherry) return 300;
+    if (block.isBARx1) return 4;
+    if (block.isBARx2) return 8;
+    if (block.isBARx3) return 16;
+    if (block.isSeven) return 128;
+    if (block.isCherry) return 256;
 
     return 0;
   }

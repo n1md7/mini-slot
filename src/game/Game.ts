@@ -81,7 +81,7 @@ export class Game extends Setup {
 
     if (win > 0) {
       // Celebrate the win
-      if (env.isCrazyGames() && win > 300) await window.CrazyGames.SDK.game.happytime();
+      if (env.isCrazyGames() && win >= 64) await window.CrazyGames.SDK.game.happytime();
       console.log(`You won ${win} coins!`);
       // Hold it temporarily and update the UI
       // User can take it or double it

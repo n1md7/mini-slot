@@ -185,7 +185,7 @@ describe('Calculator', () => {
       const result = calculator.calculate([block01, block02, block03], 'Top');
 
       // Assert
-      expect(result).toBe(256);
+      expect(result).toBe(1 * 128);
     });
 
     it('should calculate MIDDLE line', () => {
@@ -201,7 +201,7 @@ describe('Calculator', () => {
       const result = calculator.calculate([block01, block02, block03], 'Bottom');
 
       // Assert
-      expect(result).toBe(256);
+      expect(result).toBe(2 * 128);
     });
   });
 

@@ -31,4 +31,8 @@ Click: Use your mouse to click on various in-game buttons and options, such as t
 If you prefer keyboard controls, the spacebar can be used as an optional alternative to clicking the "Spin" button. Simply press the spacebar, and the reels will start spinning, adding an extra level of convenience for players who like to keep their hands on the keyboard.
 
 
+#### Debug mode
+
+Lucky Spin has debug mode which is accessible by navigating to https://n1md7.github.io/mini-slot/#debug
+
 ![image](https://github.com/n1md7/mini-slot/assets/6734058/45520654-473c-4f26-991b-1da09ea14fe7)

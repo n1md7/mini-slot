@@ -8,7 +8,7 @@ const GetMoreCredits: Component = () => {
   return (
     <Modal centered show={store.alert.getMoreCredits} onHide={hideAlerts}>
       <Modal.Header closeButton>
-        <Modal.Title>No credits</Modal.Title>
+        <Modal.Title>Insufficient credits</Modal.Title>
       </Modal.Header>
       <Modal.Body>Watch an ad to get more credits</Modal.Body>
       <Modal.Footer>

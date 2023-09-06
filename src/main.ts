@@ -6,7 +6,7 @@ import Cherry from '/images/symbols/Cherry.png';
 import Background from '/backgrounds/background-01.jpg';
 
 import WinSound from '/sounds/win.mp3';
-import SpinSound from '/sounds/spin.mp3';
+import SpinSound from '/sounds/reel-spin.wav';
 
 import { Assets } from '@pixi/assets';
 import * as PIXI from 'pixi.js';
@@ -70,7 +70,10 @@ const assetBundles = [
 Promise.all(assetBundles)
   .then(([images, audios]) => {
     assets.images = images;
-    assets.audios = audios;
+    assets.audios = {
+      WIN: audios.get(WinSound),
+      SPIN: audios.get(SpinSound),
+    };
     document.body.style.backgroundImage = `url(${Background})`;
     game.setup();
   })

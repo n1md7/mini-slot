@@ -17,8 +17,8 @@ export const [alert, setAlert] = createStore({
   oneMoreChance: false,
 });
 export const [paused, setPaused] = createSignal(false);
-export const [music, setMusic] = createSignal(10);
-export const [sound, setSound] = createSignal(30);
+export const [music, setMusic] = createSignal(5);
+export const [sound, setSound] = createSignal(15);
 export const [isMuted, setIsMuted] = createSignal(false);
 
 export const hideAlerts = () => {
@@ -92,6 +92,7 @@ export const decrementBet = () => setBet(bet() - 1);
 export const resetWin = () => setWin(0);
 export const doubleWin = () => setWin(win() * 2);
 export const toggleAutoSpin = () => setAutoSpin(!autoSpin());
+export const toggleMute = () => setIsMuted(!isMuted());
 export const setDoubleView = () => setView({ isSlot: false, isDouble: true });
 export const setSlotView = () => setView({ isSlot: true, isDouble: false });
 

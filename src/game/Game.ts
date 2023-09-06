@@ -5,7 +5,6 @@ import { Views } from '/src/game/views/Views';
 import * as store from '/src/ui/store';
 import { delay } from '/src/utils/utils';
 import env from '/src/utils/Env';
-import { setDoubleView } from '/src/ui/store';
 
 export class Game extends Setup {
   private static instance: Game;

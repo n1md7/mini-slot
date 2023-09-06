@@ -1,19 +1,22 @@
 import { AbstractSound } from './sound.abstract';
 import { assets } from '/src/utils/assets';
+import { sound } from '/src/ui/store';
 
 export class SlotSound extends AbstractSound {
-  private readonly winSound: HTMLAudioElement;
-  private readonly spinSound: HTMLAudioElement;
+  private winSound!: HTMLAudioElement;
+  private spinSound!: HTMLAudioElement;
 
   constructor() {
     super('SLOT-SOUND');
+  }
 
+  init() {
     this.winSound = assets.audios.WIN;
     this.spinSound = assets.audios.SPIN;
   }
 
   playSpin(volume?: number) {
-    this.spinSound.volume = volume ?? this.volume;
+    this.spinSound.volume = volume ?? sound() * 0.01;
     this.spinSound.muted = this.isDisabled();
     this.spinSound.play().then();
 
@@ -21,7 +24,7 @@ export class SlotSound extends AbstractSound {
   }
 
   playWin(volume?: number) {
-    this.winSound.volume = volume ?? this.volume;
+    this.winSound.volume = volume ?? sound() * 0.01;
     this.winSound.muted = this.isDisabled();
     this.winSound.play().then();
 

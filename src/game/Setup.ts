@@ -1,19 +1,16 @@
 import { Spinner } from '/src/game/components/spinner/Spinner';
 import { CANVAS, IMAGE_ASSET } from '/src/game/enums';
 import { Application } from 'pixi.js';
-import { SlotSound } from '/src/sound/slot-sound';
 import { Symbols } from '/src/game/components/reels/components/Symbols';
 import { assets } from '/src/utils/assets';
 
 export abstract class Setup {
   protected readonly spinner: Spinner;
   protected app!: Application;
-  protected slotSound: SlotSound;
   protected slotSymbols: Symbols;
 
   protected constructor() {
     this.spinner = new Spinner();
-    this.slotSound = new SlotSound();
     this.slotSymbols = new Symbols();
   }
 

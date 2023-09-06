@@ -8,7 +8,9 @@ import { Container } from 'pixi.js';
 import { gsap } from 'gsap';
 import GUI from 'lil-gui';
 import ms from 'ms';
+import SpinSound from '/sounds/reel-spin.wav';
 import { Animations } from '/src/game/components/reels/components/Animations';
+import { Sound } from '/src/sound/Sound';
 
 export type ReelOptions = {
   spinTime: `${number} sec`;
@@ -22,6 +24,7 @@ export class Reel extends Container implements iSubscribe, iUnsubscribe, iInit {
 
   private readonly _blocks: Block[];
   private readonly _stopAt: StopAt;
+  private readonly _sound: Sound;
 
   constructor(
     private readonly reelOptions: ReelOptions,
@@ -33,6 +36,7 @@ export class Reel extends Container implements iSubscribe, iUnsubscribe, iInit {
     this._spinning = false;
     this._blocks = [];
     this._stopAt = new StopAt();
+    this._sound = new Sound(SpinSound, 1, 15);
 
     this.x = reelOptions.id * REEL.WIDTH;
     this.capacity = this.getCapacityByReelId(reelOptions.id);
@@ -88,6 +92,7 @@ export class Reel extends Container implements iSubscribe, iUnsubscribe, iInit {
   }
 
   async spin() {
+    this._sound.play();
     this._spinning = true;
     await gsap
       .to(this, {
@@ -97,6 +102,7 @@ export class Reel extends Container implements iSubscribe, iUnsubscribe, iInit {
       })
       .then(() => {
         this._spinning = false;
+        this._sound.stop();
       });
   }
 
